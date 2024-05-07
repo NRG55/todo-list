@@ -1,11 +1,11 @@
 console.log('Hey');
 
-
 import TodoList from './todo-list.js';
 import Project from './project.js';
 import Task from './task.js';
-let testTodo = new TodoList;
+import HtmlController from './html-controller.js';
 
+let testTodo = new TodoList;
 console.log(testTodo)
 
 let testProjectTask = new Project('Test Project 2');
@@ -32,11 +32,17 @@ function setName() {
         console.warn(error);
 
     } finally {
-        
-    }
 
-   
+    }   
 }
+
 setName();
 console.log('Finished!');
+
+const html = new HtmlController;
+
+
+html.handleAddProjectButton();
+
+
 
