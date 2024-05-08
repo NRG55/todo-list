@@ -1,12 +1,14 @@
 import Project from './project.js';
 import Task from './task.js';
 
-export default class TodoList {
+export default class ProjectTaskList {
     #projects;
 
     constructor() {
         this.#projects = [];
-        this.#projects.push(new Project('Test Project'));
+        this.#projects.push(new Project('Test Project 1'));
+        this.#projects.push(new Project('Test Project 2'));
+        this.#projects.push(new Project('Test Project 3'));
     };
 
     set projects(value) {
@@ -23,5 +25,5 @@ export default class TodoList {
 
     clearProjects() {
         return this.#projects = [];
-    }
+    };
 };

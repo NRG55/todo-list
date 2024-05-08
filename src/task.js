@@ -17,7 +17,7 @@ export default class Task {
 
     set name(value) {         
         if(value === "" || typeof value !== 'string') {
-           throw new Error('Invalid name!');
+           throw new Error('Invalid task name!');
         }
         this.#name = value;
     };

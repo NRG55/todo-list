@@ -8,7 +8,14 @@ export default class Project {
     };
 
     set name(value) {
-        this.#name = value;
+        try {
+        if(value === "" || typeof value !== 'string') {
+            throw new Error('Invalid project name!');
+         }
+        } catch (error) {
+            console.warn(error);
+        }
+         this.#name = value;
     };
 
     get name() {
