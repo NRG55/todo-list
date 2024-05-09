@@ -6,9 +6,9 @@ export default class ProjectTaskList {
 
     constructor() {
         this.#projects = [];
-        this.#projects.push(new Project('Test Project 1'));
-        this.#projects.push(new Project('Test Project 2'));
-        this.#projects.push(new Project('Test Project 3'));
+        this.#projects.push(new Project('Project1'));
+        this.#projects.push(new Project('Project2'));
+        this.#projects.push(new Project('Project3'));
     };
 
     set projects(value) {

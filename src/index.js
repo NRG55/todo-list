@@ -1,10 +1,10 @@
 console.log('Hey');
 
-import TodoList from './project-task-list.js';
+import TodoList from './todo-list-controller.js';
 import Project from './project.js';
 import Task from './task.js';
-import HtmlController from './webpage.js';
-import ProjectTaskList from './project-task-list.js';
+import WebpageController from './webpage-controller.js';
+import ProjectTaskList from './todo-list-controller.js';
 
 // let testTodo = new TodoList;
 // console.log(testTodo)
@@ -42,10 +42,13 @@ import ProjectTaskList from './project-task-list.js';
 
 
 const myProjectsList = new ProjectTaskList;
+console.log(myProjectsList)
 export default myProjectsList;
 
-const html = new HtmlController;
-html.loadWebpage();
+const webpageController = new WebpageController;
+webpageController.renderHomepage();
+
 //  html.loadProjects();
 
 
+// webpage.initDisplayProjectContentButton()
