@@ -6,27 +6,37 @@ export default class WebpageController {
         this.renderProjects();
         this.initAddProjectButton();
         this.initProjectButton()
-    }
+    };
 
     renderProjects() {
-        myProjectsList.projects.forEach((element) => {            
+        const projectsList = document.querySelector('ul.projects-list');
+        
+
+        myProjectsList.projects.forEach((element) => { 
+            const projectWrap = document.createElement('li');
+            const projectElement = document.createElement('button');
+           
+            projectElement.textContent = element.name;
+            projectsList.appendChild(projectWrap);
+            projectWrap.appendChild(projectElement);
+
             this.renderProject(element.name);  
         });
     };     
 
     renderProject(projectName) {
-        const projectsListHtml = document.querySelector('.projects-list');
+        // const projectsListHtml = document.querySelector('.add-project-container');
 
-        projectsListHtml.innerHTML += `
-           <button class="button-project" id="${projectName}">
-              ${projectName}
-              <span 
-               id="close"
-               onclick="this.parentNode.remove();">
-               x
-               </span> 
-           </button>
-        `               
+        // projectsListHtml.innerHTML += `
+        //    <button class="button-project" id="${projectName}">
+        //       ${projectName}
+        //       <span 
+        //        id="close"
+        //        onclick="this.parentNode.remove();">
+        //        x
+        //        </span> 
+        //    </button>
+        // `               
     };
 
     renderProjectContent(projectName) {
@@ -38,9 +48,11 @@ export default class WebpageController {
         `        
     };
 
+   
+
     initAddProjectButton() {        
         const buttonAddProject = document.querySelector('.button-add-project-popup');  
-        const projectsListHtml = document.querySelector('.projects-list');         
+        const projectsListHtml = document.querySelector('.add-project-container');         
       
         buttonAddProject.addEventListener('click', () => {
             this.addProject();
