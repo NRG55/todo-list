@@ -10,7 +10,8 @@ export default class WebpageController {
     };
 
     renderProjects() {
-        const projectsList = document.querySelector('ul.projects-list');        
+        const projectsList = document.querySelector('ul.projects-list');
+        projectsList.innerHTML = '';        
 
         myProjectsList.projects.forEach((element) => {          
             projectsList.appendChild(this.renderProjectElement(element.name));           
@@ -46,9 +47,7 @@ export default class WebpageController {
            <h1>${projectName}</h1>
            <button class="button-add-task">+ Add task</button>
         `        
-    };
-
-   
+    };   
 
     initAddProjectButton() {        
         const buttonAddProject = document.querySelector('.add-project-button');  
@@ -61,20 +60,42 @@ export default class WebpageController {
             // projectsListHtml.innerHTML = "Projects: "
             this.renderProjects()
             this.initProjectButton()
+            this.initSubmitProjectFormButton(projectForm);
         });
     };
+
+    initSubmitProjectFormButton(projectForm) {
+        const buttonAddProject = document.getElementById('submit-project-form-button');  
+        
+        buttonAddProject.addEventListener('click', () => {
+
+    //    const projectForm = new ProjectForm;
+        projectForm.submitProject();
+        console.log(myProjectsList)
+            // const projectForm = new ProjectForm;
+            // projectForm.createForm();
+            // // projectForm.submitProject();
+            // // projectsListHtml.innerHTML = "Projects: "
+            // this.renderProjects()
+            // this.initProjectButton()
+            this.renderProjects()
+            this.initProjectButton()
+        });
+    }
     
     initProjectButton() {        
       
         myProjectsList.projects.forEach((e) => {
             let projectName = e.name;
-            console.log(e.name)
+            // console.log(e.name)
             const buttonProject = document.getElementById(`${projectName}`);
             buttonProject.addEventListener('click',()  => {
+                console.log('click')
                 this.renderProjectContent(e.name);
             });            
         });      
     }; 
+    
     
     addProject() {
         console.log(this)

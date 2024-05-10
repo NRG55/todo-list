@@ -1,4 +1,5 @@
 import myProjectsList from './index.js';
+import Project from './project.js';
 
 export default class ProjectForm {
     createForm() {
@@ -7,12 +8,14 @@ export default class ProjectForm {
 
         const projectInput = document.createElement('input');
         projectInput.type = 'text';
-        projectInput.name = 'new-project';
+        projectInput.name = 'input-new-project';
+        projectInput.className = 'input-new-project';
         projectInput.placeholder = 'Project name';
         projectInput.focus();
 
         const submitButton = document.createElement('button');
         submitButton.textContent = 'Submit'; 
+        submitButton.id ='submit-project-form-button';
         
         const cancelButton = document.createElement('button');
         cancelButton.textContent = 'Cancel'; 
@@ -25,10 +28,11 @@ export default class ProjectForm {
     };
 
     submitProject() {
-        const projectName = document.querySelector('.new-project').value;
+        const inputValue = document.querySelector('.input-new-project').value;
+        // const projectName = document.querySelector('.new-project').value;
 
 
-        myProjectsList.addProject(projectName);
+        myProjectsList.addProject(new Project(inputValue));
     };
 
 
