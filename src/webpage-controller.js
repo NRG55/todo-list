@@ -1,5 +1,6 @@
 import Project from './project.js';
 import myProjectsList from './index.js';
+import ProjectForm from './project-form.js';
 
 export default class WebpageController {
     renderHomepage() {
@@ -9,22 +10,21 @@ export default class WebpageController {
     };
 
     renderProjects() {
-        const projectsList = document.querySelector('ul.projects-list');
-        
+        const projectsList = document.querySelector('ul.projects-list');        
 
-        myProjectsList.projects.forEach((element) => { 
-            const projectWrap = document.createElement('li');
-            const projectElement = document.createElement('button');
-           
-            projectElement.textContent = element.name;
-            projectsList.appendChild(projectWrap);
-            projectWrap.appendChild(projectElement);
-
-            this.renderProject(element.name);  
+        myProjectsList.projects.forEach((element) => {          
+            projectsList.appendChild(this.renderProjectElement(element.name));           
         });
     };     
 
-    renderProject(projectName) {
+    renderProjectElement(projectName) {
+        const projectWrap = document.createElement('li');
+        const projectElement = document.createElement('button');
+
+        projectElement.textContent = projectName; 
+        projectElement.id =  projectName;          
+        projectWrap.appendChild(projectElement);
+        return projectWrap;
         // const projectsListHtml = document.querySelector('.add-project-container');
 
         // projectsListHtml.innerHTML += `
@@ -51,12 +51,14 @@ export default class WebpageController {
    
 
     initAddProjectButton() {        
-        const buttonAddProject = document.querySelector('.button-add-project-popup');  
-        const projectsListHtml = document.querySelector('.add-project-container');         
+        const buttonAddProject = document.querySelector('.add-project-button');  
+        // const projectsListHtml = document.querySelector('.add-project-container');         
       
         buttonAddProject.addEventListener('click', () => {
-            this.addProject();
-            projectsListHtml.innerHTML = "Projects: "
+            const projectForm = new ProjectForm;
+            projectForm.createForm();
+            // projectForm.submitProject();
+            // projectsListHtml.innerHTML = "Projects: "
             this.renderProjects()
             this.initProjectButton()
         });
@@ -82,7 +84,7 @@ export default class WebpageController {
 
         myProjectsList.addProject(new Project(projectName));
         // console.log(myProjectsList)
-        this.renderProject(projectName);
+        this.renderProjectElement(projectName);
     };    
 };
 
