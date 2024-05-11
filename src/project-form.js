@@ -29,11 +29,7 @@ export default class ProjectForm {
 
     submitProject() {
         const inputValue = document.querySelector('.input-new-project').value;
-        // const projectName = document.querySelector('.new-project').value;
-
 
         myProjectsList.addProject(new Project(inputValue));
     };
-
-
 };

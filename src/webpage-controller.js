@@ -1,18 +1,20 @@
 import Project from './project.js';
 import myProjectsList from './index.js';
 import ProjectForm from './project-form.js';
+import TaskForm from './task-form.js';
 
 export default class WebpageController {
     renderHomepage() {
         this.renderProjects();
         this.initAddProjectButton();
-        this.initProjectButton()
+        this.initProjectButton();
+        this.initSubmitTaskFormButton()
     };
 
     renderProjects() {
         const projectsList = document.querySelector('ul.projects-list');
-        projectsList.innerHTML = '';        
 
+        projectsList.innerHTML = ''; 
         myProjectsList.projects.forEach((element) => {          
             projectsList.appendChild(this.renderProjectElement(element.name));           
         });
@@ -25,19 +27,7 @@ export default class WebpageController {
         projectElement.textContent = projectName; 
         projectElement.id =  projectName;          
         projectWrap.appendChild(projectElement);
-        return projectWrap;
-        // const projectsListHtml = document.querySelector('.add-project-container');
-
-        // projectsListHtml.innerHTML += `
-        //    <button class="button-project" id="${projectName}">
-        //       ${projectName}
-        //       <span 
-        //        id="close"
-        //        onclick="this.parentNode.remove();">
-        //        x
-        //        </span> 
-        //    </button>
-        // `               
+        return projectWrap;       
     };
 
     renderProjectContent(projectName) {
@@ -50,14 +40,11 @@ export default class WebpageController {
     };   
 
     initAddProjectButton() {        
-        const buttonAddProject = document.querySelector('.add-project-button');  
-        // const projectsListHtml = document.querySelector('.add-project-container');         
+        const buttonAddProject = document.querySelector('.add-project-button');       
       
         buttonAddProject.addEventListener('click', () => {
             const projectForm = new ProjectForm;
-            projectForm.createForm();
-            // projectForm.submitProject();
-            // projectsListHtml.innerHTML = "Projects: "
+            projectForm.createForm();          
             this.renderProjects()
             this.initProjectButton()
             this.initSubmitProjectFormButton(projectForm);
@@ -67,45 +54,33 @@ export default class WebpageController {
     initSubmitProjectFormButton(projectForm) {
         const buttonAddProject = document.getElementById('submit-project-form-button');  
         
-        buttonAddProject.addEventListener('click', () => {
-
-    //    const projectForm = new ProjectForm;
-        projectForm.submitProject();
-        console.log(myProjectsList)
-            // const projectForm = new ProjectForm;
-            // projectForm.createForm();
-            // // projectForm.submitProject();
-            // // projectsListHtml.innerHTML = "Projects: "
-            // this.renderProjects()
-            // this.initProjectButton()
-            this.renderProjects()
-            this.initProjectButton()
+        buttonAddProject.addEventListener('click', () => {    
+        projectForm.submitProject();       
+            this.renderProjects();
+            this.initProjectButton();
         });
-    }
-    
-    initProjectButton() {        
-      
+    };
+
+    initProjectButton() {       
         myProjectsList.projects.forEach((e) => {
-            let projectName = e.name;
-            // console.log(e.name)
+            let projectName = e.name;        
             const buttonProject = document.getElementById(`${projectName}`);
-            buttonProject.addEventListener('click',()  => {
-                console.log('click')
+            buttonProject.addEventListener('click',()  => {              
                 this.renderProjectContent(e.name);
             });            
         });      
-    }; 
+    };
     
-    
-    addProject() {
-        console.log(this)
-        const input = document.querySelector('.input-add-project-popup');
-        const projectName = input.value;
-        console.log(projectName)
-
-        myProjectsList.addProject(new Project(projectName));
-        // console.log(myProjectsList)
-        this.renderProjectElement(projectName);
-    };    
+    initSubmitTaskFormButton() {
+        const buttonAddProject = document.getElementById('task-form-submit-button');  
+        
+        buttonAddProject.addEventListener('click', () => {    
+        const taskForm = new TaskForm; 
+        taskForm.submitTask();
+        console.log(myProjectsList)      
+            this.renderProjects();
+            this.initProjectButton();
+        });
+    }
 };
 

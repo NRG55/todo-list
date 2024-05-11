@@ -1,18 +1,18 @@
 export default class Task {
     #name = "";
     #description = "";
-    #note = "";
+    #notes = "";
     #dueDate;
     #priority;
-    #location;
+    #project;
 
-    constructor(name, description, note, dueDate, priority, location) {
+    constructor(name, description, notes, dueDate, priority, project) {
         this.#name = name;
         this.#description = description;
-        this.#note = note;
+        this.#notes = notes;
         this.#dueDate = dueDate;
         this.#priority = priority;
-        this.#location = location;
+        this.#project = project;
     };
 
     set name(value) {         
@@ -34,12 +34,12 @@ export default class Task {
         return this.#description;
     };
 
-    set note(value) {
-        this.#note = value;
+    set notes(value) {
+        this.#notes = value;
     };
 
-    get note() {
-        return this.#note;
+    get notes() {
+        return this.#notes;
     };
 
     set dueDate(value) {
@@ -58,12 +58,12 @@ export default class Task {
         return this.#priority;
     };
 
-    set location(value) {
-        this.#location = value;
+    set project(value) {
+        this.#project = value;
     };
 
-    get location() {
-        return this.#location;
+    get project() {
+        return this.#project;
     };
 };
 
