@@ -47,7 +47,7 @@ export default class WebpageController {
             projectForm.createForm();          
             this.renderProjects()
             this.initProjectButton()
-            this.initSubmitProjectFormButton(projectForm);
+            this.initSubmitProjectFormButton(projectForm);           
         });
     };
 
@@ -66,21 +66,31 @@ export default class WebpageController {
             let projectName = e.name;        
             const buttonProject = document.getElementById(`${projectName}`);
             buttonProject.addEventListener('click',()  => {              
-                this.renderProjectContent(e.name);
-            });            
-        });      
+                this.renderProjectContent(e.name);               
+                this.initAddTaskButton()  
+            });                    
+        });           
+    };
+
+    initAddTaskButton() {        
+        const buttonAddTask = document.querySelector('.button-add-task');       
+        // console.log(buttonAddTask)
+        buttonAddTask.addEventListener('click', () => {
+            const dialog = document.querySelector('dialog');
+            dialog.show();           
+        });
     };
     
     initSubmitTaskFormButton() {
-        const buttonAddProject = document.getElementById('task-form-submit-button');  
-        
+        const buttonAddProject = document.getElementById('task-form-submit-button'); 
+
         buttonAddProject.addEventListener('click', () => {    
         const taskForm = new TaskForm; 
         taskForm.submitTask();
-        console.log(myProjectsList)      
+        // console.log(myProjectsList)      
             this.renderProjects();
             this.initProjectButton();
         });
-    }
+    };
 };
 

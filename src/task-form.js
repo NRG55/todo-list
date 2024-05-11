@@ -15,6 +15,5 @@ export default class TaskForm {
         const newTask = new Task(name, description, notes, dueDate, 'priority', 'project');
         myProjectsList.addProject(new Project('Test'));
         myProjectsList.projects[3].addTask(newTask);
-
     };
 };
