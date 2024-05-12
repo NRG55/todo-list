@@ -86,7 +86,7 @@ export default class WebpageController {
             dialog.show();
 
             const taskForm = new TaskForm;          
-          
+            taskForm.renderTaskForm();
             taskForm.addProjectsToSelectBox(taskForm);
             this.initSubmitTaskFormButton(taskForm);           
         });
