@@ -16,4 +16,17 @@ export default class TaskForm {
         myProjectsList.addProject(new Project('Test'));
         myProjectsList.projects[3].addTask(newTask);
     };
+
+    addProjectsToSelectBox() {
+        const selectBox = document.getElementById('link');
+        
+        selectBox.textContent = "";
+        myProjectsList.projects.forEach(project => {
+            const projectOption = document.createElement('option');
+
+            projectOption.value = project.name;
+            projectOption.textContent = project.name;
+            selectBox.appendChild(projectOption)
+        });
+    };
 };

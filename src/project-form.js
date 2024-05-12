@@ -24,8 +24,13 @@ export default class ProjectForm {
         buttonsContainer.appendChild(cancelButton);
         projectContainer.append(projectInput);
         projectContainer.append(buttonsContainer);
-
     };
+
+    removeFormFromDOM() {
+        const projectContainer = document.querySelector('.add-project-container');
+
+        projectContainer.innerHTML = "";
+    }
 
     submitProject() {
         const inputValue = document.querySelector('.input-new-project').value;

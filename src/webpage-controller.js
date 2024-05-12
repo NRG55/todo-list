@@ -8,7 +8,7 @@ export default class WebpageController {
         this.renderProjects();
         this.initAddProjectButton();
         this.initProjectButton();
-        this.initSubmitTaskFormButton()
+        // this.initSubmitTaskFormButton()
     };
 
     renderProjects() {
@@ -55,19 +55,24 @@ export default class WebpageController {
         const buttonAddProject = document.getElementById('submit-project-form-button');  
         
         buttonAddProject.addEventListener('click', () => {    
-        projectForm.submitProject();       
+            projectForm.submitProject();
+            projectForm.removeFormFromDOM();
             this.renderProjects();
             this.initProjectButton();
+           
         });
     };
 
-    initProjectButton() {       
+    initProjectButton() { 
+        let projectName = ''; 
+
         myProjectsList.projects.forEach((e) => {
-            let projectName = e.name;        
+            projectName = e.name; 
+
             const buttonProject = document.getElementById(`${projectName}`);
             buttonProject.addEventListener('click',()  => {              
                 this.renderProjectContent(e.name);               
-                this.initAddTaskButton()  
+                this.initAddTaskButton();  
             });                    
         });           
     };
@@ -77,16 +82,21 @@ export default class WebpageController {
         // console.log(buttonAddTask)
         buttonAddTask.addEventListener('click', () => {
             const dialog = document.querySelector('dialog');
-            dialog.show();           
+            dialog.show();
+
+            const taskForm = new TaskForm; 
+       
+         
+            this.initSubmitTaskFormButton(taskForm);
+            taskForm.addProjectsToSelectBox()           
         });
     };
     
-    initSubmitTaskFormButton() {
+    initSubmitTaskFormButton(taskForm) {
         const buttonAddProject = document.getElementById('task-form-submit-button'); 
 
         buttonAddProject.addEventListener('click', () => {    
-        const taskForm = new TaskForm; 
-        taskForm.submitTask();
+            taskForm.submitTask();
         // console.log(myProjectsList)      
             this.renderProjects();
             this.initProjectButton();

@@ -42,7 +42,9 @@ import ProjectTaskList from './todo-list-controller.js';
 
 
 const myProjectsList = new ProjectTaskList;
-console.log(myProjectsList)
+myProjectsList.projects.forEach(e => {
+    console.log(e.name)
+})
 export default myProjectsList;
 
 const webpageController = new WebpageController;
