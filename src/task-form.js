@@ -2,7 +2,16 @@ import Task from "./task";
 import Project from './project.js';
 import myProjectsList from "./index.js";
 
-export default class TaskForm {
+export default class TaskForm {    
+    renderTaskForm() {
+        const form = document.querySelector('.task-form');
+
+        const nameWrap = document.createElement('div');
+        const nameLabel = document.createElement('label');
+        const nameInput = document.createElement('input');
+
+    };
+
     submitTask() {
         const form = document.querySelector('.task-form');
         const name = form.querySelector('.task-form-input-name').value;
@@ -11,11 +20,15 @@ export default class TaskForm {
         const dueDate = form.querySelector('.task-form-input-duedate').value;
         const priority = form.querySelector('.task-form-select-priority').value;
         const project = form.querySelector('.task-form-select-project').value;
-
+        
+        // form.addEventListener('submit', (e) => {
+        //     e.preventDefault();
+        // })
         // const newTask = new Task(name, description, notes, dueDate, priority, project);
         // myProjectsList.addProject('Test');
         myProjectsList.addTask(name, description, notes, dueDate, priority, project)
         console.log(myProjectsList)
+        
     };
 
     addProjectsToSelectBox() {
@@ -30,4 +43,6 @@ export default class TaskForm {
             selectBox.appendChild(projectOption)
         });
     };
+
 };
+

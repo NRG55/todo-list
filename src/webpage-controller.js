@@ -9,6 +9,7 @@ export default class WebpageController {
         this.initAddProjectButton();
         this.initProjectButton();
         // this.initSubmitTaskFormButton()
+        // this.initSubmitTaskFormButton();
     };
 
     renderProjects() {
@@ -84,23 +85,29 @@ export default class WebpageController {
             const dialog = document.querySelector('dialog');
             dialog.show();
 
-            const taskForm = new TaskForm; 
-       
-         
-            this.initSubmitTaskFormButton(taskForm);
-            taskForm.addProjectsToSelectBox()           
+            const taskForm = new TaskForm;          
+          
+            taskForm.addProjectsToSelectBox(taskForm);
+            this.initSubmitTaskFormButton(taskForm);           
         });
     };
     
     initSubmitTaskFormButton(taskForm) {
         const buttonAddProject = document.getElementById('task-form-submit-button'); 
 
-        buttonAddProject.addEventListener('click', () => {    
+        buttonAddProject.onclick = () => {
             taskForm.submitTask();
+        }
+
+        // buttonAddProject.addEventListener('click', () => { 
+        //     // const taskForm = new TaskForm;   
+        //     taskForm.submitTask();
+           
             
-            this.renderProjects();
-            this.initProjectButton();
-        });
+        //     // this.renderProjects();
+        //     // this.initProjectButton();
+        // });
+       
     };
 };
 
