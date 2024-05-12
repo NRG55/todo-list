@@ -97,7 +97,7 @@ export default class WebpageController {
 
         buttonAddProject.addEventListener('click', () => {    
             taskForm.submitTask();
-        // console.log(myProjectsList)      
+            
             this.renderProjects();
             this.initProjectButton();
         });

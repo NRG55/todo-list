@@ -1,3 +1,6 @@
+import myProjectsList from ".";
+import Task from "./task";
+
 export default class Project {
     #name = '';
     #tasks;
@@ -28,10 +31,6 @@ export default class Project {
 
     get tasks() {
         return this.#tasks;
-    };
-
-    addTask(value) {
-        this.#tasks.push(value);
     };
 };
 

@@ -33,8 +33,8 @@ export default class ProjectForm {
     }
 
     submitProject() {
-        const inputValue = document.querySelector('.input-new-project').value;
+        const value = document.querySelector('.input-new-project').value;
 
-        myProjectsList.addProject(new Project(inputValue));
+        myProjectsList.addProject(value);
     };
 };
