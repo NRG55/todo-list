@@ -13,13 +13,24 @@ export default class WebpageController {
     };
 
     renderProjects() {
-        const projectsList = document.querySelector('ul.projects-list');
+        
+        const projectsList = document.querySelector('ul.projects-list-left-sidebar');
 
         projectsList.innerHTML = ''; 
-        myProjectsList.projects.forEach((element) => {          
+        myProjectsList.projects.forEach((element) => {
+            if (element.name === 'All tasks') {
+                this.renderAllTasks(element.name);
+                return;  
+            }          
             projectsList.appendChild(this.renderProjectElement(element.name));           
         });
-    };     
+    }; 
+    
+    renderAllTasks(name) {
+        const allTasks = document.querySelector('ul.all-tasks-list-left-sidebar');
+
+        allTasks.appendChild(this.renderProjectElement(name));
+    }
 
     renderProjectElement(projectName) {
         const projectWrap = document.createElement('li');
@@ -31,11 +42,11 @@ export default class WebpageController {
         return projectWrap;       
     };
 
-    renderProjectContent(projectName) {
-        const projectContent = document.querySelector('.project-content');
+    renderTasksContainer(projectName) {
+        const projectContent = document.querySelector('.tasks-container');
 
         projectContent.innerHTML = `
-           <h1>${projectName}</h1>
+           <h2>${projectName}</h2>
            <button class="button-add-task">+ Add task</button>
         `        
     };   
@@ -72,7 +83,7 @@ export default class WebpageController {
 
             const buttonProject = document.getElementById(`${projectName}`);
             buttonProject.addEventListener('click',()  => {              
-                this.renderProjectContent(e.name);               
+                this.renderTasksContainer(e.name);               
                 this.initAddTaskButton();  
             });                    
         });           

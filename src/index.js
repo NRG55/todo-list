@@ -1,5 +1,5 @@
 console.log('Hey');
-
+import './style.css'
 import TodoList from './todo-list-controller.js';
 import Project from './project.js';
 import Task from './task.js';

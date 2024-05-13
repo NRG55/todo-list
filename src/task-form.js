@@ -14,6 +14,8 @@ export default class TaskForm {
         nameInput.type = "text";
         nameInput.id = "name";
         nameInput.className = "task-form-input-name";
+        nameInput.placeholder = "Task title (required)";
+        nameInput.required = true;
         nameWrap.append(nameLabel, nameInput);
         
         const descriptionWrap = document.createElement('div');        

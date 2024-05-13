@@ -6,81 +6,92 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="projects">
-        <h3>Projects</h3>
-        <ul class="projects-list"></ul>        
-        <div class="add-project-container"></div>
-        <button class="add-project-button">+ Add project</button>
-    </div>    
+    <div id="container">
+        <header class="header">
+            <h1>Todo</h1>
+        </header>
+        <main class="main-content">     
+            <div class="left-sidebar"> 
+                <div class="all-tasks-left-sidebar">
+                    <ul class="all-tasks-list-left-sidebar"></ul> 
+                </div>         
+                <div class="projects-left-sidebar">
+                    <h3>Projects</h3>
+                    <ul class="projects-list-left-sidebar"></ul>        
+                    <div class="add-project-container"></div>
+                    <button class="add-project-button">+ Add project</button>
+                </div>           
+            </div>
+            <div class="tasks-container"></div>
 
-    <div class="project-content"></div>
-
-    <div class="task-form-container">
-        <dialog class="task-form-dialog">          
-            <form method="dialog" class="task-form">
-                <!-- <div>
-                    <label for="name">Title:</label>
-                    <input 
-                      type="text" 
-                      id="name" 
-                      class="task-form-input-name"
-                      />
-                </div>
-                <div>
-                    <label for="description">Description:</label>
-                    <input 
-                      type="text" 
-                      id="description"  
-                      class="task-form-input-description"
-                      />
-                </div>
-                <div>
-                    <label for="note">Notes:</label>
-                    <input 
-                      type="text" 
-                      id="note"
-                      class="task-form-input-notes"
-                      />
-                </div>
-                <div> 
-                    <label for="dueDate">Due date:</label>
-                    <input 
-                      type="date" 
-                      id="dueDate"
-                      class="task-form-input-duedate"
-                      />
-                </div>
-                <div>
-                    <label for="priority">Priority</label>
-                    <select 
-                      type="text" 
-                      id="priority"
-                      class="task-form-select-priority"
-                      >
-                        <option value="low">low</option>
-                        <option value="medium">medium</option>
-                        <option value="high">high</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="link">Assign to:</label>
-                    <select 
-                      type="text" 
-                      id="link"
-                      class="task-form-select-project"
-                      >
-                        <option value="tasks">All tasks</option>
-                        <optiongroup label="projects"></optiongroup>                       
-                    </select>
-                </div> 
-                <div class="form-buttons">
-                     <button type="submit" class="close-form-button" formnovalidate>Close</button>
-                     <button type="submit" class="add-form-button" id="task-form-submit-button">Add</button> 
-                </div>        -->
-            </form>
-           
-        </dialog>
-    </div>
+            <div class="task-form-container">
+                <dialog class="task-form-dialog">          
+                    <form method="dialog" class="task-form">
+                        <!-- <div>
+                            <label for="name">Title:</label>
+                            <input 
+                            type="text" 
+                            id="name" 
+                            class="task-form-input-name"
+                            />
+                        </div>
+                        <div>
+                            <label for="description">Description:</label>
+                            <input 
+                            type="text" 
+                            id="description"  
+                            class="task-form-input-description"
+                            />
+                        </div>
+                        <div>
+                            <label for="note">Notes:</label>
+                            <input 
+                            type="text" 
+                            id="note"
+                            class="task-form-input-notes"
+                            />
+                        </div>
+                        <div> 
+                            <label for="dueDate">Due date:</label>
+                            <input 
+                            type="date" 
+                            id="dueDate"
+                            class="task-form-input-duedate"
+                            />
+                        </div>
+                        <div>
+                            <label for="priority">Priority</label>
+                            <select 
+                            type="text" 
+                            id="priority"
+                            class="task-form-select-priority"
+                            >
+                                <option value="low">low</option>
+                                <option value="medium">medium</option>
+                                <option value="high">high</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="link">Assign to:</label>
+                            <select 
+                            type="text" 
+                            id="link"
+                            class="task-form-select-project"
+                            >
+                                <option value="tasks">All tasks</option>
+                                <optiongroup label="projects"></optiongroup>                       
+                            </select>
+                        </div> 
+                        <div class="form-buttons">
+                            <button type="submit" class="close-form-button" formnovalidate>Close</button>
+                            <button type="submit" class="add-form-button" id="task-form-submit-button">Add</button> 
+                        </div>        -->
+                    </form>
+                
+                </dialog>
+            </div>
+        </main>
+    </div> 
    
 </body>
 </html>

@@ -4,10 +4,12 @@ import Task from './task.js';
 
 export default class ProjectTaskList {
     #projects;
+    #allTasks
 
     constructor() {
         this.#projects = [];
-        this.#projects.push(new Project('Tasks'));
+        this.#allTasks = [];        
+        this.#projects.push(new Project('Project1'));
         this.#projects.push(new Project('Project2'));
         this.#projects.push(new Project('Project3'));
     };
@@ -19,6 +21,10 @@ export default class ProjectTaskList {
     get projects() {
         return this.#projects;
     };
+
+    get allTasks() {
+        return this.#allTasks;
+    }
 
     addProject(value) {
         this.#projects.push(new Project(value));
@@ -32,7 +38,7 @@ export default class ProjectTaskList {
         const newTask = new Task(name, description, notes, dueDate, priority, project);
 
         if(project === 'tasks') { 
-          this.#projects[0].tasks.push(newTask)
+          this.#allTasks.push(newTask)
         } else {
             const currentProject = myProjectsList.projects.find(e => e.name === project);
             currentProject.tasks.push(newTask);
