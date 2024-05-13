@@ -97,19 +97,6 @@ export default class TaskForm {
         taskForm.append(nameWrap, descriptionWrap, notesWrap, dueDateWrap, priorityWrap, selectProjectWrap, buttonsWrap);         
     };
 
-    submitTask() {
-        const form = document.querySelector('.task-form');
-        const name = form.querySelector('.task-form-input-name').value;
-        const description = form.querySelector('.task-form-input-description').value;
-        const notes = form.querySelector('.task-form-input-notes').value;
-        const dueDate = form.querySelector('.task-form-input-duedate').value;
-        const priority = form.querySelector('.task-form-select-priority').value;
-        const project = form.querySelector('.task-form-select-project').value;
-        
-        myProjectsList.addTask(name, description, notes, dueDate, priority, project)
-        console.log(myProjectsList);        
-    };
-
     addProjectsToSelectBox() {
         const selectBox = document.getElementById('projects');
         
@@ -126,5 +113,25 @@ export default class TaskForm {
         });
     };
 
+    closeTaskForm() {
+        const taskForm = document.querySelector('.task-form');
+        const dialog = document.querySelector('.task-form-dialog');
+
+        taskForm.innerHTML = "";
+        dialog.close();        
+    };
+
+    submitTask() {
+        const form = document.querySelector('.task-form');
+        const name = form.querySelector('.task-form-input-name').value;
+        const description = form.querySelector('.task-form-input-description').value;
+        const notes = form.querySelector('.task-form-input-notes').value;
+        const dueDate = form.querySelector('.task-form-input-duedate').value;
+        const priority = form.querySelector('.task-form-select-priority').value;
+        const project = form.querySelector('.task-form-select-project').value;
+        
+        myProjectsList.addTask(name, description, notes, dueDate, priority, project)
+        console.log(myProjectsList);        
+    };
 };
 

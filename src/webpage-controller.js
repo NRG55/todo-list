@@ -97,6 +97,7 @@ export default class WebpageController {
 
         buttonAddProject.onclick = () => {
             taskForm.submitTask();
+            taskForm.closeTaskForm();
         }
 
         // buttonAddProject.addEventListener('click', () => { 
