@@ -51,7 +51,7 @@ export default class TaskForm {
         priorityLabel.htmlFor = "priority";
         priorityLabel.innerHTML = "Priority:";          
         const prioritySelect = document.createElement('select');        
-        prioritySelect.id = "notes";
+        prioritySelect.id = "priority";
         prioritySelect.className = "task-form-select-priority";         
         const priorityOptionLow = document.createElement('option');
         priorityOptionLow.value = "low";
@@ -67,16 +67,18 @@ export default class TaskForm {
 
         const selectProjectWrap = document.createElement('div');        
         const selectProjectLabel = document.createElement('label');
-        selectProjectLabel.htmlFor = "priority";
-        selectProjectLabel.innerHTML = "Priority:";          
+        selectProjectLabel.htmlFor = "select-project";
+        selectProjectLabel.innerHTML = "Assign to:";          
         const selectProjectSelect = document.createElement('select');       
         selectProjectSelect.id = "select-project";
         selectProjectSelect.className = "task-form-select-project";       
         const selectProjectOption = document.createElement('option');
         selectProjectOption.value = "tasks";
         selectProjectOption.innerHTML = "All tasks";
-        const selectProjectOptionGroup = document.createElement('optiongroup');
-        selectProjectOptionGroup.label = "projects";
+        const selectProjectOptionGroup = document.createElement('optgroup');
+        selectProjectOptionGroup.label = "Projects";
+        selectProjectOptionGroup.id = "projects";
+
         selectProjectSelect.append(selectProjectOption, selectProjectOptionGroup);
         selectProjectWrap.append(selectProjectLabel, selectProjectSelect);
 
@@ -104,25 +106,22 @@ export default class TaskForm {
         const priority = form.querySelector('.task-form-select-priority').value;
         const project = form.querySelector('.task-form-select-project').value;
         
-        // form.addEventListener('submit', (e) => {
-        //     e.preventDefault();
-        // })
-        // const newTask = new Task(name, description, notes, dueDate, priority, project);
-        // myProjectsList.addProject('Test');
         myProjectsList.addTask(name, description, notes, dueDate, priority, project)
-        console.log(myProjectsList)
-        
+        console.log(myProjectsList);        
     };
 
     addProjectsToSelectBox() {
-        const selectBox = document.getElementById('select-project');
+        const selectBox = document.getElementById('projects');
         
         selectBox.textContent = "";
         myProjectsList.projects.forEach(project => {
             const projectOption = document.createElement('option');
-
+            
             projectOption.value = project.name;
-            projectOption.textContent = project.name;
+            projectOption.textContent = project.name;           
+            if (project.name === 'Tasks') {
+               return;               
+             }
             selectBox.appendChild(projectOption)
         });
     };

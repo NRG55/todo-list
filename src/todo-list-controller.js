@@ -31,7 +31,7 @@ export default class ProjectTaskList {
     addTask(name, description, notes, dueDate, priority, project) {
         const newTask = new Task(name, description, notes, dueDate, priority, project);
 
-        if(project === 'Tasks') { 
+        if(project === 'tasks') { 
           this.#projects[0].tasks.push(newTask)
         } else {
             const currentProject = myProjectsList.projects.find(e => e.name === project);
