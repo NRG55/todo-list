@@ -6,11 +6,12 @@ import RenderElement from './elements.js';
 
 export default class WebpageController {
     renderHomepage() {
-        this.renderAllTasksElement();
-        this.renderProjects();
-        this.initAddProjectButton();
-        this.initAllTasksButton();
-        this.initProjectButton();       
+        // this.renderAllTasksElement();
+        // this.renderProjects();
+        // this.initAddProjectButton();
+        // this.initAllTasksButton();
+        // this.initProjectButton(); 
+        this.initLeftSidebar();      
     };
 
     renderProjects() {        
@@ -133,5 +134,42 @@ export default class WebpageController {
         // });
        
     };
+
+    initLeftSidebar() {
+        const addProjectButton = document.querySelector('.add-project-button');       
+      
+        addProjectButton.addEventListener('click', () => {
+            console.log('HEY')
+            this.openAddProjectForm();
+            // const projectForm = new ProjectForm;
+            // projectForm.createForm();          
+            // this.renderProjects()
+            // this.initProjectButton()
+            // this.initSubmitProjectFormButton(projectForm);           
+        });
+    };
+
+    openAddProjectForm() {
+        const dialog =document.querySelector('dialog');
+
+        const renderElement = new RenderElement;
+        const form = renderElement.addProjectForm();
+        dialog.textContent = "";
+        dialog.appendChild(form);
+
+        const projectForm = document.querySelector('#add-project-form');
+       
+        projectForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            
+             const newProject = new Project(projectName.value);
+            myProjectsList.addProject(projectName.value)
+            console.log(myProjectsList);
+            dialog.close();
+
+        })
+        dialog.showModal();
+    }
+    
 };
 

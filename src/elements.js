@@ -17,6 +17,36 @@ export default class RenderElement {
         projectButton.appendChild(image);
         projectButton.appendChild(text);
         projectButton.appendChild(deleteProjectButtonText);
+
         return projectButton;
-    };    
+    }; 
+    
+    addProjectForm() {
+        const addProjectForm = document.createElement('form');
+        addProjectForm.setAttribute("id", "add-project-form");        
+
+        const projectInput = document.createElement('input');
+        projectInput.type = 'text';     
+        projectInput.id = 'projectName';
+        projectInput.className = 'input-new-project';
+        projectInput.placeholder = 'Project name';
+        projectInput.focus();
+
+        const buttonsContainer = document.createElement('div');
+
+        const addButton = document.createElement('button');
+        addButton.textContent = 'Add'; 
+        addButton.setAttribute('type', 'submit')
+        addButton.id ='project-form-add-button';
+        
+        const cancelButton = document.createElement('button');
+        cancelButton.textContent = 'Cancel'; 
+       
+        buttonsContainer.appendChild(addButton);
+        buttonsContainer.appendChild(cancelButton);
+        addProjectForm.append(projectInput);
+        addProjectForm.append(buttonsContainer);
+
+        return addProjectForm;
+    };
 }

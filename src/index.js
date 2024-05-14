@@ -52,7 +52,7 @@ const webpageController = new WebpageController;
 webpageController.renderHomepage();
 
 const renderElement = new RenderElement;
-console.log(renderElement.leftSidebarProjectButton('PROJECT'))
+console.log(renderElement)
 
 
 

@@ -31,7 +31,7 @@ export default class Project {
 
     get tasks() {
         return this.#tasks;
-    };
+    };    
 };
 
 
