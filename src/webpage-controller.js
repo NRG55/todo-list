@@ -2,6 +2,7 @@ import Project from './project.js';
 import myProjectsList from './index.js';
 import ProjectForm from './project-form.js';
 import TaskForm from './task-form.js';
+import RenderElement from './elements.js';
 
 export default class WebpageController {
     renderHomepage() {
@@ -33,12 +34,15 @@ export default class WebpageController {
     }
 
     renderProjectElement(projectName) {
-        const projectWrap = document.createElement('li');
-        const projectElement = document.createElement('button');
+        const renderElement = new RenderElement;
 
-        projectElement.textContent = projectName; 
-        projectElement.id =  projectName;          
-        projectWrap.appendChild(projectElement);
+        
+        const projectWrap = document.createElement('li');
+        // const projectElement = document.createElement('button');
+
+        // projectElement.textContent = projectName; 
+        // projectElement.id =  projectName;          
+        projectWrap.appendChild(renderElement.leftSidebarProjectButton(projectName));
         return projectWrap;       
     };
 

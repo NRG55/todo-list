@@ -3,6 +3,7 @@ import './style.css'
 import TodoList from './todo-list-controller.js';
 import Project from './project.js';
 import Task from './task.js';
+import RenderElement from './elements.js';
 import WebpageController from './webpage-controller.js';
 import ProjectTaskList from './todo-list-controller.js';
 
@@ -49,6 +50,11 @@ export default myProjectsList;
 
 const webpageController = new WebpageController;
 webpageController.renderHomepage();
+
+const renderElement = new RenderElement;
+console.log(renderElement.leftSidebarProjectButton('PROJECT'))
+
+
 
 
 
