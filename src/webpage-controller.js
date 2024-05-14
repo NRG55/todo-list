@@ -5,31 +5,31 @@ import TaskForm from './task-form.js';
 
 export default class WebpageController {
     renderHomepage() {
+        this.renderAllTasksElement();
         this.renderProjects();
         this.initAddProjectButton();
-        this.initProjectButton();
-        // this.initSubmitTaskFormButton()
-        // this.initSubmitTaskFormButton();
+        this.initAllTasksButton();
+        this.initProjectButton();       
     };
 
-    renderProjects() {
-        
+    renderProjects() {        
         const projectsList = document.querySelector('ul.projects-list-left-sidebar');
 
         projectsList.innerHTML = ''; 
-        myProjectsList.projects.forEach((element) => {
-            if (element.name === 'All tasks') {
-                this.renderAllTasks(element.name);
-                return;  
-            }          
+        myProjectsList.projects.forEach((element) => {                  
             projectsList.appendChild(this.renderProjectElement(element.name));           
         });
     }; 
     
-    renderAllTasks(name) {
-        const allTasks = document.querySelector('ul.all-tasks-list-left-sidebar');
+    renderAllTasksElement() {
+        const allTasksDiv = document.querySelector('ul.all-tasks-left-sidebar');
+        const allTasksElement = document.createElement('button');
+;
+        allTasksElement.innerHTML = "All tasks";
+        allTasksElement.id = "all-tasks-button";
 
-        allTasks.appendChild(this.renderProjectElement(name));
+        //  console.log(myProjectsList)
+        allTasksDiv.appendChild(allTasksElement);
     }
 
     renderProjectElement(projectName) {
@@ -42,11 +42,11 @@ export default class WebpageController {
         return projectWrap;       
     };
 
-    renderTasksContainer(projectName) {
+    renderTasksContainer(name) {
         const projectContent = document.querySelector('.tasks-container');
 
         projectContent.innerHTML = `
-           <h2>${projectName}</h2>
+           <h2>${name}</h2>
            <button class="button-add-task">+ Add task</button>
         `        
     };   
@@ -70,8 +70,7 @@ export default class WebpageController {
             projectForm.submitProject();
             projectForm.removeFormFromDOM();
             this.renderProjects();
-            this.initProjectButton();
-           
+            this.initProjectButton();           
         });
     };
 
@@ -89,9 +88,18 @@ export default class WebpageController {
         });           
     };
 
+    initAllTasksButton() {            
+        const buttonProject = document.getElementById('all-tasks-button');
+
+        buttonProject.addEventListener('click',()  => {              
+            this.renderTasksContainer('All tasks');               
+            this.initAddTaskButton();  
+        });              
+    }
+
     initAddTaskButton() {        
         const buttonAddTask = document.querySelector('.button-add-task');       
-        // console.log(buttonAddTask)
+       
         buttonAddTask.addEventListener('click', () => {
             const dialog = document.querySelector('dialog');
             dialog.show();

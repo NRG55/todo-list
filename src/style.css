@@ -4,6 +4,16 @@
     padding: 0;
 }
 
+html, body {
+    height: 100dvh;
+}
+
+header {
+    height: 4rem;
+}
+
+
+
 button {
     cursor: pointer;
 }
@@ -13,13 +23,29 @@ li {
 }
 
 .main-content {
+    position: relative;
     display: grid;
-    grid-template-columns: 300px auto; 
+    grid-template-columns: 240px 1fr; 
+    height: calc(100% - 4rem);
+   
+   
      
 }
 
 .left-sidebar {
-    /* display: grid;
-    gap: 1rem;
-    height: 100vh; */
+    display: grid;
+    grid-template-rows: 5rem 1fr; 
+   /* position: fixed; */
+    height: 100%;
+}
+
+.task-container {
+    height: 100%;
+}
+
+.task-form-dialog {
+    position: fixed;
+    margin: auto;
+    width: 280px;
+    margin-top: 100px;
 }
