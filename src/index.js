@@ -1,4 +1,4 @@
-console.log('Hey');
+// console.log('Hey');
 import './style.css'
 import TodoList from './todo-list-controller.js';
 import Project from './project.js';
@@ -52,7 +52,7 @@ const webpageController = new WebpageController;
 webpageController.renderHomepage();
 
 const renderElement = new RenderElement;
-console.log(renderElement)
+// console.log(renderElement)
 
 
 
