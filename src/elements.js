@@ -1,3 +1,5 @@
+import myProjectsList from "./index.js";
+
 export default class RenderElement {
     leftSidebarProjectButton(project) {
         const projectButton = document.createElement("button");
@@ -21,7 +23,7 @@ export default class RenderElement {
         return projectButton;
     }; 
     
-    addProjectForm() {
+    projectForm() {
         const addProjectForm = document.createElement('form');
         addProjectForm.setAttribute("id", "add-project-form");        
 
@@ -49,4 +51,109 @@ export default class RenderElement {
 
         return addProjectForm;
     };
+
+    taskForm() {
+        const taskForm = document.createElement('form');
+        taskForm.setAttribute("id", "task-form")
+
+        const nameWrap = document.createElement('div');        
+        const nameLabel = document.createElement('label');
+        nameLabel.htmlFor = "title";
+        nameLabel.innerHTML = "Title:";          
+        const nameInput = document.createElement('input');
+        nameInput.type = "text";
+        nameInput.id = "title";
+        nameInput.className = "task-form-input-name";
+        nameInput.placeholder = "Task title (required)";
+        nameInput.required = true;
+        nameWrap.append(nameLabel, nameInput);
+        
+        const descriptionWrap = document.createElement('div');        
+        const descriptionLabel = document.createElement('label');
+        descriptionLabel.htmlFor = "description";
+        descriptionLabel.innerHTML = "Description:";          
+        const descriptionInput = document.createElement('input');
+        descriptionInput.type = "text";
+        descriptionInput.id = "description";
+        descriptionInput.className = "task-form-input-description";
+        descriptionWrap.append(descriptionLabel, descriptionInput);
+
+        const notesWrap = document.createElement('div');        
+        const notesLabel = document.createElement('label');
+        notesLabel.htmlFor = "notes";
+        notesLabel.innerHTML = "Notes:";          
+        const notesInput = document.createElement('input');
+        notesInput.type = "text";
+        notesInput.id = "notes";
+        notesInput.className = "task-form-input-notes"; 
+        notesWrap.append(notesLabel, notesInput);
+
+        const dueDateWrap = document.createElement('div');        
+        const dueDateLabel = document.createElement('label');
+        dueDateLabel.htmlFor = "duedate";
+        dueDateLabel.innerHTML = "Due date:";          
+        const dueDateInput = document.createElement('input');
+        dueDateInput.type = "date";
+        dueDateInput.id = "duedate";
+        dueDateInput.className = "task-form-input-duedate"; 
+        dueDateWrap.append(dueDateLabel, dueDateInput);
+
+        const priorityWrap = document.createElement('div');        
+        const priorityLabel = document.createElement('label');
+        priorityLabel.htmlFor = "priority";
+        priorityLabel.innerHTML = "Priority:";          
+        const prioritySelect = document.createElement('select');        
+        prioritySelect.id = "priority";
+        prioritySelect.className = "task-form-select-priority";         
+        const priorityOptionLow = document.createElement('option');
+        priorityOptionLow.value = "low";
+        priorityOptionLow.innerHTML = "low";
+        const priorityOptionMedium = document.createElement('option');
+        priorityOptionMedium.value = "medium";
+        priorityOptionMedium.innerHTML = "medium";
+        const priorityOptionHigh = document.createElement('option');
+        priorityOptionHigh.value = "high";
+        priorityOptionHigh.innerHTML = "high";
+        prioritySelect.append(priorityOptionLow, priorityOptionMedium, priorityOptionHigh);
+        priorityWrap.append(priorityLabel, prioritySelect);
+
+        const selectProjectWrap = document.createElement('div');        
+        const selectProjectLabel = document.createElement('label');
+        selectProjectLabel.htmlFor = "selectProject";
+        selectProjectLabel.innerHTML = "Assign to:";          
+        const selectProjectSelect = document.createElement('select');       
+        selectProjectSelect.id = "selectProject";
+        selectProjectSelect.className = "task-form-select-project";       
+        const selectProjectOption = document.createElement('option');
+        selectProjectOption.value = "tasks";
+        selectProjectOption.innerHTML = "All tasks";
+        const selectProjectOptionGroup = document.createElement('optgroup');
+        selectProjectOptionGroup.label = "Projects";
+        selectProjectOptionGroup.id = "projects";
+        myProjectsList.projects.forEach((element) => {
+            const projectOption = document.createElement('option');
+
+            projectOption.innerHTML = element.name
+            selectProjectOptionGroup.appendChild(projectOption)
+        });
+
+        selectProjectSelect.append(selectProjectOption, selectProjectOptionGroup);
+        selectProjectWrap.append(selectProjectLabel, selectProjectSelect);
+
+        const buttonsWrap = document.createElement('div');
+        const buttonSubmit = document.createElement('button');
+        buttonSubmit.type = "submit";
+        buttonSubmit.className = "task-form-submit-button";
+        buttonSubmit.innerHTML = "Submit"; 
+        buttonSubmit.id = "task-form-submit-button";    
+        const buttonClose = document.createElement('button');
+        buttonClose.type = "submit";
+        buttonClose.className = "task-form-close-button";
+        buttonClose.innerHTML = "Close"; 
+        buttonsWrap.append(buttonSubmit, buttonClose);
+        
+        taskForm.append(nameWrap, descriptionWrap, notesWrap, dueDateWrap, priorityWrap, selectProjectWrap, buttonsWrap);
+        
+        return taskForm;
+    }
 }

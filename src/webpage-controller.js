@@ -1,7 +1,5 @@
 import Project from './project.js';
 import myProjectsList from './index.js';
-import ProjectForm from './project-form.js';
-import TaskForm from './task-form.js';
 import RenderElement from './elements.js';
 
 export default class WebpageController {
@@ -12,7 +10,8 @@ export default class WebpageController {
         // this.initAllTasksButton();
         // this.initProjectButton(); 
         this.initLeftSidebar();  
-        this.renderProjectButtons()    
+        this.renderProjectButtons();
+        this.initTasksContainer();    
     };
 
     renderProjectButtons() {
@@ -71,7 +70,7 @@ export default class WebpageController {
 
         projectContent.innerHTML = `
            <h2>${name}</h2>
-           <button id="add-task-button">+ Add task</button>
+           
         `        
     };   
 
@@ -167,7 +166,7 @@ export default class WebpageController {
         // const dialog = document.getElementById('left-sidebar-projects-dialog');
         const projectsContainer = document.querySelector('.add-project-form')
         const renderElement = new RenderElement;
-        const form = renderElement.addProjectForm();
+        const form = renderElement.projectForm();
         // dialog.textContent = "";
         // dialog.appendChild(form);
 
@@ -189,13 +188,30 @@ export default class WebpageController {
     
     initTasksContainer() {
         const addTask = document.getElementById('add-task-button');
-        addTask.addEventListener("click", function() {
-            renderAddTaskForm();
+        addTask.addEventListener("click", () => {
+            console.log('click')
+            this.renderAddTaskForm();
         });
     };
 
     renderAddTaskForm() {
-        const dialog = document
-    }
+        const dialog = document.querySelector('.task-form-dialog');
+
+        const renderElement = new RenderElement;
+        const form = renderElement.taskForm();
+        dialog.textContent = "";
+        dialog.appendChild(form);
+
+        const taskForm = document.getElementById('task-form');
+        taskForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+          
+            myProjectsList.addTask(title.value, description.value, notes.value, duedate.value, priority.value, selectProject.value);
+            console.log(myProjectsList);
+            dialog.close();
+        })
+
+        dialog.showModal();
+    };
 };
 

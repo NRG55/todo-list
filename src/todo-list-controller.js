@@ -35,13 +35,13 @@ export default class ProjectTaskList {
     };
 
     addTask(name, description, notes, dueDate, priority, project) {
-        const newTask = new Task(name, description, notes, dueDate, priority, project);
-
-        if(project === 'tasks') { 
-          this.#allTasks.push(newTask)
-        } else {
-            const currentProject = myProjectsList.projects.find(e => e.name === project);
-            currentProject.tasks.push(newTask);
-        };        
+        // const newTask = new Task(name, description, notes, dueDate, priority, project);        
+        this.#allTasks.push(new Task(name, description, notes, dueDate, priority, project))
+        // if(project === 'tasks') { 
+        //   this.#allTasks.push(newTask)
+        // } else {
+        //     const currentProject = myProjectsList.projects.find(e => e.name === project);
+        //     currentProject.tasks.push(newTask);
+        // };        
     };
 };
