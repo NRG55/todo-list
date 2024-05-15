@@ -1,4 +1,5 @@
 import myProjectsList from "./index.js";
+import moment from "moment";
 
 export default class RenderElement {
     leftSidebarProjectButton(project) {
@@ -25,7 +26,7 @@ export default class RenderElement {
     
     projectForm() {
         const addProjectForm = document.createElement('form');
-        addProjectForm.setAttribute("id", "add-project-form");        
+        addProjectForm.setAttribute("id", "project-form");        
 
         const projectInput = document.createElement('input');
         projectInput.type = 'text';     
@@ -173,9 +174,25 @@ export default class RenderElement {
         taskDescription.classList.add('task-description');
         taskDescription.innerHTML = task.description;
 
-        taskInfoWrap.append(taskName, taskDescription);
+        const dueDate = document.createElement('p');
+        
+        dueDate.innerHTML = this.formatDate(task.dueDate)
+
+        taskInfoWrap.append(taskName, taskDescription, dueDate);
         taskContainer.appendChild(taskInfoWrap);
 
         return taskContainer;        
+    };
+
+    formatDate(dueDate) {
+    //    const moment = require('moment');
+       let date = dueDate
+       date = moment().format('MM-DD-YY');
+       return date;
+    //     const date =  new Date(dueDate);
+       
+    //     console.log(date)
+    //     const formattedDate = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+    //     return formattedDate;
     };
 }

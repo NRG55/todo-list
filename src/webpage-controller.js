@@ -1,6 +1,7 @@
 import Project from './project.js';
 import myProjectsList from './index.js';
 import RenderElement from './elements.js';
+import moment from 'moment';
 
 export default class WebpageController {
     renderHomepage() {
@@ -10,18 +11,18 @@ export default class WebpageController {
         // this.initAllTasksButton();
         // this.initProjectButton(); 
         this.initLeftSidebar();  
-        this.renderProjectButtons();
+        // this.renderProjectButtons();
         this.initTasksContainer(); 
-        this.renderTasks();   
+        // this.renderTasks();   
     };
 
     renderProjectButtons() {
-        const addProjectContainer = document.querySelector('.add-project-container');
+        const addProjectContainer = document.querySelector('.left-sidebar-projects-container');
         const renderElement = new RenderElement;
         const projects = myProjectsList.projects;
 
         projects.forEach((element) => {
-            const button = renderElement.leftSidebarProjectButton(element.name);
+            const button = renderElement.leftSidebarProjectButton(element.name);           
 
             button.addEventListener('click', () => {
                 this.renderTasksContainer(element.name)
@@ -155,31 +156,35 @@ export default class WebpageController {
     // };
 
     initLeftSidebar() {
-        const addProjectButton = document.querySelector('.add-project-button');       
+        const addProjectButton = document.querySelector('.add-project-button');      
       
         addProjectButton.addEventListener('click', () => {
             // console.log('HEY')
             this.openAddProjectForm();                      
         });
+
+        this.renderProjectButtons();
     };
 
     openAddProjectForm() {
         // const dialog = document.getElementById('left-sidebar-projects-dialog');
-        const projectsContainer = document.querySelector('.add-project-form')
+        const projectsContainer = document.querySelector('.left-sidebar-projects-container');
+        const projectFormContainer = document.querySelector('.left-sidebar-project-form');
         const renderElement = new RenderElement;
         const form = renderElement.projectForm();
         // dialog.textContent = "";
-        // dialog.appendChild(form);
+        // dialog.appendChild(form);       
+        projectFormContainer.appendChild(form);
 
-        projectsContainer.textContent = "";
-        projectsContainer.appendChild(form);
-
-        const projectForm = document.getElementById('add-project-form');       
+        const projectForm = document.getElementById('project-form');       
         projectForm.addEventListener("submit", (event) => {
-            event.preventDefault();             
-            myProjectsList.addProject(projectName.value);
+            event.preventDefault();
+            myProjectsList.addProject(projectName.value);          
             console.log(myProjectsList)
-            projectsContainer.textContent = "";
+            projectsContainer.innerHTML = "";
+            projectFormContainer.innerHTML = "";
+            // projectForm.textContent = "";
+            this.renderProjectButtons();
             // projectForm.style.display = "none";           
             // dialog.close();
         })
@@ -189,6 +194,8 @@ export default class WebpageController {
     
     initTasksContainer() {
         const addTask = document.getElementById('add-task-button');
+
+        this.renderTasks();
         addTask.addEventListener("click", () => {
             console.log('click')
             this.renderAddTaskForm();
@@ -205,8 +212,8 @@ export default class WebpageController {
 
         const taskForm = document.getElementById('task-form');
         taskForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-          
+            event.preventDefault();            
+           
             myProjectsList.addTask(title.value, description.value, notes.value, duedate.value, priority.value, selectProject.value);
             console.log(myProjectsList);
             this.renderTasks();
@@ -226,7 +233,7 @@ export default class WebpageController {
             const task = renderElement.task(element);
             console.log(task)
             tasksContainer.appendChild(task);
-        })
-    }
+        });
+    };
 };
 

@@ -27,7 +27,7 @@ li {
     display: grid;
     grid-template-columns: 240px 1fr; 
     height: calc(100% - 4rem);
-   
+    border: 1px solid black;
    
      
 }
@@ -37,6 +37,14 @@ li {
     grid-template-rows: 5rem 1fr; 
    /* position: fixed; */
     height: 100%;
+    padding: 20px;
+    border: 1px solid black;
+  
+}
+
+.left-sidebar-projects-container button {
+    background-color: white;
+    display: flex;
 }
 
 .task-container {
@@ -48,6 +56,15 @@ li {
     margin: auto;
     width: 280px;
     margin-top: 100px;
+}
+
+.task-container {
+    border-top: 1px solid rgb(185, 183, 183) ;
+}
+
+.left-sidebar-projects-container {
+    display: grid;
+    grid-template-columns: 1fr;  
 }
 
 /* .projects-left-sidebar {
