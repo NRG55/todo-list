@@ -155,5 +155,27 @@ export default class RenderElement {
         taskForm.append(nameWrap, descriptionWrap, notesWrap, dueDateWrap, priorityWrap, selectProjectWrap, buttonsWrap);
         
         return taskForm;
-    }
+    };
+
+    task(task) {
+        const taskContainer = document.createElement('div');
+        taskContainer.classList.add('task-container');
+        // taskContainer.id = '';
+
+        const taskInfoWrap = document.createElement('div');
+        taskInfoWrap.classList.add('task-info-wrap');
+
+        const taskName = document.createElement('h3');
+        taskName.classList.add('task-name');
+        taskName.innerHTML = task.name;
+
+        const taskDescription = document.createElement('p');
+        taskDescription.classList.add('task-description');
+        taskDescription.innerHTML = task.description;
+
+        taskInfoWrap.append(taskName, taskDescription);
+        taskContainer.appendChild(taskInfoWrap);
+
+        return taskContainer;        
+    };
 }

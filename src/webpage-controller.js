@@ -11,7 +11,8 @@ export default class WebpageController {
         // this.initProjectButton(); 
         this.initLeftSidebar();  
         this.renderProjectButtons();
-        this.initTasksContainer();    
+        this.initTasksContainer(); 
+        this.renderTasks();   
     };
 
     renderProjectButtons() {
@@ -208,10 +209,24 @@ export default class WebpageController {
           
             myProjectsList.addTask(title.value, description.value, notes.value, duedate.value, priority.value, selectProject.value);
             console.log(myProjectsList);
+            this.renderTasks();
             dialog.close();
         })
 
         dialog.showModal();
     };
+
+    renderTasks() {
+        const tasksContainer = document.querySelector('.tasks-container');
+        tasksContainer.innerHTML = "";
+        const renderElement = new RenderElement;
+        console.log(myProjectsList.allTasks)
+
+        myProjectsList.allTasks.forEach((element) => {
+            const task = renderElement.task(element);
+            console.log(task)
+            tasksContainer.appendChild(task);
+        })
+    }
 };
 
