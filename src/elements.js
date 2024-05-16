@@ -1,5 +1,5 @@
 import myProjectsList from "./index.js";
-import moment from "moment";
+import { handleDate } from "./utils.js";
 
 export default class RenderElement {
     leftSidebarProjectButton(project) {
@@ -73,8 +73,8 @@ export default class RenderElement {
         const descriptionLabel = document.createElement('label');
         descriptionLabel.htmlFor = "description";
         descriptionLabel.innerHTML = "Description:";          
-        const descriptionInput = document.createElement('input');
-        descriptionInput.type = "text";
+        const descriptionInput = document.createElement('textarea');
+        // descriptionInput.type = "text";
         descriptionInput.id = "description";
         descriptionInput.className = "task-form-input-description";
         descriptionWrap.append(descriptionLabel, descriptionInput);
@@ -174,25 +174,22 @@ export default class RenderElement {
         taskDescription.classList.add('task-description');
         taskDescription.innerHTML = task.description;
 
-        const dueDate = document.createElement('p');
-        
-        dueDate.innerHTML = this.formatDate(task.dueDate)
+        const bottomInfoLine = document.createElement('p');
+        bottomInfoLine.classList.add('task-bottom-info-line');
+        const dueDate = document.createElement('span');        
+        dueDate.innerHTML = handleDate(task.dueDate);
+        const linkedProject = document.createElement('span');
+        linkedProject.innerHTML = task.project; 
+        bottomInfoLine.append(dueDate, linkedProject) ;
 
-        taskInfoWrap.append(taskName, taskDescription, dueDate);
+        taskInfoWrap.append(taskName, taskDescription, bottomInfoLine);
         taskContainer.appendChild(taskInfoWrap);
 
         return taskContainer;        
     };
 
-    formatDate(dueDate) {
-    //    const moment = require('moment');
-       let date = dueDate
-       date = moment().format('MM-DD-YY');
-       return date;
-    //     const date =  new Date(dueDate);
-       
-    //     console.log(date)
-    //     const formattedDate = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
-    //     return formattedDate;
+   
+    taskContainerHeader() {
+
     };
 }

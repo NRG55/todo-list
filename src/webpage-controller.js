@@ -231,7 +231,7 @@ export default class WebpageController {
 
         myProjectsList.allTasks.forEach((element) => {
             const task = renderElement.task(element);
-            console.log(task)
+            // console.log(task)
             tasksContainer.appendChild(task);
         });
     };
