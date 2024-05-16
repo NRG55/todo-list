@@ -1,5 +1,7 @@
 import myProjectsList from "./index.js";
 import { handleDate } from "./utils.js";
+import { addProjectsToSelectOptgroup } from "./task-form-controller.js";
+import { taskPriorityHandler } from "./task-display-controller.js";
 
 export default class RenderElement {
     leftSidebarProjectButton(project) {
@@ -105,7 +107,10 @@ export default class RenderElement {
         priorityLabel.innerHTML = "Priority:";          
         const prioritySelect = document.createElement('select');        
         prioritySelect.id = "priority";
-        prioritySelect.className = "task-form-select-priority";         
+        prioritySelect.className = "task-form-select-priority";
+        const priorityOptionNoPriority = document.createElement('option');
+        priorityOptionNoPriority.value = "no priority";
+        priorityOptionNoPriority.innerHTML = "no priority";         
         const priorityOptionLow = document.createElement('option');
         priorityOptionLow.value = "low";
         priorityOptionLow.innerHTML = "low";
@@ -115,7 +120,7 @@ export default class RenderElement {
         const priorityOptionHigh = document.createElement('option');
         priorityOptionHigh.value = "high";
         priorityOptionHigh.innerHTML = "high";
-        prioritySelect.append(priorityOptionLow, priorityOptionMedium, priorityOptionHigh);
+        prioritySelect.append(priorityOptionNoPriority, priorityOptionLow, priorityOptionMedium, priorityOptionHigh);
         priorityWrap.append(priorityLabel, prioritySelect);
 
         const selectProjectWrap = document.createElement('div');        
@@ -127,18 +132,8 @@ export default class RenderElement {
         selectProjectSelect.className = "task-form-select-project";       
         const selectProjectOption = document.createElement('option');
         selectProjectOption.value = "tasks";
-        selectProjectOption.innerHTML = "All tasks";
-        const selectProjectOptionGroup = document.createElement('optgroup');
-        selectProjectOptionGroup.label = "Projects";
-        selectProjectOptionGroup.id = "projects";
-        myProjectsList.projects.forEach((element) => {
-            const projectOption = document.createElement('option');
-
-            projectOption.innerHTML = element.name
-            selectProjectOptionGroup.appendChild(projectOption)
-        });
-
-        selectProjectSelect.append(selectProjectOption, selectProjectOptionGroup);
+        selectProjectOption.innerHTML = "All tasks";        
+        selectProjectSelect.append(selectProjectOption, addProjectsToSelectOptgroup());        
         selectProjectWrap.append(selectProjectLabel, selectProjectSelect);
 
         const buttonsWrap = document.createElement('div');
@@ -158,14 +153,25 @@ export default class RenderElement {
         return taskForm;
     };
 
-    task(task) {
+    taskContent(task) {
         const taskContainer = document.createElement('div');
         taskContainer.classList.add('task-container');
         // taskContainer.id = '';
 
-        const taskInfoWrap = document.createElement('div');
-        taskInfoWrap.classList.add('task-info-wrap');
-
+        // const taskInfoWrap = document.createElement('div');
+        // taskInfoWrap.classList.add('task-info-wrap');
+        
+        const taskInfoFirstDiv = document.createElement('div');
+        taskInfoFirstDiv.classList.add('task-info-first-div');
+        // const taskPrioritySpan = document.createElement("span");
+        // taskPrioritySpan.className = "priority-span"
+        // taskPrioritySpan.classList.add('material-symbols-outlined');
+        // taskPrioritySpan.textContent = 'pen_size_1';
+        // taskInfoFirstDiv.append(taskPrioritySpan)
+       
+        taskInfoFirstDiv.append(taskPriorityHandler(task));
+        taskContainer.append(taskInfoFirstDiv)
+        const taskInfoSecondDiv = document.createElement('div');
         const taskName = document.createElement('h3');
         taskName.classList.add('task-name');
         taskName.innerHTML = task.name;
@@ -181,9 +187,10 @@ export default class RenderElement {
         const linkedProject = document.createElement('span');
         linkedProject.innerHTML = task.project; 
         bottomInfoLine.append(dueDate, linkedProject) ;
+        taskInfoSecondDiv.append(taskName, taskDescription, bottomInfoLine)
 
-        taskInfoWrap.append(taskName, taskDescription, bottomInfoLine);
-        taskContainer.appendChild(taskInfoWrap);
+        // taskInfoWrap.append(taskLeftSection, taskName, taskDescription, bottomInfoLine);
+        taskContainer.append(taskInfoSecondDiv);
 
         return taskContainer;        
     };
