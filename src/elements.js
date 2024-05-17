@@ -8,7 +8,7 @@ export default class RenderElement {
     leftSidebarProjectButton(project) {
         const projectButton = document.createElement("button");
         projectButton.classList.add("left-sidebar-project-button");
-        projectButton.setAttribute("data-key", project);
+        // projectButton.setAttribute("data-key", project);
         projectButton.id = project
 
         const image = document.createElement("img");
@@ -18,7 +18,7 @@ export default class RenderElement {
         text.textContent = project;
 
         const deleteProjectButtonText = document.createElement("span");        
-        deleteProjectButtonText.textContent = "x"
+        deleteProjectButtonText.textContent = "x";
 
         projectButton.appendChild(image);
         projectButton.appendChild(text);

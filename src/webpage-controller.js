@@ -24,10 +24,11 @@ export default class WebpageController {
         projects.forEach((element) => {
             const button = renderElement.leftSidebarProjectButton(element.name);           
 
-            // button.addEventListener('click', () => {
-            //     this.renderTasksContainer(element.name)
-            //     console.log('click')
-            // });
+            button.addEventListener('click', () => {
+                const projectName = button.id;
+                console.log(projectName)
+                this.renderTasks(projectName)           
+            });
             addProjectContainer.appendChild(button);
         });      
     };
@@ -230,17 +231,41 @@ export default class WebpageController {
         dialog.showModal();
     };
 
-    renderTasks() {
+    renderTasks(project) {
         const tasksContainer = document.querySelector('.tasks-container');
         tasksContainer.innerHTML = "";
         const renderElement = new RenderElement;
-        console.log(myProjectsList.allTasks)
-
+        // console.log(myProjectsList.allTasks)
+        if (project) {
+            let tasks = myProjectsList.getTasksByProject(project);
+            tasks.forEach((element) => {
+                const task = renderElement.taskContent(element);
+                // console.log(task)
+                tasksContainer.appendChild(task);
+            });
+            return;
+        }; 
+        
         myProjectsList.allTasks.forEach((element) => {
             const task = renderElement.taskContent(element);
             // console.log(task)
             tasksContainer.appendChild(task);
         });
     };
+
+    // renderTasksByProject(project) {
+    //     const tasksContainer = document.querySelector('.tasks-container');
+    //     tasksContainer.innerHTML = "";
+    //     const renderElement = new RenderElement;
+        
+    //     let tasks = myProjectsList.getTasksByProject(project);
+    //     // console.log(myProjectsList.allTasks)
+    //     // console.log(tasks)
+    //     tasks.forEach((element) => {
+    //         const task = renderElement.taskContent(element);
+    //         // console.log(task)
+    //         tasksContainer.appendChild(task);
+    //     });
+    // }
 };
 
