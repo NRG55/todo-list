@@ -44,4 +44,9 @@ export default class ProjectTaskList {
         //     currentProject.tasks.push(newTask);
         // };        
     };
+
+    getTasksByProject(project) {
+        let tasks = this.#allTasks.filter(element => element.project === project);
+        return tasks;
+    };
 };

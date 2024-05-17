@@ -1,4 +1,5 @@
 import myProjectsList from "./index.js";
+
 import { handleDate } from "./utils.js";
 import { addProjectsToSelectOptgroup } from "./task-form-controller.js";
 import { taskPriorityHandler } from "./task-display-controller.js";
@@ -182,7 +183,7 @@ export default class RenderElement {
 
         const bottomInfoLine = document.createElement('p');
         bottomInfoLine.classList.add('task-bottom-info-line');
-        const dueDate = document.createElement('span');        
+        const dueDate = document.createElement('span');       
         dueDate.innerHTML = handleDate(task.dueDate);
         const linkedProject = document.createElement('span');
         linkedProject.innerHTML = task.project; 
@@ -194,9 +195,22 @@ export default class RenderElement {
 
         return taskContainer;        
     };
-
    
     taskContainerHeader() {
+        const header = document.createElement('div');
+        header.className = "task-container-header";
 
+        const name = document.createElement('h2');
+        name.innerHTML = "Project-test";
+        const numberOfTasksSpan = document.createElement('span');
+        numberOfTasksSpan.innerHTML = "(4)";
+        
+        const addTaskButton = document.createElement('button');
+        addTaskButton.className = "add-task-button";
+        addTaskButton.textContent = "+ Add task";
+        console.log(addTaskButton)
+
+        header.append(name, numberOfTasksSpan, addTaskButton);
+        return header;
     };
 }

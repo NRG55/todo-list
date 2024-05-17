@@ -1,7 +1,7 @@
 import Project from './project.js';
 import myProjectsList from './index.js';
 import RenderElement from './elements.js';
-import moment from 'moment';
+
 
 export default class WebpageController {
     renderHomepage() {
@@ -24,10 +24,10 @@ export default class WebpageController {
         projects.forEach((element) => {
             const button = renderElement.leftSidebarProjectButton(element.name);           
 
-            button.addEventListener('click', () => {
-                this.renderTasksContainer(element.name)
-                console.log('click')
-            });
+            // button.addEventListener('click', () => {
+            //     this.renderTasksContainer(element.name)
+            //     console.log('click')
+            // });
             addProjectContainer.appendChild(button);
         });      
     };
@@ -67,14 +67,14 @@ export default class WebpageController {
     //     return projectWrap;       
     // };
 
-    renderTasksContainer(name) {
-        const projectContent = document.querySelector('.tasks-container');
+    // renderTasksContainer(name) {
+    //     const projectContent = document.querySelector('.tasks-container');
 
-        projectContent.innerHTML = `
-           <h2>${name}</h2>
+    //     projectContent.innerHTML = `
+    //        <h2>${name}</h2>
            
-        `        
-    };   
+    //     `        
+    // };   
 
     // initAddProjectButton() {        
     //     const buttonAddProject = document.querySelector('.add-project-button');       
@@ -187,15 +187,22 @@ export default class WebpageController {
             this.renderProjectButtons();
             // projectForm.style.display = "none";           
             // dialog.close();
-        })
+        });
         // dialog.showModal();
         // projectForm.style.display = "block"
     };
     
     initTasksContainer() {
-        const addTask = document.getElementById('add-task-button');
+        const tasksContainer = document.querySelector('.tasks-container-header'); 
+      
+        const renderElement = new RenderElement();
+        const header = renderElement.taskContainerHeader();
+        tasksContainer.appendChild(header); 
 
+        const addTask = document.querySelector('.add-task-button');
+        console.log(addTask);
         this.renderTasks();
+       
         addTask.addEventListener("click", () => {
             console.log('click')
             this.renderAddTaskForm();
