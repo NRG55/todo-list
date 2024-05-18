@@ -19,4 +19,11 @@ export function taskPriorityHandler(task) {
       }
 
       return taskPrioritySpan;
-}
+};
+
+export function updateHeader(title) {
+    const header = document.querySelector('.task-container-header-name');
+    header.innerHTML = title;
+};
+
+

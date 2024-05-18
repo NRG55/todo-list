@@ -1,7 +1,7 @@
 import myProjectsList from "./index.js";
 
 import { handleDate } from "./utils.js";
-import { addProjectsToSelectOptgroup } from "./task-form-controller.js";
+import { addProjectsToSelectBox, selectCurrentProject } from "./task-form-controller.js";
 import { taskPriorityHandler } from "./task-display-controller.js";
 
 export default class RenderElement {
@@ -134,7 +134,7 @@ export default class RenderElement {
         const selectProjectOption = document.createElement('option');
         selectProjectOption.value = "tasks";
         selectProjectOption.innerHTML = "All tasks";        
-        selectProjectSelect.append(selectProjectOption, addProjectsToSelectOptgroup());        
+        selectProjectSelect.append(selectProjectOption, addProjectsToSelectBox());        
         selectProjectWrap.append(selectProjectLabel, selectProjectSelect);
 
         const buttonsWrap = document.createElement('div');
@@ -201,7 +201,8 @@ export default class RenderElement {
         header.className = "task-container-header";
 
         const name = document.createElement('h2');
-        name.innerHTML = "Project-test";
+        name.className = "task-container-header-name";
+        // name.innerHTML = name;
         const numberOfTasksSpan = document.createElement('span');
         numberOfTasksSpan.innerHTML = "(4)";
         
