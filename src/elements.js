@@ -17,12 +17,12 @@ export default class RenderElement {
         const text = document.createElement("div");
         text.textContent = project;
 
-        const deleteProjectButtonText = document.createElement("span");        
-        deleteProjectButtonText.textContent = "x";
+        const tasksNumberSpan = document.createElement("span");        
+        tasksNumberSpan.className = 'project-button-tasks-span';
 
         projectButton.appendChild(image);
         projectButton.appendChild(text);
-        projectButton.appendChild(deleteProjectButtonText);
+        projectButton.appendChild(tasksNumberSpan);
 
         return projectButton;
     }; 
@@ -204,7 +204,8 @@ export default class RenderElement {
         name.className = "task-container-header-name";
         // name.innerHTML = name;
         const numberOfTasksSpan = document.createElement('span');
-        numberOfTasksSpan.innerHTML = "(4)";
+        numberOfTasksSpan.className = "task-container-header-span";
+        // numberOfTasksSpan.innerHTML = "(4)";
         
         const addTaskButton = document.createElement('button');
         addTaskButton.className = "add-task-button";

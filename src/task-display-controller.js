@@ -1,3 +1,5 @@
+import myProjectsList from ".";
+
 export function taskPriorityHandler(task) {
     const taskPrioritySpan = document.createElement("span");
         // taskPrioritySpan.className = "priority-span"
@@ -21,9 +23,8 @@ export function taskPriorityHandler(task) {
       return taskPrioritySpan;
 };
 
-export function updateHeader(title) {
-    const header = document.querySelector('.task-container-header-name');
-    header.innerHTML = title;
-};
+
+
+
 
 

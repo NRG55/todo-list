@@ -1,14 +1,15 @@
 import Project from './project.js';
 import myProjectsList from './index.js';
 import RenderElement from './elements.js';
-import { updateHeader } from './task-display-controller.js';
+import { numberOfProjectTasks } from './project-display-controller.js';
 import { selectCurrentProject } from './task-form-controller.js';
 
 
 export default class WebpageController {
     renderHomepage() {        
         this.initLeftSidebar();        
-        this.initTasksContainer();        
+        this.initTasksContainer(); 
+            
     };
 
     renderProjectButtons() {
@@ -22,8 +23,9 @@ export default class WebpageController {
             button.addEventListener('click', () => {
                 const projectName = button.id;
                 console.log(projectName)
-                updateHeader(projectName);
-                this.renderTasks(projectName);           
+                this.updateHeader(projectName);
+                this.renderTasks(projectName); 
+                this.updateNumberOfTasks(projectName);          
             });
             addProjectContainer.appendChild(button);
         });      
@@ -38,6 +40,11 @@ export default class WebpageController {
         this.renderProjectButtons();
     };
 
+    updateHeader(title) {
+        const header = document.querySelector('.task-container-header-name');
+        header.innerHTML = title;
+    };
+
     openAddProjectForm() {       
         const projectsContainer = document.querySelector('.left-sidebar-projects-container');
         const projectFormContainer = document.querySelector('.left-sidebar-project-form');
@@ -50,10 +57,14 @@ export default class WebpageController {
 
         projectForm.addEventListener("submit", (event) => {
             event.preventDefault();
-            myProjectsList.addProject(projectName.value);          
+            myProjectsList.addProject(projectName.value);
+            const project = projectName.value;            
+               
             projectsContainer.innerHTML = "";
-            projectFormContainer.innerHTML = "";          
-            this.renderProjectButtons();            
+            projectFormContainer.innerHTML = "";
+
+            this.renderProjectButtons(); 
+            this.updateNumberOfTasks(project);                       
         });        
     };
     
@@ -88,7 +99,8 @@ export default class WebpageController {
             event.preventDefault();            
             myProjectsList.addTask(title.value, description.value, notes.value, duedate.value, priority.value, selectProject.value);           
             this.renderTasks(selectProject.value);
-            updateHeader(selectProject.value);
+            this.updateHeader(selectProject.value);
+            this.updateNumberOfTasks(selectProject.value); 
             dialog.close();
         })
 
@@ -117,6 +129,23 @@ export default class WebpageController {
            
             tasksContainer.appendChild(task);
         });
-    }; 
+    };
+    
+    updateNumberOfTasks(project) {
+        const taskContainerHeaderSpan = document.querySelector('.task-container-header-span');
+        const projectButtons = document.querySelectorAll('.left-sidebar-project-button');
+
+        taskContainerHeaderSpan.innerHTML = `(${numberOfProjectTasks(project)})`;
+
+        projectButtons.forEach((button) => {
+            const taskNumberSpan = document.createElement('span');
+            const project = button.id;
+            const tasksNumber = myProjectsList.getTasksByProject(project).length;
+           
+            taskNumberSpan.innerHTML = tasksNumber;
+            button.removeChild(button.children[2]);
+            button.appendChild(taskNumberSpan);
+        });
+    }  
 };
 
