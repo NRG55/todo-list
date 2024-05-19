@@ -58,12 +58,9 @@ li {
     margin-top: 100px;
 }
 
-.task-container {
-    border-top: 1px solid rgb(185, 183, 183) ;
-}
-
 .task-container-header {
-    display: flex;    
+    display: flex;
+    padding: 1rem;    
 }
 
 .left-sidebar-projects-container {
@@ -71,22 +68,33 @@ li {
     grid-template-columns: 1fr;  
 }
 
-
-.task-info-first-div .material-symbols-outlined {
-  /* color: red; */
-  font-size: 44px;
-  transform: rotate(90deg);
-  padding-top: 0;
-  /* font-variation-settings:
-  'FILL' 1,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24 */
+.tasks-main {
+    padding: 0 1rem; 
 }
 
-.task-container {    
+
+.task-info-first-div .material-symbols-outlined {
+  font-size: 44px;
+  transform: rotate(90deg);
+  padding-top: 0; 
+}
+
+.task-bottom-info-line .material-symbols-outlined {  
+    font-size: 12px;
+    color: grey;
+    margin-top: -2px;   
+}
+
+.task-item {    
     display: grid;
     grid-template-columns: 40px 1fr;
+    border-top: 1px solid rgb(185, 183, 183);
+    padding: 1rem 0;
+    gap: 0.5rem;   
+}
+
+.task-name, .task-description {
+    margin-bottom: 0.3rem;
 }
 
 .task-no-priority {
@@ -104,3 +112,24 @@ li {
 .task-priority-high {
     color: rgb(199, 4, 4);
 }
+
+.task-bottom-info-line {
+    display: flex;
+    gap: 1rem;
+    font-size: 12px; 
+    color: red;   
+}
+
+.task-bottom-info-line div {
+   display: grid;
+   grid-template-columns: auto 1fr;
+   align-items: center;
+   gap: 4px;    
+}
+
+.task-bottom-info-line div:nth-of-type(2) {
+  color: rgb(46, 45, 45);
+ }
+
+
+

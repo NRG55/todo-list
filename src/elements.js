@@ -191,12 +191,8 @@ export default class RenderElement {
     };
 
     taskContent(task) {
-        const taskContainer = document.createElement('div');
-        taskContainer.classList.add('task-container');
-        // taskContainer.id = '';
-
-        // const taskInfoWrap = document.createElement('div');
-        // taskInfoWrap.classList.add('task-info-wrap');
+        const taskItem = document.createElement('div');
+        taskItem.classList.add('task-item');       
         
         const taskInfoFirstDiv = document.createElement('div');
         taskInfoFirstDiv.classList.add('task-info-first-div');
@@ -207,7 +203,7 @@ export default class RenderElement {
         // taskInfoFirstDiv.append(taskPrioritySpan)
        
         taskInfoFirstDiv.append(taskPriorityHandler(task));
-        taskContainer.append(taskInfoFirstDiv)
+        taskItem.append(taskInfoFirstDiv)
         const taskInfoSecondDiv = document.createElement('div');
         const taskName = document.createElement('h3');
         taskName.classList.add('task-name');
@@ -219,17 +215,30 @@ export default class RenderElement {
 
         const bottomInfoLine = document.createElement('p');
         bottomInfoLine.classList.add('task-bottom-info-line');
+
+        const dueDateWrap = document.createElement('div');
+        const dueDateIcon = document.createElement('span'); 
+        dueDateIcon.classList.add('material-symbols-outlined');
+        dueDateIcon.textContent = 'calendar_today';  
         const dueDate = document.createElement('span');       
         dueDate.innerHTML = handleDate(task.dueDate);
+        dueDateWrap.append(dueDateIcon, dueDate);
+
+        const linkedProjectWrap = document.createElement('div');
+        const linkedProjectIcon = document.createElement('span'); 
+        linkedProjectIcon.classList.add('material-symbols-outlined');
+        linkedProjectIcon.textContent = 'folder';  
         const linkedProject = document.createElement('span');
-        linkedProject.innerHTML = task.project; 
-        bottomInfoLine.append(dueDate, linkedProject) ;
+        linkedProject.innerHTML = task.project;
+        linkedProjectWrap.append(linkedProjectIcon, linkedProject);
+                
+        bottomInfoLine.append(dueDateWrap, linkedProjectWrap) ;
         taskInfoSecondDiv.append(taskName, taskDescription, bottomInfoLine)
 
         // taskInfoWrap.append(taskLeftSection, taskName, taskDescription, bottomInfoLine);
-        taskContainer.append(taskInfoSecondDiv);
+        taskItem.append(taskInfoSecondDiv);
 
-        return taskContainer;        
+        return taskItem;        
     };
    
     taskContainerHeader() {
