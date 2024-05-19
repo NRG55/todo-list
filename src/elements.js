@@ -34,15 +34,15 @@ export default class RenderElement {
     }; 
 
     projectSettingsButton() {
-        const button = document.createElement('button');
+        // const button = document.createElement('button');
         const buttonSpan = document.createElement('span');
         // taskPrioritySpan.className = "priority-span"
         buttonSpan.classList.add('material-symbols-outlined');
         buttonSpan.textContent = 'more_vert';
 
-        button.appendChild(buttonSpan);
-
-        return button;
+        // button.appendChild(buttonSpan);
+        // return button;
+        return buttonSpan;
     };
 
     projectDeleteButton() {
@@ -231,8 +231,14 @@ export default class RenderElement {
         const linkedProject = document.createElement('span');
         linkedProject.innerHTML = task.project;
         linkedProjectWrap.append(linkedProjectIcon, linkedProject);
-                
-        bottomInfoLine.append(dueDateWrap, linkedProjectWrap) ;
+        
+        if (task.dueDate === "") {
+            console.log(dueDate.value)
+            bottomInfoLine.append(linkedProjectWrap);
+        } else {
+            console.log(dueDate.value)
+            bottomInfoLine.append(dueDateWrap, linkedProjectWrap);
+        }
         taskInfoSecondDiv.append(taskName, taskDescription, bottomInfoLine)
 
         // taskInfoWrap.append(taskLeftSection, taskName, taskDescription, bottomInfoLine);
