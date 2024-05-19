@@ -11,22 +11,58 @@ export default class RenderElement {
         // projectButton.setAttribute("data-key", project);
         projectButton.id = project
 
-        const image = document.createElement("img");
-        image.src = '';        
+        const iconSpan = document.createElement('span');
+        iconSpan.classList.add('material-symbols-outlined');
+        iconSpan.textContent = 'folder'       
 
         const text = document.createElement("div");
         text.textContent = project;
 
-        const tasksNumberSpan = document.createElement("span");        
-        tasksNumberSpan.className = 'project-button-tasks-span';
+        // const tasksNumberSpan = document.createElement("tasks-number-span");        
+        // tasksNumberSpan.className = 'project-button-tasks-span';
 
-        projectButton.appendChild(image);
+        const settings = document.createElement('div');        
+        settings.className = 'project-button-settings';
+        settings.appendChild(this.projectSettingsButton());
+
+        projectButton.appendChild(iconSpan);
         projectButton.appendChild(text);
-        projectButton.appendChild(tasksNumberSpan);
+        // projectButton.appendChild(tasksNumberSpan);
+        projectButton.appendChild(settings);
 
         return projectButton;
     }; 
-    
+
+    projectSettingsButton() {
+        const button = document.createElement('button');
+        const buttonSpan = document.createElement('span');
+        // taskPrioritySpan.className = "priority-span"
+        buttonSpan.classList.add('material-symbols-outlined');
+        buttonSpan.textContent = 'more_vert';
+
+        button.appendChild(buttonSpan);
+
+        return button;
+    };
+
+    projectDeleteButton() {
+        const button = document.createElement('button');
+
+        buttonSpan.classList.add('project-button-delete');
+        button.innerHTML = "Delete";
+
+        return button;
+    };
+
+    projectEditButton() {
+        const button = document.createElement('button');
+
+        buttonSpan.classList.add('project-button-edit');
+        button.innerHTML = "Edit";
+
+        return button;
+    };
+        
     projectForm() {
         const addProjectForm = document.createElement('form');
         addProjectForm.setAttribute("id", "project-form");        
@@ -215,4 +251,6 @@ export default class RenderElement {
         header.append(name, numberOfTasksSpan, addTaskButton);
         return header;
     };
+
+
 }

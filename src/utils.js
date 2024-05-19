@@ -6,8 +6,8 @@ export function handleDate(dueDate) {
             dueDate = "";            
             return dueDate;            
         } else {  
-            let date = format(dueDate, "dd MMM yyyy");
+            let date = format(dueDate, "dd MMM yy");
             console.log(date)
-            return `Due: ` + date;
+            return date;
        };   
     };

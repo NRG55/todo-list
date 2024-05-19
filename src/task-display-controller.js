@@ -23,6 +23,35 @@ export function taskPriorityHandler(task) {
       return taskPrioritySpan;
 };
 
+export function updateNumberOfTasks(project) {
+    renderNumberOfTasksHeaderTaskContainer(project);
+    renderNumberOfTasksProjectButton();
+};
+
+export function renderNumberOfTasksProjectButton() {    
+    const projectButtons = document.querySelectorAll('.left-sidebar-project-button');
+
+    projectButtons.forEach((button) => {       
+        const project = button.id;
+        const tasksNumber = myProjectsList.getTasksByProject(project).length;
+        const taskNumberSpan = document.createElement('span');
+        taskNumberSpan.className = "tasks-span";
+
+        if (button.contains(button.querySelector('.tasks-span'))) {
+            button.querySelector('.tasks-span').remove();
+        };
+       
+        taskNumberSpan.innerHTML = tasksNumber;       
+        button.appendChild(taskNumberSpan);
+    });
+};
+
+export function renderNumberOfTasksHeaderTaskContainer(project) {
+    const taskContainerHeaderSpan = document.querySelector('.task-container-header-span');   
+
+    taskContainerHeaderSpan.innerHTML = `(${myProjectsList.getTasksByProject(project).length})`;    
+} 
+
 
 
 

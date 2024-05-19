@@ -1,7 +1,7 @@
 import Project from './project.js';
 import myProjectsList from './index.js';
 import RenderElement from './elements.js';
-import { numberOfProjectTasks } from './project-display-controller.js';
+import { updateNumberOfTasks } from './task-display-controller.js';
 import { selectCurrentProject } from './task-form-controller.js';
 
 
@@ -14,7 +14,7 @@ export default class WebpageController {
 
     renderProjectButtons() {
         const addProjectContainer = document.querySelector('.left-sidebar-projects-container');
-        const renderElement = new RenderElement;
+        const renderElement = new RenderElement();
         const projects = myProjectsList.projects;
 
         projects.forEach((element) => {
@@ -25,7 +25,7 @@ export default class WebpageController {
                 console.log(projectName)
                 this.updateHeader(projectName);
                 this.renderTasks(projectName); 
-                this.updateNumberOfTasks(projectName);          
+                updateNumberOfTasks(projectName);          
             });
             addProjectContainer.appendChild(button);
         });      
@@ -48,7 +48,7 @@ export default class WebpageController {
     openAddProjectForm() {       
         const projectsContainer = document.querySelector('.left-sidebar-projects-container');
         const projectFormContainer = document.querySelector('.left-sidebar-project-form');
-        const renderElement = new RenderElement;
+        const renderElement = new RenderElement();
         const form = renderElement.projectForm();
 
         projectFormContainer.appendChild(form);
@@ -64,7 +64,7 @@ export default class WebpageController {
             projectFormContainer.innerHTML = "";
 
             this.renderProjectButtons(); 
-            this.updateNumberOfTasks(project);                       
+            updateNumberOfTasks(project);                       
         });        
     };
     
@@ -87,7 +87,7 @@ export default class WebpageController {
 
     renderAddTaskForm() {
         const dialog = document.querySelector('.task-form-dialog');
-        const renderElement = new RenderElement;
+        const renderElement = new RenderElement();
         const form = renderElement.taskForm();
 
         dialog.textContent = "";
@@ -100,7 +100,7 @@ export default class WebpageController {
             myProjectsList.addTask(title.value, description.value, notes.value, duedate.value, priority.value, selectProject.value);           
             this.renderTasks(selectProject.value);
             this.updateHeader(selectProject.value);
-            this.updateNumberOfTasks(selectProject.value); 
+            updateNumberOfTasks(selectProject.value); 
             dialog.close();
         })
 
@@ -109,7 +109,7 @@ export default class WebpageController {
 
     renderTasks(project) {
         const tasksContainer = document.querySelector('.tasks-container');
-        const renderElement = new RenderElement;
+        const renderElement = new RenderElement();
 
         tasksContainer.innerHTML = "";       
        
@@ -129,23 +129,6 @@ export default class WebpageController {
            
             tasksContainer.appendChild(task);
         });
-    };
-    
-    updateNumberOfTasks(project) {
-        const taskContainerHeaderSpan = document.querySelector('.task-container-header-span');
-        const projectButtons = document.querySelectorAll('.left-sidebar-project-button');
-
-        taskContainerHeaderSpan.innerHTML = `(${numberOfProjectTasks(project)})`;
-
-        projectButtons.forEach((button) => {
-            const taskNumberSpan = document.createElement('span');
-            const project = button.id;
-            const tasksNumber = myProjectsList.getTasksByProject(project).length;
-           
-            taskNumberSpan.innerHTML = tasksNumber;
-            button.removeChild(button.children[2]);
-            button.appendChild(taskNumberSpan);
-        });
-    }  
+    };   
 };
 
