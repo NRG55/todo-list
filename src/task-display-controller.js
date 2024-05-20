@@ -4,7 +4,8 @@ export function taskPriorityHandler(task) {
     const taskPrioritySpan = document.createElement("span");
         // taskPrioritySpan.className = "priority-span"
         taskPrioritySpan.classList.add('material-symbols-outlined');
-        taskPrioritySpan.textContent = 'remove';
+        // taskPrioritySpan.textContent = 'remove';
+         taskPrioritySpan.textContent = 'keyboard_arrow_right';
     // const prioritySpan = document.querySelector('.priority-span');
     console.log(taskPrioritySpan)
     if (task.priority == 'no priority') {

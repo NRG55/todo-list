@@ -1,8 +1,9 @@
 import myProjectsList from "./index.js";
 
-import { handleDate } from "./utils.js";
+import { handleDate, setTodayDate } from "./task-form-controller.js";
 import { addProjectsToSelectBox, selectCurrentProject } from "./task-form-controller.js";
 import { taskPriorityHandler } from "./task-display-controller.js";
+import { format } from "date-fns";
 
 export default class RenderElement {
     leftSidebarProjectButton(project) {
@@ -134,9 +135,10 @@ export default class RenderElement {
         dueDateLabel.innerHTML = "Due date:";          
         const dueDateInput = document.createElement('input');
         dueDateInput.type = "date";
-        dueDateInput.id = "duedate";
-        dueDateInput.className = "task-form-input-duedate"; 
+        dueDateInput.id = "duedate";       
+        // dueDateInput.className = "task-form-input-duedate"; 
         dueDateWrap.append(dueDateLabel, dueDateInput);
+       
 
         const priorityWrap = document.createElement('div');        
         const priorityLabel = document.createElement('label');
@@ -186,6 +188,7 @@ export default class RenderElement {
         buttonsWrap.append(buttonSubmit, buttonClose);
         
         taskForm.append(nameWrap, descriptionWrap, notesWrap, dueDateWrap, priorityWrap, selectProjectWrap, buttonsWrap);
+    
         
         return taskForm;
     };
@@ -221,7 +224,7 @@ export default class RenderElement {
         dueDateIcon.classList.add('material-symbols-outlined');
         dueDateIcon.textContent = 'calendar_today';  
         const dueDate = document.createElement('span');       
-        dueDate.innerHTML = handleDate(task.dueDate);
+        dueDate.innerHTML = format(task.dueDate, "dd MMM yy");
         dueDateWrap.append(dueDateIcon, dueDate);
 
         const linkedProjectWrap = document.createElement('div');

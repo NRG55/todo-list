@@ -3,13 +3,13 @@ import myProjectsList from './index.js';
 import RenderElement from './elements.js';
 import { updateNumberOfTasks } from './task-display-controller.js';
 import { selectCurrentProject } from './task-form-controller.js';
+import { setTodayDate } from './task-form-controller.js';
 
 
 export default class WebpageController {
     renderHomepage() {        
         this.initLeftSidebar();        
-        this.initTasksContainer(); 
-            
+        this.initTasksContainer();             
     };
 
     renderProjectButtons() {
@@ -92,6 +92,7 @@ export default class WebpageController {
 
         dialog.textContent = "";
         dialog.appendChild(form);
+        setTodayDate();
 
         const taskForm = document.getElementById('task-form');
 

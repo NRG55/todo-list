@@ -1,5 +1,6 @@
 import myProjectsList from "./index.js";
 
+
 export function addProjectsToSelectBox() {
         const projectOptionGroup = document.createElement('optgroup');
         projectOptionGroup.className = "task-form-projects-optgroup";
@@ -36,7 +37,26 @@ export function selectCurrentProject() {
         });
 };
 
+export function setTodayDate() {
+    const dateInput = document.getElementById('duedate');
+    console.log(dateInput)
+    const today = new Date().toISOString().split('T')[0];
 
+    dateInput.setAttribute('min', today);
+    dateInput.setAttribute('value', today);
+}
+
+// export function handleDate(dueDate) { 
+//     console.log(dueDate)
+//     if (dueDate === "") {            
+//         dueDate = "";            
+//         return dueDate;            
+//     } else {  
+//         let date = format(dueDate, "dd MMM yy");
+//         console.log(date)
+//         return date;
+//    };   
+// };
 
     
 

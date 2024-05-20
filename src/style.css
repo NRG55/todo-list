@@ -99,8 +99,8 @@ li {
     align-items: center; */
   }
 .task-info-first-div .material-symbols-outlined {
-  font-size: 44px;
-  transform: rotate(90deg);
+  font-size: 24px;
+  /* transform: rotate(90deg); */
   padding-top: 0; 
 }
 
