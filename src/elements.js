@@ -11,7 +11,7 @@ export default class RenderElement {
         buttonsWrap.classList.add('left-sidebar-all-tasks');
 
         const allTasksButton = document.createElement('button');
-        allTasksButton.classList.add('all-tasks-button');      
+        allTasksButton.classList.add('all-tasks-button');            
 
         const allTasksIconSpan = document.createElement('span');
         allTasksIconSpan.classList.add('material-symbols-outlined');

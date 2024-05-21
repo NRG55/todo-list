@@ -15,7 +15,13 @@ export default class WebpageController {
     initTasksButtons() {
         const allTaskButton = document.querySelector('.all-tasks-button');
         allTaskButton.addEventListener('click', () => {
-            
+           
+
+            const title = allTaskButton.id;
+            // console.log(projectName)
+            this.updateHeader("All Tasks");
+            this.renderTasks(); 
+            updateNumberOfTasks();        
         })
     }
 
@@ -49,10 +55,18 @@ export default class WebpageController {
             this.openAddProjectForm();                      
         });
         this.renderProjectButtons();
+
+        this.initTasksButtons();
     };
 
     updateHeader(title) {
         const header = document.querySelector('.task-container-header-name');
+
+        if (title === "tasks") {
+            header.innerHTML = "All Tasks";
+            return;
+        };
+        
         header.innerHTML = title;
     };
 
@@ -115,7 +129,7 @@ export default class WebpageController {
             updateNumberOfTasks(selectProject.value); 
 
             console.log(myProjectsList.allTasks.length) 
-               
+
             dialog.close();
         })
 
