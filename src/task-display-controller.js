@@ -53,6 +53,9 @@ export function renderNumberOfTasksHeaderTaskContainer(project) {
     taskContainerHeaderSpan.innerHTML = `(${myProjectsList.getTasksByProject(project).length})`;    
 } 
 
+export function renderAllTasks() {
+    
+}
 
 
 
