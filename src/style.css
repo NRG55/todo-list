@@ -43,7 +43,7 @@ li {
 
 .left-sidebar {
     display: grid;
-    grid-template-rows: 5rem 1fr; 
+    grid-template-rows: 8rem 1fr; 
    /* position: fixed; */
     height: 100%;
     padding: 20px;
@@ -52,6 +52,9 @@ li {
   
 }
 
+.all-tasks-button,
+.today-tasks-button,
+.overdue-tasks-button,
 .left-sidebar-project-button {
     /* background-color: white; */
     display: grid;
@@ -83,10 +86,11 @@ li {
     padding: 1rem;    
 }
 
-.left-sidebar-projects-container {
+.left-sidebar-projects-container, .left-sidebar-all-tasks {
     display: grid;
-    grid-template-columns: 1fr;  
-}
+    grid-template-columns: 1fr;
+    color: blue;
+  }
 
 .tasks-main {
     padding: 0 1rem; 

@@ -6,10 +6,55 @@ import { taskPriorityHandler } from "./task-display-controller.js";
 import { format } from "date-fns";
 
 export default class RenderElement {
+    leftSidebarTasksButtons() {
+        const buttonsWrap = document.createElement('div');
+        buttonsWrap.classList.add('left-sidebar-all-tasks');
+
+        const allTasksButton = document.createElement('button');
+        allTasksButton.classList.add('all-tasks-button');      
+
+        const allTasksIconSpan = document.createElement('span');
+        allTasksIconSpan.classList.add('material-symbols-outlined');
+        allTasksIconSpan.textContent = 'fact_check';       
+
+        const allTaskstext = document.createElement('span');
+        allTaskstext.innerHTML = "All Tasks";   
+
+        allTasksButton.append(allTasksIconSpan, allTaskstext);        
+
+        const todayTasksButton = document.createElement('button');
+        todayTasksButton.classList.add('today-tasks-button');      
+
+        const todayTasksIconSpan = document.createElement('span');
+        todayTasksIconSpan.classList.add('material-symbols-outlined');
+        todayTasksIconSpan.textContent = 'calendar_month';       
+
+        const todayTasksText = document.createElement('span');
+        todayTasksText.innerHTML = "Today";   
+
+        todayTasksButton.append(todayTasksIconSpan, todayTasksText);
+        
+        const overdueTasksButton = document.createElement('button');
+        overdueTasksButton.classList.add('overdue-tasks-button');      
+
+        const overdueTasksIconSpan = document.createElement('span');
+        overdueTasksIconSpan.classList.add('material-symbols-outlined');
+        overdueTasksIconSpan.textContent = 'schedule';       
+
+        const overdueTasksText = document.createElement('span');
+        overdueTasksText.innerHTML = "Overdue";   
+
+        overdueTasksButton.append(overdueTasksIconSpan, overdueTasksText);
+
+        buttonsWrap.append(allTasksButton, todayTasksButton, overdueTasksButton);
+
+        return buttonsWrap;
+
+    }
+
     leftSidebarProjectButton(project) {
         const projectButton = document.createElement("button");
-        projectButton.classList.add("left-sidebar-project-button");
-        // projectButton.setAttribute("data-key", project);
+        projectButton.classList.add("left-sidebar-project-button");      
         projectButton.id = project
 
         const iconSpan = document.createElement('span');
@@ -19,17 +64,11 @@ export default class RenderElement {
         const text = document.createElement("div");
         text.textContent = project;
 
-        // const tasksNumberSpan = document.createElement("tasks-number-span");        
-        // tasksNumberSpan.className = 'project-button-tasks-span';
-
         const settings = document.createElement('div');        
         settings.className = 'project-button-settings';
         settings.appendChild(this.projectSettingsButton());
 
-        projectButton.appendChild(iconSpan);
-        projectButton.appendChild(text);
-        // projectButton.appendChild(tasksNumberSpan);
-        projectButton.appendChild(settings);
+        projectButton.append(iconSpan, text, settings);       
 
         return projectButton;
     }; 

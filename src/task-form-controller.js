@@ -38,8 +38,7 @@ export function selectCurrentProject() {
 };
 
 export function setTodayDate() {
-    const dateInput = document.getElementById('duedate');
-    console.log(dateInput)
+    const dateInput = document.getElementById('duedate');  
     const today = new Date().toISOString().split('T')[0];
 
     dateInput.setAttribute('min', today);

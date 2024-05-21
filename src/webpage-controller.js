@@ -32,6 +32,10 @@ export default class WebpageController {
     };   
 
     initLeftSidebar() {
+        const allTasksContainer = document.querySelector('.all-tasks');
+        
+        const renderElement = new RenderElement();
+        allTasksContainer.appendChild(renderElement.leftSidebarTasksButtons());
         const addProjectButton = document.querySelector('.add-project-button');      
       
         addProjectButton.addEventListener('click', () => {          
