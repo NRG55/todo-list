@@ -9,8 +9,15 @@ import { setTodayDate } from './task-form-controller.js';
 export default class WebpageController {
     renderHomepage() {        
         this.initLeftSidebar();        
-        this.initTasksContainer();             
+        this.initTasksContainer();                   
     };
+
+    initTasksButtons() {
+        const allTaskButton = document.querySelector('.all-tasks-button');
+        allTaskButton.addEventListener('click', () => {
+            
+        })
+    }
 
     renderProjectButtons() {
         const addProjectContainer = document.querySelector('.left-sidebar-projects-container');
@@ -22,7 +29,7 @@ export default class WebpageController {
 
             button.addEventListener('click', () => {
                 const projectName = button.id;
-                console.log(projectName)
+                // console.log(projectName)
                 this.updateHeader(projectName);
                 this.renderTasks(projectName); 
                 updateNumberOfTasks(projectName);          
@@ -68,7 +75,7 @@ export default class WebpageController {
             projectFormContainer.innerHTML = "";
 
             this.renderProjectButtons(); 
-            updateNumberOfTasks(project);                       
+            updateNumberOfTasks(project);                               
         });        
     };
     
@@ -106,6 +113,9 @@ export default class WebpageController {
             this.renderTasks(selectProject.value);
             this.updateHeader(selectProject.value);
             updateNumberOfTasks(selectProject.value); 
+
+            console.log(myProjectsList.allTasks.length) 
+               
             dialog.close();
         })
 

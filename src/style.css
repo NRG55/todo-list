@@ -6,20 +6,20 @@
 
 html, body {
     height: 100%;
+    color: #4e4a4a;
 }
 
 header {
     height: 2.5rem;
     padding-left: 20px;
-    background: linear-gradient(90deg, #f9f6f3 240px, white 0%);
-    color: rgb(78, 78, 78);   
+    background: linear-gradient(90deg, #f9f6f3 240px, white 0%);  
 }
 
 button {
     cursor: pointer;
     background-color: transparent;
     border: none;
-    padding: 8px 12px;
+    padding: 8px 12px;   
 }
 
 .left-sidebar h3 {
@@ -42,13 +42,29 @@ button {
 .all-tasks-button,
 .today-tasks-button,
 .overdue-tasks-button,
-.left-sidebar-project-button {   
+.left-sidebar-project-button {
     display: grid;
-    grid-template-columns: auto 1fr 20px 20px;
+    grid-template-columns: auto 1fr 20px;
     align-items: center;
     gap: 4px;
     text-align: left;
-    color: rgb(51, 50, 50);
+    color: rgb(51, 50, 50);   
+
+    &:hover {
+        background-color:#f3efea;
+    }
+
+    &:focus {
+        background-color: #ebe4dc;
+    }
+}
+
+/* .all-tasks-button:hover {
+    background-color: black;
+} */
+
+.left-sidebar-project-button { 
+    grid-template-columns: auto 1fr 20px 20px;   
 }
 
 .add-project-button,
@@ -93,7 +109,7 @@ button {
 }
 
 .material-symbols-outlined {
-    color: grey;
+    color: rgb(151, 150, 150);
     font-size: 16px;  
   }
 
@@ -162,6 +178,10 @@ button {
 .project-button-settings button {  
     display: grid;
     align-items: center;   
+}
+
+.tasks-span {
+    color: rgb(145, 143, 143);
 }
 
 

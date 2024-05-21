@@ -26,8 +26,7 @@ export function selectCurrentProject() {
         projectsOptgroup.forEach((optgroup) => {
             const projectOptions = optgroup.querySelectorAll('option');
 
-            projectOptions.forEach((option) => {
-                console.log(title.innerHTML)
+            projectOptions.forEach((option) => {               
                 if (option.value === title.innerHTML) {
                     option.selected = true;
     

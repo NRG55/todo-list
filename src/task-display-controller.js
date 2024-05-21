@@ -7,7 +7,7 @@ export function taskPriorityHandler(task) {
         // taskPrioritySpan.textContent = 'remove';
          taskPrioritySpan.textContent = 'keyboard_arrow_right';
     // const prioritySpan = document.querySelector('.priority-span');
-    console.log(taskPrioritySpan)
+    // console.log(taskPrioritySpan)
     if (task.priority == 'no priority') {
         taskPrioritySpan.classList.add('task-no-priority');
       }
@@ -25,11 +25,12 @@ export function taskPriorityHandler(task) {
 };
 
 export function updateNumberOfTasks(project) {
-    renderNumberOfTasksHeaderTaskContainer(project);
-    renderNumberOfTasksProjectButton();
+    displayNumberOfTasksHeaderTaskContainer(project);
+    appendNumberOfTasksToAllTasksButton();
+    appendNumberOfTasksToProjectButton();
 };
 
-export function renderNumberOfTasksProjectButton() {    
+export function appendNumberOfTasksToProjectButton() {    
     const projectButtons = document.querySelectorAll('.left-sidebar-project-button');
 
     projectButtons.forEach((button) => {       
@@ -47,14 +48,28 @@ export function renderNumberOfTasksProjectButton() {
     });
 };
 
-export function renderNumberOfTasksHeaderTaskContainer(project) {
+export function appendNumberOfTasksToAllTasksButton() {    
+        const allTasksButton = document.querySelector('.all-tasks-button');       
+        const taskNumberSpan = document.createElement('span');
+        taskNumberSpan.className = "tasks-span";
+
+        if (allTasksButton.contains(allTasksButton.querySelector('.tasks-span'))) {
+           allTasksButton.querySelector('.tasks-span').remove();
+        };
+        
+        const tasksNumber = myProjectsList.allTasks.length;
+        taskNumberSpan.innerHTML = tasksNumber;       
+        allTasksButton.appendChild(taskNumberSpan);   
+};
+
+export function displayNumberOfTasksHeaderTaskContainer(project) {
     const taskContainerHeaderSpan = document.querySelector('.task-container-header-span');   
 
     taskContainerHeaderSpan.innerHTML = `(${myProjectsList.getTasksByProject(project).length})`;    
 } 
 
 export function renderAllTasks() {
-    
+
 }
 
 

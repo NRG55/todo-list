@@ -274,13 +274,13 @@ export default class RenderElement {
         linkedProject.innerHTML = task.project;
         linkedProjectWrap.append(linkedProjectIcon, linkedProject);
         
-        if (task.dueDate === "") {
-            console.log(dueDate.value)
-            bottomInfoLine.append(linkedProjectWrap);
-        } else {
-            console.log(dueDate.value)
+        // if (task.dueDate === "") {
+        //     console.log(dueDate.value)
+        //     bottomInfoLine.append(linkedProjectWrap);
+        // } else {
+        //     console.log(dueDate.value)
             bottomInfoLine.append(dueDateWrap, linkedProjectWrap);
-        }
+        // }
         taskInfoSecondDiv.append(taskName, taskDescription, bottomInfoLine)
 
         // taskInfoWrap.append(taskLeftSection, taskName, taskDescription, bottomInfoLine);
@@ -303,8 +303,7 @@ export default class RenderElement {
         const addTaskButton = document.createElement('button');
         addTaskButton.className = "add-task-button";
         addTaskButton.textContent = "+ Add task";
-        console.log(addTaskButton)
-
+      
         header.append(name, numberOfTasksSpan, addTaskButton);
         return header;
     };
