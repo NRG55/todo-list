@@ -22,6 +22,13 @@ button {
     padding: 8px 12px;   
 }
 
+input, textarea, select, option {   
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid rgb(201, 196, 196);
+    outline: none;
+}
+
 .left-sidebar h3 {
     padding: 8px 12px; 
 }
@@ -29,7 +36,7 @@ button {
 .main-content { 
     display: grid;
     grid-template-columns: 240px auto; 
-    height: calc(100% - 2.5rem);     
+    height: calc(100% - 2.5rem);       
 }
 
 .left-sidebar {
@@ -56,6 +63,10 @@ button {
 
     &:focus {
         background-color: #ebe4dc;
+
+       .material-symbols-outlined {
+            color:rgb(241, 66, 66);
+        }
     }
 }
 
@@ -72,7 +83,7 @@ button {
     color: grey;
 
     &:hover {
-        color: red;
+        color: rgb(238, 65, 65);
     }
 }
 
@@ -91,7 +102,7 @@ button {
 
 .task-container-header {
     display: grid;
-    grid-template-columns: auto 1fr 100px;
+    grid-template-columns: auto 1fr 120px;
     padding: 1rem; 
   
     gap: 4px;
@@ -113,19 +124,31 @@ button {
     font-size: 16px;  
   }
 
+.add-task-button {
+   display: flex;
+   align-items: center;
+   gap: 4px
+}
+.add-task-button-icon {
+    color:rgb(245, 100, 100);
+    font-size: 24px;   
+}
+
 .task-info-first-div .material-symbols-outlined {  
     font-size: 24px; 
     padding-top: 0; 
+    transform: rotate(90deg);
 }
 
 .task-bottom-info-line .material-symbols-outlined {  
     font-size: 12px;  
-    margin-top: -1px;   
+    margin-top: -1px;
+    color: rgb(185, 182, 182);   
 }
 
 .task-item {    
     display: grid;
-    grid-template-columns: 40px 1fr;
+    grid-template-columns: 52px 1fr;
     border-top: 1px solid rgb(228, 225, 225);
     padding: 1rem 0;
     gap: 0.5rem;   
@@ -140,15 +163,17 @@ button {
 }
 
 .task-priority-low {
-    color: rgb(226, 226, 29);
+    color: rgb(148, 194, 171);
 }
 
 .task-priority-medium {
-    color: rgb(223, 172, 79);
+    color: rgb(219, 181, 110);
+    padding-left: 4px;
 }
 
 .task-priority-high {
-    color: rgb(253, 84, 84);
+    color: rgb(245, 142, 142);
+    padding-left: 8px;
 }
 
 .task-bottom-info-line {
@@ -182,6 +207,20 @@ button {
 
 .tasks-span {
     color: rgb(145, 143, 143);
+}
+
+.project-form-buttons-container {
+    display: flex;
+    justify-content: space-between;    
+}
+
+#project-form button:hover {
+   color:rgb(243, 67, 67);
+}
+
+.error {
+    border-color: rgb(245, 59, 59);
+    /* color: red; */
 }
 
 

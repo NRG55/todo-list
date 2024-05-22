@@ -5,20 +5,24 @@ export function taskPriorityHandler(task) {
         // taskPrioritySpan.className = "priority-span"
         taskPrioritySpan.classList.add('material-symbols-outlined');
         // taskPrioritySpan.textContent = 'remove';
-         taskPrioritySpan.textContent = 'keyboard_arrow_right';
+         
     // const prioritySpan = document.querySelector('.priority-span');
     // console.log(taskPrioritySpan)
-    if (task.priority == 'no priority') {
-        taskPrioritySpan.classList.add('task-no-priority');
-      }
+    // if (task.priority == 'no priority') {
+    //     taskPrioritySpan.classList.add('task-no-priority');
+    //     taskPrioritySpan.textContent = 'stat_1';
+    //   }
       if (task.priority == 'low') {
         taskPrioritySpan.classList.add('task-priority-low');
+        taskPrioritySpan.textContent = 'stat_1';
       }
       if (task.priority == 'medium') {
         taskPrioritySpan.classList.add('task-priority-medium');
+        taskPrioritySpan.textContent = 'stat_2';
       }
       if (task.priority == 'high') {
         taskPrioritySpan.classList.add('task-priority-high');
+        taskPrioritySpan.textContent = 'stat_3';
       }
 
       return taskPrioritySpan;
@@ -64,8 +68,12 @@ export function appendNumberOfTasksToAllTasksButton() {
 
 export function displayNumberOfTasksHeaderTaskContainer(project) {
     const taskContainerHeaderSpan = document.querySelector('.task-container-header-span');   
-
-    taskContainerHeaderSpan.innerHTML = `(${myProjectsList.getTasksByProject(project).length})`;    
+    
+    if (project) {
+      taskContainerHeaderSpan.innerHTML = `(${myProjectsList.getTasksByProject(project).length})`;
+      return;
+    };
+    taskContainerHeaderSpan.innerHTML = `(${myProjectsList.allTasks.length})`;       
 } 
 
 export function renderAllTasks() {

@@ -1,4 +1,3 @@
-import Project from './project.js';
 import myProjectsList from './index.js';
 import RenderElement from './elements.js';
 import { updateNumberOfTasks } from './task-display-controller.js';
@@ -14,11 +13,7 @@ export default class WebpageController {
 
     initTasksButtons() {
         const allTaskButton = document.querySelector('.all-tasks-button');
-        allTaskButton.addEventListener('click', () => {
-           
-
-            const title = allTaskButton.id;
-            // console.log(projectName)
+        allTaskButton.addEventListener('click', () => {            
             this.updateHeader("All Tasks");
             this.renderTasks(); 
             updateNumberOfTasks();        
@@ -35,7 +30,7 @@ export default class WebpageController {
 
             button.addEventListener('click', () => {
                 const projectName = button.id;
-                // console.log(projectName)
+               
                 this.updateHeader(projectName);
                 this.renderTasks(projectName); 
                 updateNumberOfTasks(projectName);          
@@ -45,17 +40,16 @@ export default class WebpageController {
     };   
 
     initLeftSidebar() {
-        const allTasksContainer = document.querySelector('.all-tasks');
-        
+        const allTasksContainer = document.querySelector('.all-tasks'); 
+        const addProjectButton = document.querySelector('.add-project-button');             
         const renderElement = new RenderElement();
-        allTasksContainer.appendChild(renderElement.leftSidebarTasksButtons());
-        const addProjectButton = document.querySelector('.add-project-button');      
+
+        allTasksContainer.appendChild(renderElement.leftSidebarTasksButtons());       
       
         addProjectButton.addEventListener('click', () => {          
             this.openAddProjectForm();                      
-        });
+        });        
         this.renderProjectButtons();
-
         this.initTasksButtons();
     };
 
@@ -73,15 +67,28 @@ export default class WebpageController {
     openAddProjectForm() {       
         const projectsContainer = document.querySelector('.left-sidebar-projects-container');
         const projectFormContainer = document.querySelector('.left-sidebar-project-form');
+        const addProjectButton = document.querySelector('.add-project-button');
         const renderElement = new RenderElement();
         const form = renderElement.projectForm();
 
         projectFormContainer.appendChild(form);
 
-        const projectForm = document.getElementById('project-form'); 
+        const projectForm = document.getElementById('project-form');
+        const projectNameInput = document.getElementById('projectName');
+        const cancelButton = document.getElementById('project-form-cancel-button');  
 
+        projectNameInput.focus();
+        addProjectButton.style.display = 'none';
+        console.log(addProjectButton)
+        projectNameInput.addEventListener('invalid', (e) => {
+            e.preventDefault();
+            projectNameInput.classList.add('error');
+            projectNameInput.focus();
+          }, false);
+       
         projectForm.addEventListener("submit", (event) => {
-            event.preventDefault();
+            event.preventDefault();           
+
             myProjectsList.addProject(projectName.value);
             const project = projectName.value;            
                
@@ -89,8 +96,14 @@ export default class WebpageController {
             projectFormContainer.innerHTML = "";
 
             this.renderProjectButtons(); 
-            updateNumberOfTasks(project);                               
-        });        
+            updateNumberOfTasks(project);
+            addProjectButton.style.display = 'block';                               
+        }); 
+        
+         cancelButton.addEventListener('click', () => {
+            projectFormContainer.innerHTML = "";
+            addProjectButton.style.display = 'block';     
+        });
     };
     
     initTasksContainer() {
@@ -158,6 +171,10 @@ export default class WebpageController {
            
             tasksContainer.appendChild(task);
         });
-    };   
+    }; 
+    
+    hideAddProjectButton() {
+
+    }
 };
 

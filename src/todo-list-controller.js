@@ -27,6 +27,10 @@ export default class ProjectTaskList {
     }
 
     addProject(value) {
+        if (this.projects.some((project) => project.name === value)) {
+           return console.log('Project exists!')
+        };
+               
         this.#projects.push(new Project(value));
     };
 

@@ -61,7 +61,7 @@ export default class RenderElement {
         iconSpan.classList.add('material-symbols-outlined');
         iconSpan.textContent = 'folder'       
 
-        const text = document.createElement("div");
+        const text = document.createElement('span');
         text.textContent = project;
 
         const settings = document.createElement('div');        
@@ -112,21 +112,24 @@ export default class RenderElement {
         projectInput.id = 'projectName';
         projectInput.className = 'input-new-project';
         projectInput.placeholder = 'Project name';
-        projectInput.focus();
+        projectInput.required = true;        
 
         const buttonsContainer = document.createElement('div');
+        buttonsContainer.classList.add('project-form-buttons-container');
 
         const addButton = document.createElement('button');
         addButton.textContent = 'Add'; 
         addButton.setAttribute('type', 'submit')
-        addButton.id ='project-form-add-button';
+        addButton.id ='project-form-submit-button';
         
         const cancelButton = document.createElement('button');
-        cancelButton.textContent = 'Cancel'; 
+        cancelButton.setAttribute('type', 'button');
+        cancelButton.textContent = 'Cancel';
+        cancelButton.id = "project-form-cancel-button";
        
         buttonsContainer.appendChild(addButton);
         buttonsContainer.appendChild(cancelButton);
-        addProjectForm.append(projectInput);
+        addProjectForm.append(projectInput);        
         addProjectForm.append(buttonsContainer);
 
         return addProjectForm;
@@ -302,9 +305,17 @@ export default class RenderElement {
         
         const addTaskButton = document.createElement('button');
         addTaskButton.className = "add-task-button";
-        addTaskButton.textContent = "+ Add task";
-      
+
+        const iconSpan = document.createElement('span');
+        iconSpan.classList.add('material-symbols-outlined', 'add-task-button-icon');
+        iconSpan.textContent = 'add_circle'       
+
+        const text = document.createElement('span');
+        text.textContent = "Add task";
+        
+        addTaskButton.append(iconSpan, text);      
         header.append(name, numberOfTasksSpan, addTaskButton);
+
         return header;
     };
 
