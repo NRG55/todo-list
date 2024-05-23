@@ -46,6 +46,13 @@ input, textarea, select, option {
     background-color:#f9f6f3;  
 }
 
+.project-warning {
+    position: absolute;
+    margin-top: -1rem;
+    color: rgb(247, 49, 49);
+    font-size: 14px;
+}
+
 .all-tasks-button,
 .today-tasks-button,
 .overdue-tasks-button,
@@ -75,8 +82,31 @@ input, textarea, select, option {
 } */
 
 .left-sidebar-project-button { 
-    grid-template-columns: auto 1fr 20px 20px;   
+    /* grid-template-columns: auto 1fr 20px; */
+    position: relative; 
+
+    .tasks-span {        
+        color: rgb(145, 143, 143);
+    }
+    
+    .project-button-settings {
+        display: none;
+        position: absolute;
+        left: 164px;
+    }
+
+   &:hover  {
+    .tasks-span {        
+       display: none;
+    }
+
+    .project-button-settings {
+        display: block;
+     }
+   }
 }
+
+
 
 .add-project-button,
 .add-task-button {  
@@ -112,7 +142,9 @@ input, textarea, select, option {
 .left-sidebar-projects-container,
  .left-sidebar-all-tasks {
     display: grid;
+    position: relative;
     grid-template-columns: 1fr;
+    padding-bottom: 1rem ;
   }
 
 .tasks-main {
@@ -137,7 +169,7 @@ input, textarea, select, option {
 .task-info-first-div .material-symbols-outlined {  
     font-size: 24px; 
     padding-top: 0; 
-    transform: rotate(90deg);
+    /* transform: rotate(90deg); */
 }
 
 .task-bottom-info-line .material-symbols-outlined {  
@@ -167,13 +199,11 @@ input, textarea, select, option {
 }
 
 .task-priority-medium {
-    color: rgb(219, 181, 110);
-    padding-left: 4px;
+    color: rgb(219, 181, 110);   
 }
 
 .task-priority-high {
-    color: rgb(245, 142, 142);
-    padding-left: 8px;
+    color: rgb(245, 142, 142);  
 }
 
 .task-bottom-info-line {
@@ -205,10 +235,6 @@ input, textarea, select, option {
     align-items: center;   
 }
 
-.tasks-span {
-    color: rgb(145, 143, 143);
-}
-
 .project-form-buttons-container {
     display: flex;
     justify-content: space-between;    
@@ -222,6 +248,8 @@ input, textarea, select, option {
     border-color: rgb(245, 59, 59);
     /* color: red; */
 }
+
+
 
 
 

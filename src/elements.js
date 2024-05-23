@@ -64,7 +64,7 @@ export default class RenderElement {
         const text = document.createElement('span');
         text.textContent = project;
 
-        const settings = document.createElement('div');        
+        const settings = document.createElement('span');        
         settings.className = 'project-button-settings';
         settings.appendChild(this.projectSettingsButton());
 
@@ -106,6 +106,9 @@ export default class RenderElement {
     projectForm() {
         const addProjectForm = document.createElement('form');
         addProjectForm.setAttribute("id", "project-form");        
+        
+        const projectWarning = document.createElement('div');
+        projectWarning.classList.add('project-warning');
 
         const projectInput = document.createElement('input');
         projectInput.type = 'text';     
@@ -129,8 +132,8 @@ export default class RenderElement {
        
         buttonsContainer.appendChild(addButton);
         buttonsContainer.appendChild(cancelButton);
-        addProjectForm.append(projectInput);        
-        addProjectForm.append(buttonsContainer);
+        addProjectForm.append(projectWarning, projectInput, buttonsContainer);        
+        // addProjectForm.append(buttonsContainer);
 
         return addProjectForm;
     };

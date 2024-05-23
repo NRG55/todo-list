@@ -30,8 +30,16 @@ export default class ProjectTaskList {
         if (this.projects.some((project) => project.name === value)) {
            return console.log('Project exists!')
         };
-               
+
         this.#projects.push(new Project(value));
+    };
+
+    isProjectExists(value) {
+        if (this.projects.some((project) => project.name === value)) {
+            return true;
+         };
+         
+         return false;
     };
 
     clearProjects() {

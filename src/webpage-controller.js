@@ -81,13 +81,23 @@ export default class WebpageController {
         addProjectButton.style.display = 'none';
         console.log(addProjectButton)
         projectNameInput.addEventListener('invalid', (e) => {
-            e.preventDefault();
+            e.preventDefault(); 
+            
             projectNameInput.classList.add('error');
             projectNameInput.focus();
           }, false);
        
         projectForm.addEventListener("submit", (event) => {
-            event.preventDefault();           
+            event.preventDefault(); 
+           
+            if(myProjectsList.isProjectExists(projectName.value)) {
+                const warning = document.querySelector('.project-warning');
+
+                warning.innerHTML = "Project already exists";
+                projectNameInput.classList.add('error');
+                projectNameInput.focus();
+                return;
+            };            
 
             myProjectsList.addProject(projectName.value);
             const project = projectName.value;            
@@ -100,7 +110,7 @@ export default class WebpageController {
             addProjectButton.style.display = 'block';                               
         }); 
         
-         cancelButton.addEventListener('click', () => {
+        cancelButton.addEventListener('click', () => {
             projectFormContainer.innerHTML = "";
             addProjectButton.style.display = 'block';     
         });
