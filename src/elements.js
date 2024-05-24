@@ -1,5 +1,5 @@
 import myProjectsList from "./index.js";
-
+import WebpageController from "./webpage-controller.js";
 import { handleDate, setTodayDate } from "./task-form-controller.js";
 import { addProjectsToSelectBox, selectCurrentProject } from "./task-form-controller.js";
 import { taskPriorityHandler } from "./task-display-controller.js";
@@ -62,46 +62,90 @@ export default class RenderElement {
         iconSpan.textContent = 'folder'       
 
         const text = document.createElement('span');
+        text.classList.add('project-button-name-span');
         text.textContent = project;
 
-        const settings = document.createElement('span');        
-        settings.className = 'project-button-settings';
-        settings.appendChild(this.projectSettingsButton());
+        const settingsIcon = document.createElement('span');        
+        settingsIcon.classList.add( 'material-symbols-outlined', 'project-button-settings');
+        settingsIcon.textContent = 'more_vert'; 
+        // settings.appendChild(this.projectSettingsMenu());
 
-        projectButton.append(iconSpan, text, settings);       
+        settingsIcon.onclick = (e) => {           
+            projectSettingsPopup.classList.add('visible');
+        };
+
+        const projectSettingsPopup = document.createElement('div');
+        projectSettingsPopup.classList.add('project-settings-popup', 'hidden');
+        
+        const deleteButton = document.createElement('button');
+        deleteButton.classList.add('project-popup-delete-button');
+        deleteButton.textContent = "Delete";
+        projectSettingsPopup.appendChild(deleteButton);
+        // settingsIcon.appendChild(projectSettingsPopup); 
+
+        deleteButton.onclick = (e) => {
+            const projectName = e.target.parentNode.parentNode.id;
+        
+            myProjectsList.deleteProjectAndProjectTasks(projectName);
+            projectSettingsPopup.classList.remove('visible');
+
+            const webpageController = new WebpageController();
+            webpageController.renderProjectButtons();
+            console.log(myProjectsList)
+           
+        };
+    
+
+        projectButton.append(iconSpan, text, settingsIcon, projectSettingsPopup);       
 
         return projectButton;
     }; 
 
-    projectSettingsButton() {
-        // const button = document.createElement('button');
-        const buttonSpan = document.createElement('span');
-        // taskPrioritySpan.className = "priority-span"
-        buttonSpan.classList.add('material-symbols-outlined');
-        buttonSpan.textContent = 'more_vert';
+    // projectSettingsMenu() {       
+    //     const menuSpan = document.createElement('span');
 
-        // button.appendChild(buttonSpan);
-        // return button;
-        return buttonSpan;
+    //     menuSpan.className = 'project-settings-menu';
+    //     menuSpan.classList.add('material-symbols-outlined');
+    //     menuSpan.textContent = 'more_vert';                
+    //     // menuSpan.append(this.projectEditButton(), this. projectDeleteButton()); 
+    //     return menuSpan;
+    // }; 
+    
+    projectSettingsOptions() {
+
+    const optionsWrap = document.createElement('div');
+    optionsWrap.classList.add('project-button-options');
+
+    const editButton = document.createElement('button');
+    editButton.classList.add('project-button-edit');
+    editButton.textContent = 'Edit';
+    optionsWrap.appendChild(editButton);
+
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('project-delete');
+    deleteButton.textContent = 'Delete';
+    optionsWrap.appendChild(deleteButton);    
+
+    return optionsWrap;
     };
 
-    projectDeleteButton() {
-        const button = document.createElement('button');
+    // projectDeleteButton() {
+    //     const deleteButton = document.createElement('button');
 
-        buttonSpan.classList.add('project-button-delete');
-        button.innerHTML = "Delete";
+    //     deleteButton.classList.add('project-button-delete', 'setting-buttons');
+    //     deleteButton.innerHTML = "Delete";
 
-        return button;
-    };
+    //     return deleteButton;
+    // };
 
-    projectEditButton() {
-        const button = document.createElement('button');
+    // projectEditButton() {
+    //     const button = document.createElement('button');
 
-        buttonSpan.classList.add('project-button-edit');
-        button.innerHTML = "Edit";
+    //     button.classList.add('project-button-edit', 'setting-buttons');
+    //     button.innerHTML = "Edit";
 
-        return button;
-    };
+    //     return button;
+    // };
         
     projectForm() {
         const addProjectForm = document.createElement('form');

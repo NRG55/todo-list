@@ -17,11 +17,13 @@ export default class WebpageController {
             this.updateHeader("All Tasks");
             this.renderTasks(); 
             updateNumberOfTasks();        
-        })
-    }
+        });
+    };
 
     renderProjectButtons() {
         const addProjectContainer = document.querySelector('.left-sidebar-projects-container');
+        addProjectContainer.innerHTML = "";
+        
         const renderElement = new RenderElement();
         const projects = myProjectsList.projects;
 
@@ -33,15 +35,31 @@ export default class WebpageController {
                
                 this.updateHeader(projectName);
                 this.renderTasks(projectName); 
-                updateNumberOfTasks(projectName);          
-            });
+                updateNumberOfTasks(projectName);                
+            });           
+
             addProjectContainer.appendChild(button);
-        });      
-    };   
+            
+        });        
+    }; 
+    
+    // initProjectSettingsButton() {
+    // const settings = document.querySelectorAll('.project-button-settings');
+    // const renderElement = new RenderElement(); 
+
+    // settings.forEach((button)=>{
+    //      button.addEventListener('click', (e) => {
+    //      const settingsTest = e.target.closest('.project-button-settings');
+
+    //      settingsTest.appendChild(renderElement.projectSettingsOptions());
+    //      });
+    //   });
+    // };
 
     initLeftSidebar() {
         const allTasksContainer = document.querySelector('.all-tasks'); 
-        const addProjectButton = document.querySelector('.add-project-button');             
+        const addProjectButton = document.querySelector('.add-project-button');  
+       
         const renderElement = new RenderElement();
 
         allTasksContainer.appendChild(renderElement.leftSidebarTasksButtons());       
@@ -50,7 +68,8 @@ export default class WebpageController {
             this.openAddProjectForm();                      
         });        
         this.renderProjectButtons();
-        this.initTasksButtons();
+        this.initTasksButtons(); 
+        // this.initProjectSettingsButton();  
     };
 
     updateHeader(title) {
@@ -79,7 +98,7 @@ export default class WebpageController {
 
         projectNameInput.focus();
         addProjectButton.style.display = 'none';
-        console.log(addProjectButton)
+       
         projectNameInput.addEventListener('invalid', (e) => {
             e.preventDefault(); 
             

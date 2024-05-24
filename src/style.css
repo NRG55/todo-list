@@ -74,25 +74,24 @@ input, textarea, select, option {
        .material-symbols-outlined {
             color:rgb(241, 66, 66);
         }
-    }
+    }    
 }
 
-/* .all-tasks-button:hover {
-    background-color: black;
-} */
+.tasks-span {        
+    color: rgb(145, 143, 143);
+}
 
 .left-sidebar-project-button { 
-    /* grid-template-columns: auto 1fr 20px; */
-    position: relative; 
-
-    .tasks-span {        
-        color: rgb(145, 143, 143);
-    }
+    position: relative;    
     
     .project-button-settings {
         display: none;
         position: absolute;
         left: 164px;
+    }
+    
+    .setting-buttons{
+        display: none;
     }
 
    &:hover  {
@@ -247,6 +246,14 @@ input, textarea, select, option {
 .error {
     border-color: rgb(245, 59, 59);
     /* color: red; */
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
 }
 
 

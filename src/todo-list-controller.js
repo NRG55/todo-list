@@ -38,7 +38,7 @@ export default class ProjectTaskList {
         if (this.projects.some((project) => project.name === value)) {
             return true;
          };
-         
+
          return false;
     };
 
@@ -60,5 +60,10 @@ export default class ProjectTaskList {
     getTasksByProject(project) {
         let tasks = this.#allTasks.filter(element => element.project === project);
         return tasks;
+    };
+
+    deleteProjectAndProjectTasks(project) {
+        this.#allTasks = this.#allTasks.filter(element => element.project !== project);     
+        this.#projects = this.#projects.filter(element => element.name !== project);            
     };
 };
