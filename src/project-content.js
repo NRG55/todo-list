@@ -5,4 +5,8 @@ import myProjectsList from "./index.js"
 //     return number;
 // }
 
-
+export default class ProjectContent {
+    updateProjectName(projectName) {
+        
+    }
+}

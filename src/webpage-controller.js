@@ -1,14 +1,15 @@
 import myProjectsList from './index.js';
 import RenderElement from './elements.js';
-import { updateNumberOfTasks } from './task-display-controller.js';
+import { updateNumberOfTasks, updateNumberOfTasksAllTasksButton } from './task-display-controller.js';
 import { selectCurrentProject } from './task-form-controller.js';
 import { setTodayDate } from './task-form-controller.js';
 
 
 export default class WebpageController {
-    renderHomepage() {        
+    renderHomepage() { 
+        this.initTasksContainer();    
         this.initLeftSidebar();        
-        this.initTasksContainer();                   
+                  
     };
 
     initTasksButtons() {
@@ -16,7 +17,7 @@ export default class WebpageController {
         allTaskButton.addEventListener('click', () => {            
             this.updateHeader("All Tasks");
             this.renderTasks(); 
-            updateNumberOfTasks();        
+           updateNumberOfTasks();  
         });
     };
 
@@ -27,16 +28,37 @@ export default class WebpageController {
         const renderElement = new RenderElement();
         const projects = myProjectsList.projects;
 
-        projects.forEach((element) => {
-            const button = renderElement.leftSidebarProjectButton(element.name);           
-
-            button.addEventListener('click', () => {
-                const projectName = button.id;
+        projects.forEach((element, index) => {
+            console.log(element.name)
+            const button = renderElement.leftSidebarProjectButton(element.name, index);           
+            
+            // button.addEventListener('click', (e) => {
+            //     const projectName = button.id;
+            //     console.log(e.target)
+            //      if (e.target.classList.contains("project-popup-edit-button", "project-rename-input-container")) { button.classList.remove("left-sidebar-project-button");
+                   
+            //         console.log('click')
+            //         return;
+            //      } else {
+            //     this.updateHeader(projectName);
+            //     this.renderTasks(projectName); 
+            //     updateNumberOfTasks(projectName); 
+            //      }               
+            // });
+            
+            button.onclick = (e)=> {
+                    const projectName = button.id;
+                    console.log(e.target)
+                     if (e.target.classList.contains("project-popup-edit-button") || e.target.classList.contains("project-rename-ok-button")) { button.classList.remove("left-sidebar-project-button");
+                       
+                        console.log('click')
+                        return;
+                     } else {
+                    this.updateHeader(projectName);
+                    this.renderTasks(projectName); 
+                    updateNumberOfTasks(projectName); 
+                     } }              
                
-                this.updateHeader(projectName);
-                this.renderTasks(projectName); 
-                updateNumberOfTasks(projectName);                
-            });           
 
             addProjectContainer.appendChild(button);
             
@@ -68,7 +90,9 @@ export default class WebpageController {
             this.openAddProjectForm();                      
         });        
         this.renderProjectButtons();
-        this.initTasksButtons(); 
+        updateNumberOfTasks();
+        this.initTasksButtons();
+         
         // this.initProjectSettingsButton();  
     };
 
@@ -140,7 +164,9 @@ export default class WebpageController {
         const renderElement = new RenderElement();
         const header = renderElement.taskContainerHeader();
 
-        tasksContainer.appendChild(header); 
+        tasksContainer.appendChild(header);
+        console.log(tasksContainer)
+        this.updateHeader('tasks') 
 
         const addTask = document.querySelector('.add-task-button');
        
@@ -170,7 +196,7 @@ export default class WebpageController {
             this.updateHeader(selectProject.value);
             updateNumberOfTasks(selectProject.value); 
 
-            console.log(myProjectsList.allTasks.length) 
+            console.log(myProjectsList.tasks.length) 
 
             dialog.close();
         })
@@ -195,7 +221,7 @@ export default class WebpageController {
             return;
         }; 
         
-        myProjectsList.allTasks.forEach((element) => {
+        myProjectsList.tasks.forEach((element) => {
             const task = renderElement.taskContent(element);
            
             tasksContainer.appendChild(task);

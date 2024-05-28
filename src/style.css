@@ -101,11 +101,74 @@ input, textarea, select, option {
 
     .project-button-settings {
         display: block;
-     }
-   }
+     }    
+   }  
 }
 
+.project-rename-input-container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr 1fr; 
+    align-items: center;
+    padding: 4px;
+    padding-left: 12px; 
+    gap: 4px;  
+   
+    button {
+        padding: 0;
+    }
 
+    input {
+        padding: 4px;        
+        font-size: 12px;       
+    }
+
+    span {
+        font-size: 16px;
+    }
+
+    > span {
+        color: rgb(241, 66, 66);
+    }   
+ } 
+
+ .remove-padding {
+    padding: 0;
+ }
+
+ .project-rename-ok-button,
+ .project-rename-cancel-button {
+     padding: 0;
+     /* padding-left: 4px;    */
+ }
+
+ .project-rename-ok-button:hover {
+    color: green;
+ }
+ 
+ .project-rename-cancel-button:hover {
+    color: rgb(241, 66, 66);
+ }
+
+
+.project-settings-popup {
+    position: absolute;
+    margin-top: -100px;
+    left: 140px;
+    /* background-color: #ebe4dc; */
+   
+   
+}
+.project-settings-popup > button {
+    padding: 8px 0;
+    width: 100%;
+    border: 1px solid #ebe4dc;
+    background-color: #f9f6f3;
+    font-size: 12px;
+
+    &:hover {
+        color: red;
+    }    
+}
 
 .add-project-button,
 .add-task-button {  

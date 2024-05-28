@@ -4,11 +4,11 @@ import Task from './task.js';
 
 export default class ProjectTaskList {
     #projects;
-    #allTasks
+    #tasks
 
     constructor() {
         this.#projects = [];
-        this.#allTasks = [];        
+        this.#tasks = [];
         this.#projects.push(new Project('Project1'));
         this.#projects.push(new Project('Project2'));
         this.#projects.push(new Project('Project3'));
@@ -22,24 +22,24 @@ export default class ProjectTaskList {
         return this.#projects;
     };
 
-    get allTasks() {
-        return this.#allTasks;
-    }
+    get tasks() {
+        return this.#tasks;
+    };
 
     addProject(value) {
-        if (this.projects.some((project) => project.name === value)) {
-           return console.log('Project exists!')
+        if (this.#projects.some((project) => project.name === value)) {
+            return console.log('Project exists!')
         };
 
         this.#projects.push(new Project(value));
     };
 
     isProjectExists(value) {
-        if (this.projects.some((project) => project.name === value)) {
+        if (this.#projects.some((project) => project.name === value)) {
             return true;
-         };
+        };
 
-         return false;
+        return false;
     };
 
     clearProjects() {
@@ -48,7 +48,7 @@ export default class ProjectTaskList {
 
     addTask(name, description, notes, dueDate, priority, project) {
         // const newTask = new Task(name, description, notes, dueDate, priority, project);        
-        this.#allTasks.push(new Task(name, description, notes, dueDate, priority, project))
+        this.#tasks.push(new Task(name, description, notes, dueDate, priority, project));
         // if(project === 'tasks') { 
         //   this.#allTasks.push(newTask)
         // } else {
@@ -58,12 +58,37 @@ export default class ProjectTaskList {
     };
 
     getTasksByProject(project) {
-        let tasks = this.#allTasks.filter(element => element.project === project);
+        let tasks = this.#tasks.filter(element => element.project === project);
         return tasks;
     };
 
-    deleteProjectAndProjectTasks(project) {
-        this.#allTasks = this.#allTasks.filter(element => element.project !== project);     
-        this.#projects = this.#projects.filter(element => element.name !== project);            
+    deleteProject(project) {
+        this.#projects = this.#projects.filter(element => element.name !== project);
+    };
+
+    deleteTasksByProject(project) {
+        this.#tasks = this.#tasks.filter(element => element.project !== project);
+    };
+
+
+    updateProjectName(index, newName) {
+        // this.#projects.forEach(element => {
+        //    if (element.name === oldName) {
+        //     element.name = newName;
+        //    };
+        // });   
+
+        // let index = this.#projects.findIndex((element) => element.name === oldName);
+        this.#projects[index].name = newName;
+
+    };
+
+    updateProjectNameInTasks(oldName, newName) {
+         this.#tasks.forEach(element => {
+           if (element.project === oldName) {
+            element.project = newName;
+           };
+        });   
     };
 };
+

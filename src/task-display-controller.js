@@ -1,4 +1,4 @@
-import myProjectsList from ".";
+import myProjectsList from "./index.js";
 
 export function taskPriorityHandler(task) {
     const taskPrioritySpan = document.createElement("span");
@@ -29,12 +29,12 @@ export function taskPriorityHandler(task) {
 };
 
 export function updateNumberOfTasks(project) {
-    displayNumberOfTasksHeaderTaskContainer(project);
-    appendNumberOfTasksToAllTasksButton();
-    appendNumberOfTasksToProjectButton();
+    updateNumberOfTasksHeader(project);
+    updateNumberOfTasksAllTasksButton();
+    updateNumberOfTasksProjectButtons();
 };
 
-export function appendNumberOfTasksToProjectButton() {    
+export function updateNumberOfTasksProjectButtons() {    
     const projectButtons = document.querySelectorAll('.left-sidebar-project-button');
 
     projectButtons.forEach((button) => {       
@@ -52,7 +52,7 @@ export function appendNumberOfTasksToProjectButton() {
     });
 };
 
-export function appendNumberOfTasksToAllTasksButton() {    
+export function updateNumberOfTasksAllTasksButton() {    
         const allTasksButton = document.querySelector('.all-tasks-button');       
         const taskNumberSpan = document.createElement('span');
         taskNumberSpan.className = "tasks-span";
@@ -61,19 +61,19 @@ export function appendNumberOfTasksToAllTasksButton() {
            allTasksButton.querySelector('.tasks-span').remove();
         };
         
-        const tasksNumber = myProjectsList.allTasks.length;
+        const tasksNumber = myProjectsList.tasks.length;
         taskNumberSpan.innerHTML = tasksNumber;       
         allTasksButton.appendChild(taskNumberSpan);   
 };
 
-export function displayNumberOfTasksHeaderTaskContainer(project) {
+export function updateNumberOfTasksHeader(project) {
     const taskContainerHeaderSpan = document.querySelector('.task-container-header-span');   
     
     if (project) {
       taskContainerHeaderSpan.innerHTML = `(${myProjectsList.getTasksByProject(project).length})`;
       return;
     };
-    taskContainerHeaderSpan.innerHTML = `(${myProjectsList.allTasks.length})`;       
+    taskContainerHeaderSpan.innerHTML = `(${myProjectsList.tasks.length})`;       
 } 
 
 export function renderAllTasks() {
