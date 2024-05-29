@@ -70,12 +70,30 @@ export default class RenderElement {
         settingsIcon.classList.add('material-symbols-outlined', 'project-button-settings');
         settingsIcon.textContent = 'more_vert';       
 
-        settingsIcon.onclick = () => {
-            projectSettingsPopup.classList.add('visible');
-        };
-
         const projectSettingsPopup = document.createElement('div');
         projectSettingsPopup.classList.add('project-settings-popup', 'hidden');
+        
+        settingsIcon.onclick = () => {
+            // projectSettingsPopup.classList.add('visible');
+
+            const popups = document.querySelectorAll(".project-settings-popup");
+
+            popups.forEach((element) => {
+                element.classList.add("hidden");
+            });
+
+            if (projectSettingsPopup.classList.contains("hidden")) {
+                projectSettingsPopup.classList.remove("hidden");
+            } else {
+                projectSettingsPopup.classList.remove("hidden");
+            };
+
+            window.onclick =  (e) => {
+                if (!e.target.classList.contains("project-button-settings")) {
+                    projectSettingsPopup.classList.add('hidden');
+                };
+            };    
+        };
 
         const deleteButton = document.createElement('button');
         deleteButton.classList.add('project-popup-delete-button');
@@ -99,35 +117,46 @@ export default class RenderElement {
 
         editButton.onclick = () => {            
             const currentProjectButton = document.getElementById(`${project}`);
-            // currentProjectButton.onclick = null;
-         
+            // currentProjectButton.onclick = null;         
           
             currentProjectButton.innerHTML = "";
             currentProjectButton.classList.add('remove-padding');
            
             currentProjectButton.append(this.projectRenameElement(project));
             const okButton = document.querySelector(".project-rename-ok-button");
+            const cancelButton = document.querySelector(".project-rename-cancel-button");
             const renameInput = document.querySelector(".project-rename-input");
  
             const input = document.querySelector('.project-rename-input');
             input.value = project;
             input.focus();
             
-            okButton.onclick = () => { 
-                console.log('HEY')
-                const newName = renameInput.value.trim();            
+            okButton.onclick = () => {                
+                const newName = renameInput.value.trim(); 
+
                 myProjectsList.updateProjectName(index, newName);
                 myProjectsList.updateProjectNameInTasks(project, newName)           
     
                 const webpageController = new WebpageController();
                 webpageController.renderProjectButtons();
-                webpageController.updateHeader(newName);
-                // webpageController.renderTasks(newName); 
-                updateNumberOfTasks(newName); 
-                console.log(myProjectsList)
-    
-                
-            }
+                webpageController.updateHeader(newName);              
+                webpageController.renderTasks();
+                updateNumberOfTasks(newName);
+
+                const newProjectButton = document.getElementById(`${newName}`);
+                newProjectButton.focus();                                            
+            };
+
+            cancelButton.onclick = () => {
+                // const webpageController = new WebpageController();
+                // webpageController.renderProjectButtons();
+                currentProjectButton.innerHTML = "";
+                currentProjectButton.classList.remove('remove-padding');
+                currentProjectButton.append(iconSpan, text, settingsIcon, projectSettingsPopup);
+                projectSettingsPopup.classList.remove('visible');
+                currentProjectButton.classList.add("left-sidebar-project-button");
+                currentProjectButton.focus();
+            };
         };
 
         projectButton.append(iconSpan, text, settingsIcon, projectSettingsPopup);
