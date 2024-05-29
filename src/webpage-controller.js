@@ -30,22 +30,7 @@ export default class WebpageController {
 
         projects.forEach((element, index) => {
             console.log(element.name)
-            const button = renderElement.leftSidebarProjectButton(element.name, index);           
-            
-            // button.addEventListener('click', (e) => {
-            //     const projectName = button.id;
-            //     console.log(e.target)
-            //      if (e.target.classList.contains("project-popup-edit-button", "project-rename-input-container")) { button.classList.remove("left-sidebar-project-button");
-                   
-            //         console.log('click')
-            //         return;
-            //      } else {
-            //     this.updateHeader(projectName);
-            //     this.renderTasks(projectName); 
-            //     updateNumberOfTasks(projectName); 
-            //      }               
-            // });
-            
+            const button = renderElement.leftSidebarProjectButton(element.name, index);            
             button.onclick = (e)=> {
                     const projectName = button.id;
                     console.log(e.target)
@@ -56,27 +41,15 @@ export default class WebpageController {
                      } else {
                     this.updateHeader(projectName);
                     this.renderTasks(projectName); 
-                    updateNumberOfTasks(projectName); 
-                     } }              
+                    updateNumberOfTasks(projectName);                   
+                    this.removeLinkedProject();
+                     }};              
                
 
             addProjectContainer.appendChild(button);
             
         });        
-    }; 
-    
-    // initProjectSettingsButton() {
-    // const settings = document.querySelectorAll('.project-button-settings');
-    // const renderElement = new RenderElement(); 
-
-    // settings.forEach((button)=>{
-    //      button.addEventListener('click', (e) => {
-    //      const settingsTest = e.target.closest('.project-button-settings');
-
-    //      settingsTest.appendChild(renderElement.projectSettingsOptions());
-    //      });
-    //   });
-    // };
+    };     
 
     initLeftSidebar() {
         const allTasksContainer = document.querySelector('.all-tasks'); 
@@ -195,6 +168,7 @@ export default class WebpageController {
             this.renderTasks(selectProject.value);
             this.updateHeader(selectProject.value);
             updateNumberOfTasks(selectProject.value); 
+            this.removeLinkedProject();
 
             console.log(myProjectsList.tasks.length) 
 
@@ -224,12 +198,21 @@ export default class WebpageController {
         myProjectsList.tasks.forEach((element) => {
             const task = renderElement.taskContent(element);
            
-            tasksContainer.appendChild(task);
+            tasksContainer.appendChild(task);          
         });
+       
     }; 
     
-    hideAddProjectButton() {
+    removeLinkedProject() {
+        const headerProjectName = document.querySelector(".task-container-header-name").innerHTML;
+        const linkedProjectContainers = document.querySelectorAll(".linked-project-container");
+        const linkedProject = document.querySelector(".linked-project");
 
-    }
+        linkedProjectContainers.forEach((element) => {          
+            if (headerProjectName === linkedProject.innerHTML) {
+               element.remove();
+            };
+        });
+    };
 };
 

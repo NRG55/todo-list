@@ -355,14 +355,9 @@ export default class RenderElement {
 
         const taskInfoFirstDiv = document.createElement('div');
         taskInfoFirstDiv.classList.add('task-info-first-div');
-        // const taskPrioritySpan = document.createElement("span");
-        // taskPrioritySpan.className = "priority-span"
-        // taskPrioritySpan.classList.add('material-symbols-outlined');
-        // taskPrioritySpan.textContent = 'pen_size_1';
-        // taskInfoFirstDiv.append(taskPrioritySpan)
-
         taskInfoFirstDiv.append(taskPriorityHandler(task));
-        taskItem.append(taskInfoFirstDiv)
+        taskItem.append(taskInfoFirstDiv);
+        
         const taskInfoSecondDiv = document.createElement('div');
         const taskName = document.createElement('h3');
         taskName.classList.add('task-name');
@@ -384,18 +379,16 @@ export default class RenderElement {
         dueDateWrap.append(dueDateIcon, dueDate);
 
         const linkedProjectWrap = document.createElement('div');
+        linkedProjectWrap.classList.add("linked-project-container");        
         const linkedProjectIcon = document.createElement('span');
         linkedProjectIcon.classList.add('material-symbols-outlined');
         linkedProjectIcon.textContent = 'folder';
         const linkedProject = document.createElement('span');
+        linkedProject.classList.add("linked-project");
         linkedProject.innerHTML = task.project;
         linkedProjectWrap.append(linkedProjectIcon, linkedProject);
 
-        // if (task.dueDate === "") {
-        //     console.log(dueDate.value)
-        //     bottomInfoLine.append(linkedProjectWrap);
-        // } else {
-        //     console.log(dueDate.value)
+     
         bottomInfoLine.append(dueDateWrap, linkedProjectWrap);
         // }
         taskInfoSecondDiv.append(taskName, taskDescription, bottomInfoLine)
