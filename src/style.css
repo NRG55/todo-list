@@ -159,6 +159,7 @@ input, textarea, select, option {
    
    
 }
+
 .project-settings-popup > button {
     padding: 8px 0;
     width: 100%;
@@ -194,15 +195,15 @@ input, textarea, select, option {
 }
 
 dialog {
-    border: 1px solid #f3efea;
-    padding: 12px;
-    background-color: #f9f6f3;   
+    border: 1px solid #f3efea;    
 }
 
 #task-form {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;   
+    gap: 8px;
+    padding: 12px;
+    background-color: #f9f6f3;   
 
     label {       
         font-size: 12px;
@@ -223,7 +224,7 @@ dialog {
     .task-form-buttons {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 8pxs;
+        gap: 8px;
         padding-top: 8px;
     }
 
@@ -236,8 +237,7 @@ dialog {
         height: calc(100% - 16px);       
     }
 
-    button {
-        /* width: 100%; */
+    button {       
         background-color: #ebe4dc;
     }
 }

@@ -160,18 +160,11 @@ export default class WebpageController {
         dialog.appendChild(form);
         setTodayDate();
 
-        const taskForm = document.getElementById('task-form');
-        const submitButton = document.querySelector(".task-form-submit-button");
+        const taskForm = document.getElementById('task-form');       
         const closeButton = document.querySelector(".task-form-close-button");
 
-            closeButton.onclick = () => {
-                
-                   dialog.close();
-                   form.reset();                  
-            };
-
         taskForm.addEventListener('submit', (event) => {
-            event.preventDefault();                
+            event.preventDefault();             
             
             myProjectsList.addTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value);           
             this.renderTasks(selectProject.value);
@@ -181,9 +174,19 @@ export default class WebpageController {
 
             console.log(myProjectsList.tasks.length); 
 
-            dialog.close();
-            
+            dialog.close();                     
+            });              
+        
+        closeButton.addEventListener('click', (e) => {
+            e.preventDefault(); 
+               dialog.close();              
+        });
+        
+        dialog.addEventListener('click', (event) => {
+            if (event.target === dialog) {
                
+                dialog.close();
+            }
         })
 
         dialog.showModal();
