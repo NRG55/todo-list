@@ -27,6 +27,7 @@ input, textarea, select, option {
     padding: 0.5rem;
     border: 1px solid rgb(201, 196, 196);
     outline: none;
+    background-color: white;
 }
 
 .left-sidebar h3 {
@@ -188,8 +189,57 @@ input, textarea, select, option {
 .task-form-dialog {
     position: fixed;
     margin: auto;
-    width: 280px;
+    width: 360px;
     margin-top: 100px;
+}
+
+dialog {
+    border: 1px solid #f3efea;
+    padding: 12px;
+    background-color: #f9f6f3;   
+}
+
+#task-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;   
+
+    label {       
+        font-size: 12px;
+    }
+    
+    .task-form-left-div {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        gap: 4px;      
+    }
+
+    .task-form-right-div {
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr auto;
+        gap: 4px;      
+    }
+
+    .task-form-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8pxs;
+        padding-top: 8px;
+    }
+
+    .task-form-submit-button {
+        color: white;
+        background-color: rgb(238, 65, 65);
+    }
+
+    textarea {
+        height: calc(100% - 16px);       
+    }
+
+    button {
+        /* width: 100%; */
+        background-color: #ebe4dc;
+    }
 }
 
 .task-container-header {

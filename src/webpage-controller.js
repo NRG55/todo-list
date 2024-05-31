@@ -161,18 +161,29 @@ export default class WebpageController {
         setTodayDate();
 
         const taskForm = document.getElementById('task-form');
+        const submitButton = document.querySelector(".task-form-submit-button");
+        const closeButton = document.querySelector(".task-form-close-button");
+
+            closeButton.onclick = () => {
+                
+                   dialog.close();
+                   form.reset();                  
+            };
 
         taskForm.addEventListener('submit', (event) => {
-            event.preventDefault();            
-            myProjectsList.addTask(title.value, description.value, notes.value, duedate.value, priority.value, selectProject.value);           
+            event.preventDefault();                
+            
+            myProjectsList.addTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value);           
             this.renderTasks(selectProject.value);
             this.updateHeader(selectProject.value);
             updateNumberOfTasks(selectProject.value); 
             this.removeLinkedProject();
 
-            console.log(myProjectsList.tasks.length) 
+            console.log(myProjectsList.tasks.length); 
 
             dialog.close();
+            
+               
         })
 
         dialog.showModal();

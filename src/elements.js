@@ -140,8 +140,10 @@ export default class RenderElement {
                 const webpageController = new WebpageController();
                 webpageController.renderProjectButtons();
                 webpageController.updateHeader(newName);              
-                webpageController.renderTasks();
+                webpageController.renderTasks(newName);
+                webpageController.removeLinkedProject();
                 updateNumberOfTasks(newName);
+                
 
                 const newProjectButton = document.getElementById(`${newName}`);
                 newProjectButton.focus();                                            
@@ -251,7 +253,10 @@ export default class RenderElement {
 
     taskForm() {
         const taskForm = document.createElement('form');
-        taskForm.setAttribute("id", "task-form")
+        taskForm.setAttribute("id", "task-form");
+
+        const taskFormLeftDiv = document.createElement('div');
+        taskFormLeftDiv.classList.add("task-form-left-div"); 
 
         const nameWrap = document.createElement('div');
         const nameLabel = document.createElement('label');
@@ -275,6 +280,8 @@ export default class RenderElement {
         descriptionInput.className = "task-form-input-description";
         descriptionWrap.append(descriptionLabel, descriptionInput);
 
+        taskFormLeftDiv.append(nameWrap, descriptionWrap);
+
         const notesWrap = document.createElement('div');
         const notesLabel = document.createElement('label');
         notesLabel.htmlFor = "notes";
@@ -284,6 +291,9 @@ export default class RenderElement {
         notesInput.id = "notes";
         notesInput.className = "task-form-input-notes";
         notesWrap.append(notesLabel, notesInput);
+
+        const taskFormRightDiv = document.createElement('div');
+        taskFormRightDiv.classList.add("task-form-right-div");
 
         const dueDateWrap = document.createElement('div');
         const dueDateLabel = document.createElement('label');
@@ -332,19 +342,25 @@ export default class RenderElement {
         selectProjectWrap.append(selectProjectLabel, selectProjectSelect);
 
         const buttonsWrap = document.createElement('div');
+        buttonsWrap.classList.add("task-form-buttons");
         const buttonSubmit = document.createElement('button');
+        buttonSubmit.classList.add("task-form-submit-button");
         buttonSubmit.type = "submit";
         buttonSubmit.className = "task-form-submit-button";
         buttonSubmit.innerHTML = "Submit";
         buttonSubmit.id = "task-form-submit-button";
         const buttonClose = document.createElement('button');
-        buttonClose.type = "submit";
+        buttonClose.classList.add("task-form-close-button");
+        // buttonClose.type = "submit";
         buttonClose.className = "task-form-close-button";
         buttonClose.innerHTML = "Close";
+        // buttonClose.type = "submit";
+        buttonClose.formNoValidate = "formnovalidate";
         buttonsWrap.append(buttonSubmit, buttonClose);
+        
+        taskFormRightDiv.append(dueDateWrap, priorityWrap, selectProjectWrap, buttonsWrap);
 
-        taskForm.append(nameWrap, descriptionWrap, notesWrap, dueDateWrap, priorityWrap, selectProjectWrap, buttonsWrap);
-
+        taskForm.append(taskFormLeftDiv, taskFormRightDiv);
 
         return taskForm;
     };
