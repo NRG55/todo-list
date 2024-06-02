@@ -315,16 +315,16 @@ export default class RenderElement {
         prioritySelect.className = "task-form-select-priority";
         const priorityOptionNoPriority = document.createElement('option');
         priorityOptionNoPriority.value = "no priority";
-        priorityOptionNoPriority.innerHTML = "no priority";
+        priorityOptionNoPriority.innerHTML = "No priority";
         const priorityOptionLow = document.createElement('option');
         priorityOptionLow.value = "low";
-        priorityOptionLow.innerHTML = "low";
+        priorityOptionLow.innerHTML = "Low";
         const priorityOptionMedium = document.createElement('option');
         priorityOptionMedium.value = "medium";
-        priorityOptionMedium.innerHTML = "medium";
+        priorityOptionMedium.innerHTML = "Medium";
         const priorityOptionHigh = document.createElement('option');
         priorityOptionHigh.value = "high";
-        priorityOptionHigh.innerHTML = "high";
+        priorityOptionHigh.innerHTML = "High";
         prioritySelect.append(priorityOptionNoPriority, priorityOptionLow, priorityOptionMedium, priorityOptionHigh);
         priorityWrap.append(priorityLabel, prioritySelect);
 
@@ -411,6 +411,18 @@ export default class RenderElement {
 
         // taskInfoWrap.append(taskLeftSection, taskName, taskDescription, bottomInfoLine);
         taskItem.append(taskInfoSecondDiv);
+        
+        const taskInfoThirdDiv = document.createElement('div');
+        taskInfoThirdDiv.classList.add("task-info-third-div")       
+        const editButton = document.createElement("button");
+        editButton.classList.add("material-symbols-outlined", "task-edit-button");        
+        editButton.textContent = "edit_square";
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add("material-symbols-outlined", "task-delete-button");
+        deleteButton.textContent = "delete";
+        taskInfoThirdDiv.append(editButton, deleteButton);
+
+        taskItem.appendChild(taskInfoThirdDiv);
 
         return taskItem;
     };
