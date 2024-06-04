@@ -365,7 +365,7 @@ export default class RenderElement {
         return taskForm;
     };
 
-    taskContent(task) {
+    taskContent(task, index) {
         const taskItem = document.createElement('div');
         taskItem.classList.add('task-item');
 
@@ -420,10 +420,23 @@ export default class RenderElement {
         const deleteButton = document.createElement("button");
         deleteButton.classList.add("material-symbols-outlined", "task-delete-button");
         deleteButton.textContent = "delete";
+        deleteButton.id = `task-${index}`;
         taskInfoThirdDiv.append(editButton, deleteButton);
 
         taskItem.appendChild(taskInfoThirdDiv);
+         
+        deleteButton.onclick = () => {
+                // console.log(index)
+            myProjectsList.removeTask(index);
 
+            const webpageController = new WebpageController();
+            // webpageController.updateHeader(newName);              
+            webpageController.renderTasks();
+            updateNumberOfTasks();
+            console.log(myProjectsList)
+         
+        };
+        // console.log(index)
         return taskItem;
     };
 

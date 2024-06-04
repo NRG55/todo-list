@@ -90,5 +90,10 @@ export default class ProjectTaskList {
            };
         });   
     };
+
+    removeTask(index) {
+        console.log(index)
+        this.#tasks.splice(index, 1);
+    };
 };
 

@@ -172,7 +172,7 @@ export default class WebpageController {
             updateNumberOfTasks(selectProject.value); 
             this.removeLinkedProject();
 
-            console.log(myProjectsList.tasks.length); 
+            // console.log(myProjectsList.tasks.length); 
 
             dialog.close();                     
             });              
@@ -201,16 +201,16 @@ export default class WebpageController {
         if (project) {
             let tasks = myProjectsList.getTasksByProject(project);
 
-            tasks.forEach((element) => {
-                const task = renderElement.taskContent(element);
+            tasks.forEach((element, index) => {
+                const task = renderElement.taskContent(element, index);
                
                 tasksContainer.appendChild(task);
             });
             return;
         }; 
         
-        myProjectsList.tasks.forEach((element) => {
-            const task = renderElement.taskContent(element);
+        myProjectsList.tasks.forEach((element, index) => {
+            const task = renderElement.taskContent(element, index);
            
             tasksContainer.appendChild(task);          
         });

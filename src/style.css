@@ -183,7 +183,7 @@ input, textarea, select, option {
 
 .tasks-main {
     margin: 0 auto;
-    max-width: 800px;
+    max-width: 640px;
     min-width: 320px;
     width: 80%;
     padding: 1rem 1rem 3rem;
@@ -294,7 +294,8 @@ dialog {
 
 .task-info-third-div {
     button {
-        padding: 0 8px;        
+        padding: 0 8px;
+        /* font-size: 14px;         */
     }
 
     .task-delete-button:hover {
@@ -316,7 +317,7 @@ dialog {
     gap: 0.5rem;
     
     .task-info-third-div {
-        display: none;
+        /* display: none; */
     }
 
     &:hover {
