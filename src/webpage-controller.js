@@ -28,26 +28,22 @@ export default class WebpageController {
         const renderElement = new RenderElement();
         const projects = myProjectsList.projects;
 
-        projects.forEach((element, index) => {
-            console.log(element.name)
-            const button = renderElement.leftSidebarProjectButton(element.name, index);            
+        projects.forEach((element, index) => {           
+            const button = renderElement.leftSidebarProjectButton(element.name, index); 
+
             button.onclick = (e)=> {
                     const projectName = button.id;
-                    console.log(e.target)
-                     if (e.target.classList.contains("project-popup-edit-button") || e.target.classList.contains("project-rename-ok-button")) { button.classList.remove("left-sidebar-project-button");
-                       
-                        console.log('click')
+                   
+                     if (e.target.classList.contains("project-popup-edit-button") || e.target.classList.contains("project-rename-ok-button")) { button.classList.remove("left-sidebar-project-button");                      
                         return;
                      } else {
                     this.updateHeader(projectName);
                     this.renderTasks(projectName); 
                     updateNumberOfTasks(projectName);                   
                     this.removeLinkedProject();
-                     }};              
-               
+                     }};               
 
-            addProjectContainer.appendChild(button);
-            
+            addProjectContainer.appendChild(button);            
         });        
     };     
 
@@ -151,10 +147,10 @@ export default class WebpageController {
         });
     };
 
-    renderAddTaskForm() {
+    renderAddTaskForm(taskToEdit, taskIndex) {
         const dialog = document.querySelector('.task-form-dialog');
         const renderElement = new RenderElement();
-        const form = renderElement.taskForm();
+        const form = renderElement.taskForm(taskToEdit);
 
         dialog.textContent = "";
         dialog.appendChild(form);
@@ -164,9 +160,13 @@ export default class WebpageController {
         const closeButton = document.querySelector(".task-form-close-button");
 
         taskForm.addEventListener('submit', (event) => {
-            event.preventDefault();             
+            event.preventDefault(); 
             
-            myProjectsList.addTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value);           
+            if (taskToEdit) {
+               myProjectsList.updateTask(taskIndex, title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value);
+            } else {
+            myProjectsList.addTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value); 
+            };          
             this.renderTasks(selectProject.value);
             this.updateHeader(selectProject.value);
             updateNumberOfTasks(selectProject.value); 

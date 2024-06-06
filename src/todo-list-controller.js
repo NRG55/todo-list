@@ -95,5 +95,15 @@ export default class ProjectTaskList {
         console.log(index)
         this.#tasks.splice(index, 1);
     };
+
+    updateTask(index, newName, newDescription, newNotes, newDueDate, newPriority, newProject) {
+        console.log(index)
+        this.#tasks[index].name = newName;
+        this.#tasks[index].description = newDescription;
+        this.#tasks[index].notes = newNotes;
+        this.#tasks[index].dueDate = newDueDate;
+        this.#tasks[index].priority = newPriority;
+        this.#tasks[index].project = newProject;
+    };
 };
 

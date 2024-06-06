@@ -251,7 +251,7 @@ export default class RenderElement {
         return addProjectForm;
     };
 
-    taskForm() {
+    taskForm(taskToEdit) {
         const taskForm = document.createElement('form');
         taskForm.setAttribute("id", "task-form");
 
@@ -361,6 +361,15 @@ export default class RenderElement {
         taskFormRightDiv.append(dueDateWrap, priorityWrap, selectProjectWrap, buttonsWrap);
 
         taskForm.append(taskFormLeftDiv, taskFormRightDiv);
+        
+        if (taskToEdit) {           
+            nameInput.value = taskToEdit.name;
+            descriptionInput.value = taskToEdit.description;
+            notesInput.value = taskToEdit.notes;
+            dueDateInput.value = taskToEdit.dueDate;
+            prioritySelect.value = taskToEdit.priority;
+            selectProjectSelect.value = taskToEdit.project;
+        };
 
         return taskForm;
     };
@@ -420,13 +429,13 @@ export default class RenderElement {
         const deleteButton = document.createElement("button");
         deleteButton.classList.add("material-symbols-outlined", "task-delete-button");
         deleteButton.textContent = "delete";
-        deleteButton.id = `task-${index}`;
+        // deleteButton.id = `task-${index}`;
         taskInfoThirdDiv.append(editButton, deleteButton);
 
         taskItem.appendChild(taskInfoThirdDiv);
          
         deleteButton.onclick = () => {
-                // console.log(index)
+                
             myProjectsList.removeTask(index);
 
             const webpageController = new WebpageController();
@@ -436,6 +445,14 @@ export default class RenderElement {
             console.log(myProjectsList)
          
         };
+        
+        editButton.onclick = () => {
+
+            const webpageController = new WebpageController();
+                      
+            webpageController.renderAddTaskForm(task, index);
+            console.log(task)
+        }
         // console.log(index)
         return taskItem;
     };
