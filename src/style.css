@@ -317,7 +317,7 @@ dialog {
     gap: 0.5rem;
     
     .task-info-third-div {
-        /* display: none; */
+        display: none;
     }
 
     &:hover {

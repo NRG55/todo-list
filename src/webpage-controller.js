@@ -1,4 +1,5 @@
 import myProjectsList from './index.js';
+import { createDefaultData } from './defaultData.js';
 import RenderElement from './elements.js';
 import { updateNumberOfTasks, updateNumberOfTasksAllTasksButton } from './task-display-controller.js';
 import { selectCurrentProject } from './task-form-controller.js';
@@ -7,6 +8,7 @@ import { setTodayDate } from './task-form-controller.js';
 
 export default class WebpageController {
     renderHomepage() { 
+        createDefaultData();
         this.initTasksContainer();    
         this.initLeftSidebar();        
                   
