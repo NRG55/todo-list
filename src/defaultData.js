@@ -15,7 +15,8 @@ export function createDefaultData() {
         "Administration",
         "Responding to emails. Responding to project queries.",
         "",
-        format(new Date(), "yyyy-MM-dd"),
+        "2024-06-07",
+        // format(new Date(), "yyyy-MM-dd"),
         "high",
         "Work"
     );

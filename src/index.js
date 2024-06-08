@@ -3,6 +3,7 @@ import './style.css'
 import TodoList from './todo-list-controller.js';
 import Project from './project.js';
 import Task from './task.js';
+import { isToday } from 'date-fns';
 import RenderElement from './elements.js';
 import WebpageController from './webpage-controller.js';
 import ProjectTaskList from './todo-list-controller.js';
@@ -56,7 +57,14 @@ webpageController.renderHomepage();
 const renderElement = new RenderElement;
 // console.log(renderElement)
 
+myProjectsList.tasks.filter(element => {
 
+    if (isToday(element.dueDate)) {
+        return console.log(element.dueDate)
+    }
+   
+
+    })
 
 
 

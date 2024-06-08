@@ -15,12 +15,23 @@ export default class WebpageController {
     };
 
     initTasksButtons() {
-        const allTaskButton = document.querySelector('.all-tasks-button');
-        allTaskButton.addEventListener('click', () => {            
+        const allTasksButton = document.querySelector('.all-tasks-button');
+        const todayTasksButton = document.querySelector('.today-tasks-button');
+        const overdueTasksButton = document.querySelector('.overdue-tasks-button');
+
+        allTasksButton.addEventListener('click', () => {            
             this.updateHeader("All Tasks");
+            this.renderTasks(); 
+            updateNumberOfTasks();  
+        });
+
+        todayTasksButton.addEventListener('click', () => {            
+            this.updateHeader("Today");
             this.renderTasks(); 
            updateNumberOfTasks();  
         });
+
+
     };
 
     renderProjectButtons() {

@@ -104,6 +104,6 @@ export default class ProjectTaskList {
         this.#tasks[index].dueDate = newDueDate;
         this.#tasks[index].priority = newPriority;
         this.#tasks[index].project = newProject;
-    };
+    };    
 };
 

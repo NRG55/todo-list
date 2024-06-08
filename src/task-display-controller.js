@@ -1,4 +1,5 @@
 import myProjectsList from "./index.js";
+import { isToday } from 'date-fns';
 
 export function taskPriorityHandler(task) {
     const taskPrioritySpan = document.createElement("span");
@@ -30,7 +31,7 @@ export function taskPriorityHandler(task) {
 
 export function updateNumberOfTasks(project) {
     updateNumberOfTasksHeader(project);
-    updateNumberOfTasksAllTasksButton();
+    updateNumberOfTasksTasksButton();
     updateNumberOfTasksProjectButtons();
 };
 
@@ -52,18 +53,51 @@ export function updateNumberOfTasksProjectButtons() {
     });
 };
 
-export function updateNumberOfTasksAllTasksButton() {    
-        const allTasksButton = document.querySelector('.all-tasks-button');       
-        const taskNumberSpan = document.createElement('span');
-        taskNumberSpan.className = "tasks-span";
+export function updateNumberOfTasksTasksButton() { 
+    const tasksButtons = document.querySelectorAll(".left-sidebar-tasks-button"); 
+    
+    tasksButtons.forEach((button) => { 
+          if (button.contains(button.querySelector('.tasks-span'))) {
+            button.querySelector('.tasks-span').remove();
+          }; 
 
-        if (allTasksButton.contains(allTasksButton.querySelector('.tasks-span'))) {
-           allTasksButton.querySelector('.tasks-span').remove();
-        };
+      console.log(button) 
+      
+      if (button.classList.contains("today-tasks-button")) {
         
-        const tasksNumber = myProjectsList.tasks.length;
-        taskNumberSpan.innerHTML = tasksNumber;       
-        allTasksButton.appendChild(taskNumberSpan);   
+        console.log("HEY") 
+    
+      const taskNumberSpan = document.createElement('span');
+      taskNumberSpan.className = "tasks-span"; 
+
+      
+      const todayTasks = myProjectsList.tasks.filter(element => {
+        if(isToday(element.dueDate)) {
+          return element;
+        };         
+      });
+  
+
+    taskNumberSpan.innerHTML = todayTasks.length;
+    
+      // taskNumberSpan.innerHTML = tasksNumber;       
+      button.appendChild(taskNumberSpan);
+    };
+  });
+
+
+
+          // const allTasksButton = document.querySelector('.all-tasks-button');       
+          // const taskNumberSpan = document.createElement('span');
+          // taskNumberSpan.className = "tasks-span";
+
+          // if (allTasksButton.contains(allTasksButton.querySelector('.tasks-span'))) {
+          //   allTasksButton.querySelector('.tasks-span').remove();
+          // };
+          
+          // const tasksNumber = myProjectsList.tasks.length;
+          // taskNumberSpan.innerHTML = tasksNumber;       
+          // allTasksButton.appendChild(taskNumberSpan);   
 };
 
 export function updateNumberOfTasksHeader(project) {
@@ -76,7 +110,7 @@ export function updateNumberOfTasksHeader(project) {
     taskContainerHeaderSpan.innerHTML = `(${myProjectsList.tasks.length})`;       
 } 
 
-export function renderAllTasks() {
+export function renderTodayTasks() {
 
 }
 

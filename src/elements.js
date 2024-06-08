@@ -12,10 +12,10 @@ export default class RenderElement {
         buttonsWrap.classList.add('left-sidebar-all-tasks');
 
         const allTasksButton = document.createElement('button');
-        allTasksButton.classList.add('all-tasks-button');
+        allTasksButton.classList.add("all-tasks-button", "left-sidebar-tasks-button");
 
         const allTasksIconSpan = document.createElement('span');
-        allTasksIconSpan.classList.add('material-symbols-outlined');
+        allTasksIconSpan.classList.add('material-symbols-outlined', "all-tasks-icon-span");
         allTasksIconSpan.textContent = 'fact_check';
 
         const allTaskstext = document.createElement('span');
@@ -24,10 +24,10 @@ export default class RenderElement {
         allTasksButton.append(allTasksIconSpan, allTaskstext);
 
         const todayTasksButton = document.createElement('button');
-        todayTasksButton.classList.add('today-tasks-button');
+        todayTasksButton.classList.add("today-tasks-button", "left-sidebar-tasks-button");
 
         const todayTasksIconSpan = document.createElement('span');
-        todayTasksIconSpan.classList.add('material-symbols-outlined');
+        todayTasksIconSpan.classList.add("material-symbols-outlined", "all-tasks-icon-span");
         todayTasksIconSpan.textContent = 'calendar_month';
 
         const todayTasksText = document.createElement('span');
@@ -36,10 +36,10 @@ export default class RenderElement {
         todayTasksButton.append(todayTasksIconSpan, todayTasksText);
 
         const overdueTasksButton = document.createElement('button');
-        overdueTasksButton.classList.add('overdue-tasks-button');
+        overdueTasksButton.classList.add("overdue-tasks-button", "left-sidebar-tasks-button");
 
         const overdueTasksIconSpan = document.createElement('span');
-        overdueTasksIconSpan.classList.add('material-symbols-outlined');
+        overdueTasksIconSpan.classList.add("material-symbols-outlined", "all-tasks-icon-span");
         overdueTasksIconSpan.textContent = 'schedule';
 
         const overdueTasksText = document.createElement('span');
@@ -59,7 +59,7 @@ export default class RenderElement {
         projectButton.id = project
 
         const iconSpan = document.createElement('span');
-        iconSpan.classList.add('material-symbols-outlined');
+        iconSpan.classList.add("material-symbols-outlined", "project-icon-span");
         iconSpan.textContent = 'folder'
 
         const text = document.createElement('span');

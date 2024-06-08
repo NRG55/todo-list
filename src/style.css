@@ -6,20 +6,24 @@
 
 html, body {
     height: 100%;
-    color: #4e4a4a;
+    color: #575454;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    line-height: 1.6;
 }
 
 header {
     height: 2.5rem;
     padding-left: 20px;
-    background: linear-gradient(90deg, #f9f6f3 240px, white 0%);  
+    background: linear-gradient(90deg, #f9f6f3 240px, white 0%); 
+    /* color: #8d8780;  */
 }
 
 button {
     cursor: pointer;
     background-color: transparent;
     border: none;
-    padding: 8px 12px;   
+    padding: 8px 12px; 
+    font-size: 0.9rem;  
 }
 
 input, textarea, select, option {   
@@ -31,7 +35,7 @@ input, textarea, select, option {
 }
 
 .left-sidebar h3 {
-    padding: 8px 12px; 
+    padding: 8px 12px;   
 }
 
 .main-content { 
@@ -44,6 +48,7 @@ input, textarea, select, option {
     display: grid;
     grid-template-rows: 8rem auto;   
     padding: 20px;
+    padding-top: 80px;   
     background-color:#f9f6f3;  
 }
 
@@ -63,7 +68,7 @@ input, textarea, select, option {
     align-items: center;
     gap: 4px;
     text-align: left;
-    color: rgb(51, 50, 50);   
+    color: rgb(46, 45, 45);   
 
     &:hover {
         background-color:#f3efea;
@@ -75,21 +80,28 @@ input, textarea, select, option {
        .material-symbols-outlined {
             color:rgb(241, 66, 66);
         }
-    }    
+    } 
+    
+    .project-icon-span,
+    .all-tasks-icon-span {
+        font-size: 20px;
+    }
 }
 
 .tasks-span {        
-    color: rgb(145, 143, 143);
+    color: rgb(143, 137, 137);
+    font-size: 12px;
 }
 
 .left-sidebar-project-button { 
-    position: relative;    
+    position: relative;
+    /* color: #3d3c3c;     */
     
     .project-button-settings {
         display: none;
         position: absolute;
         left: 164px;
-    }
+    }    
     
     .setting-buttons{
         display: none;
@@ -236,7 +248,7 @@ dialog {
     }
 
     textarea {
-        height: calc(100% - 16px);       
+        height: calc(100% - 24px);       
     }
 
     button {       
@@ -317,15 +329,16 @@ dialog {
     gap: 0.5rem;
     
     .task-info-third-div {
-        display: none;
+        /* display: none; */
+        visibility: hidden;
     }
 
     &:hover {
         .task-info-third-div {
-            display: block;
+            /* display: block; */
+            visibility: visible;
         }
     }
-
 }
 
 .task-name, .task-description {
