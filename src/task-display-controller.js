@@ -61,43 +61,31 @@ export function updateNumberOfTasksTasksButton() {
             button.querySelector('.tasks-span').remove();
           }; 
 
-      console.log(button) 
-      
-      if (button.classList.contains("today-tasks-button")) {
-        
-        console.log("HEY") 
-    
       const taskNumberSpan = document.createElement('span');
       taskNumberSpan.className = "tasks-span"; 
-
       
+      if (button.classList.contains("today-tasks-button")) {     
       const todayTasks = myProjectsList.tasks.filter(element => {
         if(isToday(element.dueDate)) {
           return element;
         };         
-      });
-  
+      });  
 
-    taskNumberSpan.innerHTML = todayTasks.length;
-    
-      // taskNumberSpan.innerHTML = tasksNumber;       
+      taskNumberSpan.innerHTML = todayTasks.length;
+          
+        button.appendChild(taskNumberSpan);
+      };
+
+      if (button.classList.contains("all-tasks-button")) {     
+      const tasksLength = myProjectsList.tasks.length;
+
+      taskNumberSpan.innerHTML = tasksLength;  
+      
       button.appendChild(taskNumberSpan);
     };
-  });
 
-
-
-          // const allTasksButton = document.querySelector('.all-tasks-button');       
-          // const taskNumberSpan = document.createElement('span');
-          // taskNumberSpan.className = "tasks-span";
-
-          // if (allTasksButton.contains(allTasksButton.querySelector('.tasks-span'))) {
-          //   allTasksButton.querySelector('.tasks-span').remove();
-          // };
-          
-          // const tasksNumber = myProjectsList.tasks.length;
-          // taskNumberSpan.innerHTML = tasksNumber;       
-          // allTasksButton.appendChild(taskNumberSpan);   
+    
+    });        
 };
 
 export function updateNumberOfTasksHeader(project) {
