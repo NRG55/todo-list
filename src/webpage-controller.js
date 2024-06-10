@@ -1,7 +1,7 @@
 import myProjectsList from './index.js';
 import { createDefaultData } from './defaultData.js';
 import RenderElement from './elements.js';
-import { updateNumberOfTasks, updateNumberOfTasksAllTasksButton } from './task-display-controller.js';
+import { updateNumberOfTasks, getNumberOfTasksTasksButton, updateNumberOfTasksHeader } from './task-display-controller.js';
 import { selectCurrentProject } from './task-form-controller.js';
 import { setTodayDate } from './task-form-controller.js';
 
@@ -18,20 +18,41 @@ export default class WebpageController {
         const allTasksButton = document.querySelector('.all-tasks-button');
         const todayTasksButton = document.querySelector('.today-tasks-button');
         const overdueTasksButton = document.querySelector('.overdue-tasks-button');
+        const tasksButtons = document.querySelectorAll(".left-sidebar-tasks-button");
 
-        allTasksButton.addEventListener('click', () => {            
+        tasksButtons.forEach((button) => { 
+            if (button.contains(button.querySelector('.tasks-span'))) {
+              button.querySelector('.tasks-span').remove();
+            };      
+            
+            console.log(button)
+
+            const taskNumberSpan = document.createElement('span');
+            taskNumberSpan.className = "tasks-span";
+            taskNumberSpan.innerHTML = getNumberOfTasksTasksButton(button); 
+
+            button.appendChild(taskNumberSpan);    
+           
+          }); 
+
+        allTasksButton.addEventListener('click', (event) => { 
+            console.log(event.target)           
             this.updateHeader("All Tasks");
             this.renderTasks(); 
-            updateNumberOfTasks();  
+            // updateNumberOfTasks();  
         });
 
         todayTasksButton.addEventListener('click', () => {            
             this.updateHeader("Today");
             this.renderTasks(); 
-           updateNumberOfTasks();  
+            // updateNumberOfTasks();  
         });
 
-
+        overdueTasksButton.addEventListener('click', () => {            
+            this.updateHeader("Overdue");
+            this.renderTasks(); 
+            // updateNumberOfTasks();  
+        });
     };
 
     renderProjectButtons() {
@@ -79,13 +100,11 @@ export default class WebpageController {
     };
 
     updateHeader(title) {
-        const header = document.querySelector('.task-container-header-name');
-
-        if (title === "tasks") {
-            header.innerHTML = "All Tasks";
-            return;
-        };
+        const header = document.querySelector(".task-container-header-name");
+        const headerNumberOfTasksSpan = document.querySelector(".task-container-header-span");
         
+        updateNumberOfTasksHeader(title);
+        // headerNumberOfTasksSpan.innerHTML = numberOfTasks;
         header.innerHTML = title;
     };
 
@@ -148,7 +167,7 @@ export default class WebpageController {
 
         tasksContainer.appendChild(header);
         console.log(tasksContainer)
-        this.updateHeader('tasks') 
+        this.updateHeader("All Tasks"); 
 
         const addTask = document.querySelector('.add-task-button');
        

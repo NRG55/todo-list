@@ -31,7 +31,7 @@ export function taskPriorityHandler(task) {
 
 export function updateNumberOfTasks(project) {
     updateNumberOfTasksHeader(project);
-    updateNumberOfTasksTasksButton();
+    // getNumberOfTasksTasksButton(button);
     updateNumberOfTasksProjectButtons();
 };
 
@@ -53,54 +53,70 @@ export function updateNumberOfTasksProjectButtons() {
     });
 };
 
-export function updateNumberOfTasksTasksButton() { 
-    const tasksButtons = document.querySelectorAll(".left-sidebar-tasks-button"); 
-    
-    tasksButtons.forEach((button) => { 
-      if (button.contains(button.querySelector('.tasks-span'))) {
-        button.querySelector('.tasks-span').remove();
-      };      
+export function getNumberOfTasksTasksButton(button) { 
+  let tasksNumber;  
       
-      let tasksNumber;
+  if (button.classList.contains("all-tasks-button")) {     
+    tasksNumber = myProjectsList.tasks.length;       
+   };
+  
+  if (button.classList.contains("today-tasks-button")) {
+    const todayTasksArray = myProjectsList.tasks.filter(element => {
+      if(isToday(element.dueDate)) {            
+        return element;
+        };         
+      });  
+      tasksNumber = todayTasksArray.length;       
+  };     
 
-      if (button.classList.contains("all-tasks-button")) {     
-        tasksNumber = myProjectsList.tasks.length;       
-       };
-      
-      if (button.classList.contains("today-tasks-button")) {
-        const todayTasksArray = myProjectsList.tasks.filter(element => {
-          if(isToday(element.dueDate)) {            
-            return element;
-            };         
-          });  
-          tasksNumber = todayTasksArray.length;       
-      };     
+  if (button.classList.contains("overdue-tasks-button")) {     
+    const overdueTasksArray = myProjectsList.tasks.filter(element => {
+      if(isPast(element.dueDate) && !isToday(element.dueDate)) {            
+        return element;
+        };                  
+      });           
+      tasksNumber = overdueTasksArray.length; 
+   };
 
-      if (button.classList.contains("overdue-tasks-button")) {     
-        const overdueTasksArray = myProjectsList.tasks.filter(element => {
-          if(isPast(element.dueDate) && !isToday(element.dueDate)) {            
-            return element;
-            };                  
-          });           
-          tasksNumber = overdueTasksArray.length; 
-       };
-
-       const taskNumberSpan = document.createElement('span');
-       taskNumberSpan.className = "tasks-span";
-       taskNumberSpan.innerHTML = tasksNumber; 
-                
-       button.appendChild(taskNumberSpan);    
-    });        
+   return tasksNumber;   
 };
 
 export function updateNumberOfTasksHeader(project) {
     const taskContainerHeaderSpan = document.querySelector('.task-container-header-span');   
+    let tasksNumber;  
+      
+    if (project === "All Tasks") {        
+      tasksNumber = myProjectsList.tasks.length;      
+      taskContainerHeaderSpan.innerHTML = `(${tasksNumber})`;       
+      return;   
+     };
     
-    if (project) {
-      taskContainerHeaderSpan.innerHTML = `(${myProjectsList.getTasksByProject(project).length})`;
-      return;
-    };
-    taskContainerHeaderSpan.innerHTML = `(${myProjectsList.tasks.length})`;       
+    if (project === "Today") {
+      const todayTasksArray = myProjectsList.tasks.filter(element => {
+        if(isToday(element.dueDate)) {                      
+          return element;
+          };                   
+        });   
+       
+        tasksNumber = todayTasksArray.length;
+        console.log( tasksNumber )  
+        taskContainerHeaderSpan.innerHTML = `(${tasksNumber})`; 
+        return;          
+    };     
+  
+    if (project === "Overdue") {     
+      const overdueTasksArray = myProjectsList.tasks.filter(element => {
+        if(isPast(element.dueDate) && !isToday(element.dueDate)) {            
+          return element;
+          };                  
+        }); 
+                  
+        tasksNumber = overdueTasksArray.length; 
+        taskContainerHeaderSpan.innerHTML = `(${tasksNumber})`; 
+        return;
+     };   
+  
+      taskContainerHeaderSpan.innerHTML = `(${myProjectsList.getTasksByProject(project).length})`;     
 } 
 
 export function renderTodayTasks() {
