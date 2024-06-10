@@ -1,5 +1,5 @@
 import myProjectsList from "./index.js";
-import { isToday } from 'date-fns';
+import { isToday, isPast } from 'date-fns';
 
 export function taskPriorityHandler(task) {
     const taskPrioritySpan = document.createElement("span");
@@ -57,34 +57,39 @@ export function updateNumberOfTasksTasksButton() {
     const tasksButtons = document.querySelectorAll(".left-sidebar-tasks-button"); 
     
     tasksButtons.forEach((button) => { 
-          if (button.contains(button.querySelector('.tasks-span'))) {
-            button.querySelector('.tasks-span').remove();
-          }; 
-
-      const taskNumberSpan = document.createElement('span');
-      taskNumberSpan.className = "tasks-span"; 
+      if (button.contains(button.querySelector('.tasks-span'))) {
+        button.querySelector('.tasks-span').remove();
+      };      
       
-      if (button.classList.contains("today-tasks-button")) {     
-      const todayTasks = myProjectsList.tasks.filter(element => {
-        if(isToday(element.dueDate)) {
-          return element;
-        };         
-      });  
-
-      taskNumberSpan.innerHTML = todayTasks.length;
-          
-        button.appendChild(taskNumberSpan);
-      };
+      let tasksNumber;
 
       if (button.classList.contains("all-tasks-button")) {     
-      const tasksLength = myProjectsList.tasks.length;
-
-      taskNumberSpan.innerHTML = tasksLength;  
+        tasksNumber = myProjectsList.tasks.length;       
+       };
       
-      button.appendChild(taskNumberSpan);
-    };
+      if (button.classList.contains("today-tasks-button")) {
+        const todayTasksArray = myProjectsList.tasks.filter(element => {
+          if(isToday(element.dueDate)) {            
+            return element;
+            };         
+          });  
+          tasksNumber = todayTasksArray.length;       
+      };     
 
-    
+      if (button.classList.contains("overdue-tasks-button")) {     
+        const overdueTasksArray = myProjectsList.tasks.filter(element => {
+          if(isPast(element.dueDate) && !isToday(element.dueDate)) {            
+            return element;
+            };                  
+          });           
+          tasksNumber = overdueTasksArray.length; 
+       };
+
+       const taskNumberSpan = document.createElement('span');
+       taskNumberSpan.className = "tasks-span";
+       taskNumberSpan.innerHTML = tasksNumber; 
+                
+       button.appendChild(taskNumberSpan);    
     });        
 };
 
