@@ -1,6 +1,7 @@
 import myProjectsList from './index.js';
 import Project from './project.js';
 import Task from './task.js';
+import { isToday, isPast } from 'date-fns';
 
 export default class ProjectTaskList {
     #projects;
@@ -104,6 +105,17 @@ export default class ProjectTaskList {
         this.#tasks[index].dueDate = newDueDate;
         this.#tasks[index].priority = newPriority;
         this.#tasks[index].project = newProject;
-    };    
+    };
+    
+    getTodayTasks() {
+        const todayTasks = this.#tasks.filter(element => {
+            if(isToday(element.dueDate)) { 
+                console.log(element)                     
+              return element;
+              };                   
+            });
+            console.log(todayTasks)
+        return todayTasks;       
+    }
 };
 

@@ -1,7 +1,7 @@
 import myProjectsList from './index.js';
 import { createDefaultData } from './defaultData.js';
 import RenderElement from './elements.js';
-import { updateNumberOfTasks, getNumberOfTasksTasksButton, updateNumberOfTasksHeader } from './task-display-controller.js';
+import { updateNumberOfTasks, getNumberOfTasksTasksButton, updateNumberOfTasksHeader, updateNumberOfTasksProjectButtons, updateNumberOfTasksTasksButton } from './task-display-controller.js';
 import { selectCurrentProject } from './task-form-controller.js';
 import { setTodayDate } from './task-form-controller.js';
 
@@ -18,40 +18,23 @@ export default class WebpageController {
         const allTasksButton = document.querySelector('.all-tasks-button');
         const todayTasksButton = document.querySelector('.today-tasks-button');
         const overdueTasksButton = document.querySelector('.overdue-tasks-button');
-        const tasksButtons = document.querySelectorAll(".left-sidebar-tasks-button");
-
-        tasksButtons.forEach((button) => { 
-            if (button.contains(button.querySelector('.tasks-span'))) {
-              button.querySelector('.tasks-span').remove();
-            };      
-            
-            console.log(button)
-
-            const taskNumberSpan = document.createElement('span');
-            taskNumberSpan.className = "tasks-span";
-            taskNumberSpan.innerHTML = getNumberOfTasksTasksButton(button); 
-
-            button.appendChild(taskNumberSpan);    
-           
-          }); 
-
-        allTasksButton.addEventListener('click', (event) => { 
-            console.log(event.target)           
+       
+        allTasksButton.addEventListener('click', () => { 
+                  
             this.updateHeader("All Tasks");
-            this.renderTasks(); 
-            // updateNumberOfTasks();  
+            this.renderTasks();            
         });
 
         todayTasksButton.addEventListener('click', () => {            
             this.updateHeader("Today");
-            this.renderTasks(); 
-            // updateNumberOfTasks();  
+           
+            this.renderTasks("Today");
+            console.log(myProjectsList.getTodayTasks())            
         });
 
         overdueTasksButton.addEventListener('click', () => {            
             this.updateHeader("Overdue");
-            this.renderTasks(); 
-            // updateNumberOfTasks();  
+            this.renderTasks();          
         });
     };
 
@@ -93,7 +76,8 @@ export default class WebpageController {
             this.openAddProjectForm();                      
         });        
         this.renderProjectButtons();
-        updateNumberOfTasks();
+        updateNumberOfTasksProjectButtons();
+        updateNumberOfTasksTasksButton();
         this.initTasksButtons();
          
         // this.initProjectSettingsButton();  
@@ -103,9 +87,10 @@ export default class WebpageController {
         const header = document.querySelector(".task-container-header-name");
         const headerNumberOfTasksSpan = document.querySelector(".task-container-header-span");
         
-        updateNumberOfTasksHeader(title);
-        // headerNumberOfTasksSpan.innerHTML = numberOfTasks;
         header.innerHTML = title;
+        updateNumberOfTasksHeader();
+        // headerNumberOfTasksSpan.innerHTML = numberOfTasks;
+       
     };
 
     openAddProjectForm() {       
@@ -168,6 +153,7 @@ export default class WebpageController {
         tasksContainer.appendChild(header);
         console.log(tasksContainer)
         this.updateHeader("All Tasks"); 
+       
 
         const addTask = document.querySelector('.add-task-button');
        
@@ -228,7 +214,16 @@ export default class WebpageController {
         const tasksContainer = document.querySelector('.tasks-container');
         const renderElement = new RenderElement();
 
-        tasksContainer.innerHTML = "";       
+        tasksContainer.innerHTML = ""; 
+        
+        if (project === "Today") {
+            myProjectsList.getTodayTasks().forEach((element, index) => {
+                const task = renderElement.taskContent(element, index);
+               
+                tasksContainer.appendChild(task);          
+            });
+           
+        }
        
         if (project) {
             let tasks = myProjectsList.getTasksByProject(project);

@@ -2,9 +2,9 @@ import myProjectsList from "./index.js";
 import WebpageController from "./webpage-controller.js";
 import { handleDate, setTodayDate } from "./task-form-controller.js";
 import { addProjectsToSelectBox, selectCurrentProject } from "./task-form-controller.js";
-import { taskPriorityHandler } from "./task-display-controller.js";
+import { taskPriorityHandler, updateNumberOfTasksHeader, updateNumberOfTasksTasksButton } from "./task-display-controller.js";
 import { format } from "date-fns";
-import { updateNumberOfTasks } from "./task-display-controller.js";
+import { updateNumberOfTasks, updateNumberOfTasksProjectButtons } from "./task-display-controller.js";
 
 export default class RenderElement {
     leftSidebarTasksButtons() {
@@ -429,7 +429,7 @@ export default class RenderElement {
         const deleteButton = document.createElement("button");
         deleteButton.classList.add("material-symbols-outlined", "task-delete-button");
         deleteButton.textContent = "delete";
-        // deleteButton.id = `task-${index}`;
+        deleteButton.id = `task-${index}`;
         taskInfoThirdDiv.append(editButton, deleteButton);
 
         taskItem.appendChild(taskInfoThirdDiv);
@@ -440,8 +440,10 @@ export default class RenderElement {
 
             const webpageController = new WebpageController();
             // webpageController.updateHeader(newName);              
-            webpageController.renderTasks();
-            updateNumberOfTasks();
+            webpageController.renderTasks(task.project);
+            updateNumberOfTasksProjectButtons();
+            updateNumberOfTasksTasksButton();
+            updateNumberOfTasksHeader();
             console.log(myProjectsList)
          
         };
