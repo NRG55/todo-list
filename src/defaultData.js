@@ -21,6 +21,8 @@ export function createDefaultData() {
         "Work"
     );
 
+    console.log(myProjectsList)
+
     myProjectsList.addTask(
         "Meetings",
         "Internally. Reproject roles and responsibilities.",

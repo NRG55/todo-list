@@ -22,19 +22,17 @@ export default class WebpageController {
         allTasksButton.addEventListener('click', () => { 
                   
             this.updateHeader("All Tasks");
-            this.renderTasks();            
+            this.renderTasks("All Tasks");            
         });
 
         todayTasksButton.addEventListener('click', () => {            
-            this.updateHeader("Today");
-           
-            this.renderTasks("Today");
-            console.log(myProjectsList.getTodayTasks())            
+            this.updateHeader("Today");           
+            this.renderTasks("Today");              
         });
 
         overdueTasksButton.addEventListener('click', () => {            
             this.updateHeader("Overdue");
-            this.renderTasks();          
+            this.renderTasks("Overdue");          
         });
     };
 
@@ -78,19 +76,15 @@ export default class WebpageController {
         this.renderProjectButtons();
         updateNumberOfTasksProjectButtons();
         updateNumberOfTasksTasksButton();
-        this.initTasksButtons();
-         
-        // this.initProjectSettingsButton();  
+        this.initTasksButtons();       
     };
 
     updateHeader(title) {
         const header = document.querySelector(".task-container-header-name");
-        const headerNumberOfTasksSpan = document.querySelector(".task-container-header-span");
+        // const headerNumberOfTasksSpan = document.querySelector(".task-container-header-span");
         
         header.innerHTML = title;
-        updateNumberOfTasksHeader();
-        // headerNumberOfTasksSpan.innerHTML = numberOfTasks;
-       
+        updateNumberOfTasksHeader();        
     };
 
     openAddProjectForm() {       
@@ -157,7 +151,7 @@ export default class WebpageController {
 
         const addTask = document.querySelector('.add-task-button');
        
-        this.renderTasks();
+        this.renderTasks("All Tasks");
 
         addTask.addEventListener("click", () => {           
             this.renderAddTaskForm();
@@ -214,36 +208,97 @@ export default class WebpageController {
         const tasksContainer = document.querySelector('.tasks-container');
         const renderElement = new RenderElement();
 
-        tasksContainer.innerHTML = ""; 
+        tasksContainer.innerHTML = "";
         
-        if (project === "Today") {
-            myProjectsList.getTodayTasks().forEach((element, index) => {
-                const task = renderElement.taskContent(element, index);
+        if (project === "All Tasks") {
+            myProjectsList.tasks.forEach((element) => {
+                const task = renderElement.taskContent(element);
                
                 tasksContainer.appendChild(task);          
             });
-           
-        }
+            return;           
+        };
        
-        if (project) {
-            let tasks = myProjectsList.getTasksByProject(project);
-
-            tasks.forEach((element, index) => {
-                const task = renderElement.taskContent(element, index);
+        if (project === "Today") {
+            myProjectsList.getTodayTasks().forEach((element) => {
+                const task = renderElement.taskContent(element);
                
-                tasksContainer.appendChild(task);
+                tasksContainer.appendChild(task);          
             });
-            return;
-        }; 
-        
-        myProjectsList.tasks.forEach((element, index) => {
-            const task = renderElement.taskContent(element, index);
-           
-            tasksContainer.appendChild(task);          
-        });
+
+            this.addEventListenerToTaskDeletButton(project);
+            return;           
+        };
+
+        if (project === "Overdue") {
+            myProjectsList.getOverdueTasks().forEach((element) => {
+                const task = renderElement.taskContent(element);
+               
+                tasksContainer.appendChild(task);          
+            });
+
+            this.addEventListenerToTaskDeletButton(project);
+            // this.renderTasks(project);
+
+            return;           
+        };
        
+        
+        let tasks = myProjectsList.getTasksByProject(project);
+
+        tasks.forEach((element) => {
+            const task = renderElement.taskContent(element);
+            
+            tasksContainer.appendChild(task);
+        });
+
+        this.addEventListenerToTaskDeletButton(project);
+        // this.renderTasks(project);
+        
+            
+                
+
+        // myProjectsList.tasks.forEach((element) => {
+        //     const task = renderElement.taskContent(element);
+           
+        //     tasksContainer.appendChild(task);          
+        // });
+
+        // const deleteTaskButtons = document.querySelectorAll(".task-delete-button");
+
+        // deleteTaskButtons.forEach((button) => {
+        //     button.addEventListener("click", (e) => {
+        //         const taskId = e.target.id;
+        //         console.log(taskId)
+
+        //         myProjectsList.removeTask(taskId);     
+                     
+         
+        //     updateNumberOfTasksProjectButtons();
+        //     updateNumberOfTasksTasksButton();
+        //     updateNumberOfTasksHeader();
+        //     });
+        // });       
     }; 
-    
+
+    addEventListenerToTaskDeletButton(project) {
+        const deleteTaskButtons = document.querySelectorAll(".task-delete-button");
+
+        deleteTaskButtons.forEach((button) => {
+            button.addEventListener("click", (e) => {
+                const taskId = e.target.id;
+                console.log(taskId)
+
+                myProjectsList.removeTask(taskId);            
+                     
+            this.renderTasks(project);
+            updateNumberOfTasksProjectButtons();
+            updateNumberOfTasksTasksButton();
+            updateNumberOfTasksHeader();
+            });
+        });       
+    };
+
     removeLinkedProject() {
         const headerProjectName = document.querySelector(".task-container-header-name").innerHTML;
         const linkedProjectContainers = document.querySelectorAll(".linked-project-container");

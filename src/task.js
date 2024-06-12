@@ -1,4 +1,5 @@
 export default class Task {
+    #id = "";
     #name = "";
     #description = "";
     #notes = "";
@@ -6,7 +7,8 @@ export default class Task {
     #priority;
     #project;
 
-    constructor(name, description, notes, dueDate, priority, project) {
+    constructor(name, description, notes, dueDate, priority, project, id) {
+        this.#id = id;
         this.#name = name;
         this.#description = description;
         this.#notes = notes;
@@ -64,6 +66,14 @@ export default class Task {
 
     get project() {
         return this.#project;
+    };
+
+    set id(value) {
+        this.#id = value;
+    };
+
+    get id() {
+        return this.#id;
     };
 };
 

@@ -57,14 +57,14 @@ webpageController.renderHomepage();
 const renderElement = new RenderElement;
 // console.log(renderElement)
 
-myProjectsList.tasks.filter(element => {
+// myProjectsList.tasks.filter(element => {
 
-    if (isToday(element.dueDate)) {
-        return console.log(element.dueDate)
-    }
+//     if (isToday(element.dueDate)) {
+//         return console.log(element.dueDate)
+//     }
    
 
-    })
+//     })
 
 
 

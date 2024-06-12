@@ -47,9 +47,9 @@ export default class ProjectTaskList {
         return this.#projects = [];
     };
 
-    addTask(name, description, notes, dueDate, priority, project) {
+    addTask(name, description, notes, dueDate, priority, project, id) {
         // const newTask = new Task(name, description, notes, dueDate, priority, project);        
-        this.#tasks.push(new Task(name, description, notes, dueDate, priority, project));
+        this.#tasks.push(new Task(name, description, notes, dueDate, priority, project, id = Math.random().toString(16).slice(2)));
         // if(project === 'tasks') { 
         //   this.#allTasks.push(newTask)
         // } else {
@@ -92,9 +92,10 @@ export default class ProjectTaskList {
         });   
     };
 
-    removeTask(index) {
-        console.log(index)
-        this.#tasks.splice(index, 1);
+    removeTask(taskId) {
+        // console.log(index)
+        // this.#tasks.splice(index, 1);
+        this.#tasks = this.#tasks.filter((element) => element.id !== taskId);       
     };
 
     updateTask(index, newName, newDescription, newNotes, newDueDate, newPriority, newProject) {
@@ -109,13 +110,22 @@ export default class ProjectTaskList {
     
     getTodayTasks() {
         const todayTasks = this.#tasks.filter(element => {
-            if(isToday(element.dueDate)) { 
-                console.log(element)                     
+            if(isToday(element.dueDate)) {                                  
               return element;
               };                   
             });
-            console.log(todayTasks)
+           
         return todayTasks;       
-    }
+    };
+
+    getOverdueTasks() {
+        const overdueTasks = this.#tasks.filter(element => {
+            if(isPast(element.dueDate) && !isToday(element.dueDate)) {            
+              return element;
+              };                  
+            }); 
+
+        return overdueTasks;
+    };
 };
 

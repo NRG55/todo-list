@@ -374,9 +374,10 @@ export default class RenderElement {
         return taskForm;
     };
 
-    taskContent(task, index) {
+    taskContent(task) {
         const taskItem = document.createElement('div');
-        taskItem.classList.add('task-item');
+        taskItem.classList.add('task-item');       
+        taskItem.id = task.id;
 
         const taskInfoFirstDiv = document.createElement('div');
         taskInfoFirstDiv.classList.add('task-info-first-div');
@@ -428,25 +429,27 @@ export default class RenderElement {
         editButton.textContent = "edit_square";
         const deleteButton = document.createElement("button");
         deleteButton.classList.add("material-symbols-outlined", "task-delete-button");
+        deleteButton.setAttribute("id", task.id);
+
         deleteButton.textContent = "delete";
-        deleteButton.id = `task-${index}`;
+        // deleteButton.id = `task-${index}`;
         taskInfoThirdDiv.append(editButton, deleteButton);
 
         taskItem.appendChild(taskInfoThirdDiv);
          
-        deleteButton.onclick = () => {
+        // deleteButton.onclick = () => {
                 
-            myProjectsList.removeTask(index);
+        //     myProjectsList.removeTask(task.id);
 
-            const webpageController = new WebpageController();
-            // webpageController.updateHeader(newName);              
-            webpageController.renderTasks(task.project);
-            updateNumberOfTasksProjectButtons();
-            updateNumberOfTasksTasksButton();
-            updateNumberOfTasksHeader();
-            console.log(myProjectsList)
+        //     const webpageController = new WebpageController();
+        //     // webpageController.updateHeader(newName);              
+        //     webpageController.renderTasks(task.project);
+        //     updateNumberOfTasksProjectButtons();
+        //     updateNumberOfTasksTasksButton();
+        //     updateNumberOfTasksHeader();
+        //     console.log(myProjectsList)
          
-        };
+        // };
         
         editButton.onclick = () => {
 
