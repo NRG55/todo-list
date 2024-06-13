@@ -73,9 +73,7 @@ export default class RenderElement {
         const projectSettingsPopup = document.createElement('div');
         projectSettingsPopup.classList.add('project-settings-popup', 'hidden');
         
-        settingsIcon.onclick = () => {
-            // projectSettingsPopup.classList.add('visible');
-
+        settingsIcon.onclick = () => { 
             const popups = document.querySelectorAll(".project-settings-popup");
 
             popups.forEach((element) => {
@@ -116,8 +114,7 @@ export default class RenderElement {
         projectSettingsPopup.appendChild(editButton);        
 
         editButton.onclick = () => {            
-            const currentProjectButton = document.getElementById(`${project}`);
-            // currentProjectButton.onclick = null;         
+            const currentProjectButton = document.getElementById(`${project}`);                
           
             currentProjectButton.innerHTML = "";
             currentProjectButton.classList.add('remove-padding');
@@ -142,16 +139,13 @@ export default class RenderElement {
                 webpageController.updateHeader(newName);              
                 webpageController.renderTasks(newName);
                 webpageController.removeLinkedProject();
-                updateNumberOfTasks(newName);
-                
+                updateNumberOfTasks(newName);                
 
                 const newProjectButton = document.getElementById(`${newName}`);
                 newProjectButton.focus();                                            
             };
 
-            cancelButton.onclick = () => {
-                // const webpageController = new WebpageController();
-                // webpageController.renderProjectButtons();
+            cancelButton.onclick = () => {               
                 currentProjectButton.innerHTML = "";
                 currentProjectButton.classList.remove('remove-padding');
                 currentProjectButton.append(iconSpan, text, settingsIcon, projectSettingsPopup);
@@ -167,7 +161,6 @@ export default class RenderElement {
     };
 
     projectSettingsOptions() {
-
         const optionsWrap = document.createElement('div');
         optionsWrap.classList.add('project-button-options');
 
@@ -199,11 +192,7 @@ export default class RenderElement {
         const okIcon = document.createElement('span');
         okIcon.classList.add('material-symbols-outlined', 'project-rename-ok-button');
         okIcon.textContent = "check";
-        okButton.appendChild(okIcon);
-
-        console.log(okButton)
-
-        
+        okButton.appendChild(okIcon);        
 
         const cancelButton = document.createElement('button');
         const cancelIcon = document.createElement('span');
@@ -243,17 +232,15 @@ export default class RenderElement {
         cancelButton.textContent = 'Cancel';
         cancelButton.id = "project-form-cancel-button";
 
-        buttonsContainer.appendChild(addButton);
-        buttonsContainer.appendChild(cancelButton);
-        addProjectForm.append(projectWarning, projectInput, buttonsContainer);
-        // addProjectForm.append(buttonsContainer);
+        buttonsContainer.append(addButton, cancelButton);        
+        addProjectForm.append(projectWarning, projectInput, buttonsContainer);       
 
         return addProjectForm;
     };
 
     taskForm(taskToEdit) {
         const taskForm = document.createElement('form');
-        taskForm.setAttribute("id", "task-form");
+        taskForm.setAttribute("id", "task-form");    
 
         const taskFormLeftDiv = document.createElement('div');
         taskFormLeftDiv.classList.add("task-form-left-div"); 
@@ -267,15 +254,14 @@ export default class RenderElement {
         nameInput.id = "title";
         nameInput.className = "task-form-input-name";
         nameInput.placeholder = "Task title (required)";
-        nameInput.required = true;
+        nameInput.required = true;      
         nameWrap.append(nameLabel, nameInput);
 
         const descriptionWrap = document.createElement('div');
         const descriptionLabel = document.createElement('label');
         descriptionLabel.htmlFor = "description";
         descriptionLabel.innerHTML = "Description:";
-        const descriptionInput = document.createElement('textarea');
-        // descriptionInput.type = "text";
+        const descriptionInput = document.createElement('textarea');  
         descriptionInput.id = "description";
         descriptionInput.className = "task-form-input-description";
         descriptionWrap.append(descriptionLabel, descriptionInput);
@@ -301,10 +287,9 @@ export default class RenderElement {
         dueDateLabel.innerHTML = "Due date:";
         const dueDateInput = document.createElement('input');
         dueDateInput.type = "date";
-        dueDateInput.id = "duedate";
-        // dueDateInput.className = "task-form-input-duedate"; 
+        dueDateInput.id = "duedate"; 
+        dueDateInput.formNoValidate = true;    
         dueDateWrap.append(dueDateLabel, dueDateInput);
-
 
         const priorityWrap = document.createElement('div');
         const priorityLabel = document.createElement('label');
@@ -350,11 +335,9 @@ export default class RenderElement {
         buttonSubmit.innerHTML = "Submit";
         buttonSubmit.id = "task-form-submit-button";
         const buttonClose = document.createElement('button');
-        buttonClose.classList.add("task-form-close-button");
-        // buttonClose.type = "submit";
+        buttonClose.classList.add("task-form-close-button");      
         buttonClose.className = "task-form-close-button";
-        buttonClose.innerHTML = "Close";
-        // buttonClose.type = "submit";
+        buttonClose.innerHTML = "Close";       
         buttonClose.formNoValidate = "formnovalidate";
         buttonsWrap.append(buttonSubmit, buttonClose);
         
@@ -362,7 +345,7 @@ export default class RenderElement {
 
         taskForm.append(taskFormLeftDiv, taskFormRightDiv);
         
-        if (taskToEdit) {           
+        if (taskToEdit) {               
             nameInput.value = taskToEdit.name;
             descriptionInput.value = taskToEdit.description;
             notesInput.value = taskToEdit.notes;
@@ -412,40 +395,26 @@ export default class RenderElement {
         const linkedProject = document.createElement('span');
         linkedProject.classList.add("linked-project");        
         linkedProject.innerHTML = task.project;
+        linkedProjectWrap.append(linkedProjectIcon, linkedProject);     
+        bottomInfoLine.append(dueDateWrap, linkedProjectWrap); 
 
-        linkedProjectWrap.append(linkedProjectIcon, linkedProject);
-
-     
-        bottomInfoLine.append(dueDateWrap, linkedProjectWrap);
-        // }
-        taskInfoSecondDiv.append(taskName, taskDescription, bottomInfoLine)
-
-        // taskInfoWrap.append(taskLeftSection, taskName, taskDescription, bottomInfoLine);
+        taskInfoSecondDiv.append(taskName, taskDescription, bottomInfoLine);       
         taskItem.append(taskInfoSecondDiv);
         
         const taskInfoThirdDiv = document.createElement('div');
         taskInfoThirdDiv.classList.add("task-info-third-div")       
         const editButton = document.createElement("button");
-        editButton.classList.add("material-symbols-outlined", "task-edit-button");        
+        editButton.classList.add("material-symbols-outlined", "task-edit-button");
+        editButton.setAttribute("id", `task-edit-button-${task.id}`);        
         editButton.textContent = "edit_square";
         const deleteButton = document.createElement("button");
         deleteButton.classList.add("material-symbols-outlined", "task-delete-button");
         deleteButton.setAttribute("id", task.id);
-
-        deleteButton.textContent = "delete";
-       
+        deleteButton.textContent = "delete";       
         taskInfoThirdDiv.append(editButton, deleteButton);
 
-        taskItem.appendChild(taskInfoThirdDiv);       
-        
-        editButton.onclick = () => {
-
-            const webpageController = new WebpageController();
-                      
-            webpageController.renderAddTaskForm(task);
-            console.log(task)
-        }
-        // console.log(index)
+        taskItem.appendChild(taskInfoThirdDiv);        
+       
         return taskItem;
     };
 

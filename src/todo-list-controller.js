@@ -93,6 +93,11 @@ export default class ProjectTaskList {
         });   
     };
 
+    getTaskById(taskId) {
+        const task = this.#tasks.filter(element => element.id === taskId);
+        return task[0];
+    };
+
     removeTask(taskId) {
         // console.log(index)
         // this.#tasks.splice(index, 1);

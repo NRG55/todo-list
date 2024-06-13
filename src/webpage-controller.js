@@ -176,14 +176,13 @@ export default class WebpageController {
 
         taskForm.addEventListener('submit', (event) => {
             event.preventDefault();            
-
+           
             if (taskToEdit) {
+                setTodayDate();
                myProjectsList.updateTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value, taskToEdit.id);
             } else {
             myProjectsList.addTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value); 
-            }; 
-            
-           console.log(myProjectsList)
+            };      
 
             this.renderTasks(selectProject.value);
             this.updateHeader(selectProject.value);
@@ -202,8 +201,8 @@ export default class WebpageController {
             if (event.target === dialog) {
                
                 dialog.close();
-            }
-        })
+            };
+        });
 
         dialog.showModal();
     };
@@ -222,6 +221,7 @@ export default class WebpageController {
             });
 
             this.addEventListenerToTaskDeletButton(project);
+             this.addEventListenerToTaskEditButton(); 
 
             return;           
         };
@@ -234,6 +234,7 @@ export default class WebpageController {
             });
 
             this.addEventListenerToTaskDeletButton(project);
+            this.addEventListenerToTaskEditButton(); 
 
             return;           
         };
@@ -246,6 +247,7 @@ export default class WebpageController {
             });
 
             this.addEventListenerToTaskDeletButton(project);
+            this.addEventListenerToTaskEditButton(); 
           
             return;           
         };       
@@ -255,10 +257,11 @@ export default class WebpageController {
         tasks.forEach((element) => {
             const task = renderElement.taskContent(element);
             
-            tasksContainer.appendChild(task);
+            tasksContainer.appendChild(task);           
         });
 
-        this.addEventListenerToTaskDeletButton(project);       
+        this.addEventListenerToTaskDeletButton(project);
+        this.addEventListenerToTaskEditButton(); 
     }; 
 
     addEventListenerToTaskDeletButton(project) {
@@ -280,6 +283,19 @@ export default class WebpageController {
         });       
     };
 
+    addEventListenerToTaskEditButton() {
+        const editTaskButtons = document.querySelectorAll(".task-edit-button");        
+
+        editTaskButtons.forEach((button) => {
+            button.addEventListener("click", (e) => {
+                const taskId = e.target.id.slice(17, 30);
+                const task = myProjectsList.getTaskById(taskId);               
+               
+                this.renderAddTaskForm(task);          
+            });
+        });       
+    };
+
     removeLinkedProject() {
         const headerProjectName = document.querySelector(".task-container-header-name").innerHTML;
         const linkedProjectContainers = document.querySelectorAll(".linked-project-container");
@@ -287,9 +303,7 @@ export default class WebpageController {
        
         linkedProjectContainers.forEach((element) => {         
 
-            if (headerProjectName === linkedProject.innerHTML) {
-                // console.log(linkedProject.innerHTML) 
-                // console.log(headerProjectName)
+            if (headerProjectName === linkedProject.innerHTML) {                
                element.remove();
             };
         });
