@@ -336,8 +336,8 @@ export default class RenderElement {
         selectProjectSelect.id = "selectProject";
         selectProjectSelect.className = "task-form-select-project";
         const selectProjectOption = document.createElement('option');
-        selectProjectOption.value = "tasks";
-        selectProjectOption.innerHTML = "All tasks";
+        selectProjectOption.value = "All Tasks";
+        selectProjectOption.innerHTML = "All Tasks";
         selectProjectSelect.append(selectProjectOption, addProjectsToSelectBox());
         selectProjectWrap.append(selectProjectLabel, selectProjectSelect);
 
@@ -410,8 +410,9 @@ export default class RenderElement {
         linkedProjectIcon.classList.add('material-symbols-outlined');
         linkedProjectIcon.textContent = 'folder';
         const linkedProject = document.createElement('span');
-        linkedProject.classList.add("linked-project");
+        linkedProject.classList.add("linked-project");        
         linkedProject.innerHTML = task.project;
+
         linkedProjectWrap.append(linkedProjectIcon, linkedProject);
 
      
@@ -432,30 +433,16 @@ export default class RenderElement {
         deleteButton.setAttribute("id", task.id);
 
         deleteButton.textContent = "delete";
-        // deleteButton.id = `task-${index}`;
+       
         taskInfoThirdDiv.append(editButton, deleteButton);
 
-        taskItem.appendChild(taskInfoThirdDiv);
-         
-        // deleteButton.onclick = () => {
-                
-        //     myProjectsList.removeTask(task.id);
-
-        //     const webpageController = new WebpageController();
-        //     // webpageController.updateHeader(newName);              
-        //     webpageController.renderTasks(task.project);
-        //     updateNumberOfTasksProjectButtons();
-        //     updateNumberOfTasksTasksButton();
-        //     updateNumberOfTasksHeader();
-        //     console.log(myProjectsList)
-         
-        // };
+        taskItem.appendChild(taskInfoThirdDiv);       
         
         editButton.onclick = () => {
 
             const webpageController = new WebpageController();
                       
-            webpageController.renderAddTaskForm(task, index);
+            webpageController.renderAddTaskForm(task);
             console.log(task)
         }
         // console.log(index)

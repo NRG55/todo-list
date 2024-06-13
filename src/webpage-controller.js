@@ -10,8 +10,7 @@ export default class WebpageController {
     renderHomepage() { 
         createDefaultData();
         this.initTasksContainer();    
-        this.initLeftSidebar();        
-                  
+        this.initLeftSidebar();                   
     };
 
     initTasksButtons() {
@@ -22,7 +21,8 @@ export default class WebpageController {
         allTasksButton.addEventListener('click', () => { 
                   
             this.updateHeader("All Tasks");
-            this.renderTasks("All Tasks");            
+            this.renderTasks("All Tasks");
+            this.removeLinkedProject();                 
         });
 
         todayTasksButton.addEventListener('click', () => {            
@@ -80,9 +80,13 @@ export default class WebpageController {
     };
 
     updateHeader(title) {
-        const header = document.querySelector(".task-container-header-name");
-        // const headerNumberOfTasksSpan = document.querySelector(".task-container-header-span");
+        const header = document.querySelector(".task-container-header-name");      
         
+        if (title === "tasks") {
+            header.innerHTML = "All Tasks";
+            return;
+        };
+
         header.innerHTML = title;
         updateNumberOfTasksHeader();        
     };
@@ -145,9 +149,8 @@ export default class WebpageController {
         const header = renderElement.taskContainerHeader();
 
         tasksContainer.appendChild(header);
-        console.log(tasksContainer)
-        this.updateHeader("All Tasks"); 
-       
+     
+        this.updateHeader("All Tasks");        
 
         const addTask = document.querySelector('.add-task-button');
        
@@ -159,7 +162,7 @@ export default class WebpageController {
         });
     };
 
-    renderAddTaskForm(taskToEdit, taskIndex) {
+    renderAddTaskForm(taskToEdit) {
         const dialog = document.querySelector('.task-form-dialog');
         const renderElement = new RenderElement();
         const form = renderElement.taskForm(taskToEdit);
@@ -172,19 +175,20 @@ export default class WebpageController {
         const closeButton = document.querySelector(".task-form-close-button");
 
         taskForm.addEventListener('submit', (event) => {
-            event.preventDefault(); 
-            
+            event.preventDefault();            
+
             if (taskToEdit) {
-               myProjectsList.updateTask(taskIndex, title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value);
+               myProjectsList.updateTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value, taskToEdit.id);
             } else {
             myProjectsList.addTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value); 
-            };          
+            }; 
+            
+           console.log(myProjectsList)
+
             this.renderTasks(selectProject.value);
             this.updateHeader(selectProject.value);
             updateNumberOfTasks(selectProject.value); 
-            this.removeLinkedProject();
-
-            // console.log(myProjectsList.tasks.length); 
+            this.removeLinkedProject();            
 
             dialog.close();                     
             });              
@@ -216,6 +220,9 @@ export default class WebpageController {
                
                 tasksContainer.appendChild(task);          
             });
+
+            this.addEventListenerToTaskDeletButton(project);
+
             return;           
         };
        
@@ -227,6 +234,7 @@ export default class WebpageController {
             });
 
             this.addEventListenerToTaskDeletButton(project);
+
             return;           
         };
 
@@ -238,11 +246,9 @@ export default class WebpageController {
             });
 
             this.addEventListenerToTaskDeletButton(project);
-            // this.renderTasks(project);
-
+          
             return;           
-        };
-       
+        };       
         
         let tasks = myProjectsList.getTasksByProject(project);
 
@@ -252,33 +258,7 @@ export default class WebpageController {
             tasksContainer.appendChild(task);
         });
 
-        this.addEventListenerToTaskDeletButton(project);
-        // this.renderTasks(project);
-        
-            
-                
-
-        // myProjectsList.tasks.forEach((element) => {
-        //     const task = renderElement.taskContent(element);
-           
-        //     tasksContainer.appendChild(task);          
-        // });
-
-        // const deleteTaskButtons = document.querySelectorAll(".task-delete-button");
-
-        // deleteTaskButtons.forEach((button) => {
-        //     button.addEventListener("click", (e) => {
-        //         const taskId = e.target.id;
-        //         console.log(taskId)
-
-        //         myProjectsList.removeTask(taskId);     
-                     
-         
-        //     updateNumberOfTasksProjectButtons();
-        //     updateNumberOfTasksTasksButton();
-        //     updateNumberOfTasksHeader();
-        //     });
-        // });       
+        this.addEventListenerToTaskDeletButton(project);       
     }; 
 
     addEventListenerToTaskDeletButton(project) {
@@ -292,6 +272,7 @@ export default class WebpageController {
                 myProjectsList.removeTask(taskId);            
                      
             this.renderTasks(project);
+            this.removeLinkedProject();
             updateNumberOfTasksProjectButtons();
             updateNumberOfTasksTasksButton();
             updateNumberOfTasksHeader();
@@ -302,10 +283,13 @@ export default class WebpageController {
     removeLinkedProject() {
         const headerProjectName = document.querySelector(".task-container-header-name").innerHTML;
         const linkedProjectContainers = document.querySelectorAll(".linked-project-container");
-        const linkedProject = document.querySelector(".linked-project");
+        const linkedProject = document.querySelector(".linked-project");    
+       
+        linkedProjectContainers.forEach((element) => {         
 
-        linkedProjectContainers.forEach((element) => {          
             if (headerProjectName === linkedProject.innerHTML) {
+                // console.log(linkedProject.innerHTML) 
+                // console.log(headerProjectName)
                element.remove();
             };
         });

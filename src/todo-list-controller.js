@@ -48,7 +48,8 @@ export default class ProjectTaskList {
     };
 
     addTask(name, description, notes, dueDate, priority, project, id) {
-        // const newTask = new Task(name, description, notes, dueDate, priority, project);        
+        // const newTask = new Task(name, description, notes, dueDate, priority, project);       
+
         this.#tasks.push(new Task(name, description, notes, dueDate, priority, project, id = Math.random().toString(16).slice(2)));
         // if(project === 'tasks') { 
         //   this.#allTasks.push(newTask)
@@ -98,14 +99,17 @@ export default class ProjectTaskList {
         this.#tasks = this.#tasks.filter((element) => element.id !== taskId);       
     };
 
-    updateTask(index, newName, newDescription, newNotes, newDueDate, newPriority, newProject) {
-        console.log(index)
-        this.#tasks[index].name = newName;
-        this.#tasks[index].description = newDescription;
-        this.#tasks[index].notes = newNotes;
-        this.#tasks[index].dueDate = newDueDate;
-        this.#tasks[index].priority = newPriority;
-        this.#tasks[index].project = newProject;
+    updateTask(newName, newDescription, newNotes, newDueDate, newPriority, newProject, taskId) {
+        this.#tasks.forEach(element => {
+            if (element.id === taskId) {
+             element.name = newName;
+             element.description = newDescription;
+             element.notes = newNotes;
+             element.dueDate = newDueDate;
+             element.priority = newPriority;
+             element.project = newProject;
+            };
+         });         
     };
     
     getTodayTasks() {
