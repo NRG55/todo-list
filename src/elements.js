@@ -252,7 +252,7 @@ export default class RenderElement {
         const nameInput = document.createElement('input');
         nameInput.type = "text";
         nameInput.id = "title";
-        nameInput.className = "task-form-input-name";
+        nameInput.className = "task-form-name-input";
         nameInput.placeholder = "Task title (required)";
         nameInput.required = true;      
         nameWrap.append(nameLabel, nameInput);
@@ -331,6 +331,7 @@ export default class RenderElement {
         const buttonSubmit = document.createElement('button');
         buttonSubmit.classList.add("task-form-submit-button");
         buttonSubmit.type = "submit";
+        buttonSubmit.formNoValidate = true;
         buttonSubmit.className = "task-form-submit-button";
         buttonSubmit.innerHTML = "Submit";
         buttonSubmit.id = "task-form-submit-button";
@@ -338,7 +339,7 @@ export default class RenderElement {
         buttonClose.classList.add("task-form-close-button");      
         buttonClose.className = "task-form-close-button";
         buttonClose.innerHTML = "Close";       
-        buttonClose.formNoValidate = "formnovalidate";
+        // buttonClose.formNoValidate = "formnovalidate";
         buttonsWrap.append(buttonSubmit, buttonClose);
         
         taskFormRightDiv.append(dueDateWrap, priorityWrap, selectProjectWrap, buttonsWrap);

@@ -1,4 +1,5 @@
 import myProjectsList from "./index.js";
+import WebpageController from "./webpage-controller.js";
 
 
 export function addProjectsToSelectBox() {
@@ -43,6 +44,15 @@ export function setTodayDate() {
     dateInput.setAttribute('min', today);
     dateInput.setAttribute('value', today);
 }
+
+export function isTaskFormValid() {
+    const taskNameInput = document.querySelector(".task-form-name-input").value;   
+
+    if (taskNameInput === "") {      
+        return false;
+    }
+    return true;
+};
 
 // export function handleDate(dueDate) { 
 //     console.log(dueDate)

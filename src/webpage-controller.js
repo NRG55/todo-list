@@ -2,7 +2,7 @@ import myProjectsList from './index.js';
 import { createDefaultData } from './defaultData.js';
 import RenderElement from './elements.js';
 import { updateNumberOfTasks, getNumberOfTasksTasksButton, updateNumberOfTasksHeader, updateNumberOfTasksProjectButtons, updateNumberOfTasksTasksButton } from './task-display-controller.js';
-import { selectCurrentProject } from './task-form-controller.js';
+import { selectCurrentProject, isTaskFormValid } from './task-form-controller.js';
 import { setTodayDate } from './task-form-controller.js';
 
 
@@ -169,21 +169,30 @@ export default class WebpageController {
 
         dialog.textContent = "";
         dialog.appendChild(form);
+       
         setTodayDate();
 
         const taskForm = document.getElementById('task-form');       
         const closeButton = document.querySelector(".task-form-close-button");
 
         taskForm.addEventListener('submit', (event) => {
-            event.preventDefault();            
-           
+            event.preventDefault(); 
+            
+            if (!isTaskFormValid()) {
+                this.renderAddTaskForm(taskToEdit);
+                return;
+            }
+            
             if (taskToEdit) {
                 setTodayDate();
                myProjectsList.updateTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value, taskToEdit.id);
             } else {
+               
             myProjectsList.addTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value); 
-            };      
-
+            }; 
+            
+           
+          
             this.renderTasks(selectProject.value);
             this.updateHeader(selectProject.value);
             updateNumberOfTasks(selectProject.value); 

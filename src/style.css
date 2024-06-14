@@ -54,7 +54,7 @@ input, textarea, select, option {
 
 .project-warning {
     position: absolute;
-    margin-top: -1rem;
+    margin-top: -1.4rem;
     color: rgb(247, 49, 49);
     font-size: 14px;
 }
