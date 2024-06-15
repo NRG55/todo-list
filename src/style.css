@@ -316,9 +316,7 @@ dialog {
 
     .task-edit-button:hover {
         color: rgb(77, 77, 77);
-    }
-
-    
+    }    
 }
 
 .task-item {    
@@ -400,8 +398,7 @@ dialog {
 }
 
 .error {
-    border-color: rgb(245, 59, 59);
-    /* color: red; */
+    border-color: rgb(245, 59, 59);   
 }
 
 .hidden {

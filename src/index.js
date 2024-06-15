@@ -1,12 +1,8 @@
-// console.log('Hey');
-import './style.css'
-import TodoList from './todo-list-controller.js';
-import Project from './project.js';
-import Task from './task.js';
-import { isToday } from 'date-fns';
+
+import './style.css';
 import RenderElement from './elements.js';
-import WebpageController from './webpage-controller.js';
-import ProjectTaskList from './todo-list-controller.js';
+import WebpageController from './ui.js';
+// import TodoList from './todo-list.js';
 
 // let testTodo = new TodoList;
 // console.log(testTodo)
@@ -43,18 +39,18 @@ import ProjectTaskList from './todo-list-controller.js';
 // console.log('Finished!');
 
 
-const myProjectsList = new ProjectTaskList;
-// myProjectsList.projects.forEach(e => {
-//     console.log(e.name)
-// })
+// const todoList = new TodoList();
+// // myProjectsList.projects.forEach(e => {
+// //     console.log(e.name)
+// // })
 
 
-export default myProjectsList;
+// export default todoList;
 
 const webpageController = new WebpageController;
 webpageController.renderHomepage();
 
-const renderElement = new RenderElement;
+// const renderElement = new RenderElement;
 // console.log(renderElement)
 
 // myProjectsList.tasks.filter(element => {

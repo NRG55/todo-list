@@ -3,16 +3,13 @@ import Project from './project.js';
 import Task from './task.js';
 import { isToday, isPast } from 'date-fns';
 
-export default class ProjectTaskList {
+export default class TodoList {
     #projects;
     #tasks
 
     constructor() {
         this.#projects = [];
-        this.#tasks = [];
-        // this.#projects.push(new Project('Project1'));
-        // this.#projects.push(new Project('Project2'));
-        // this.#projects.push(new Project('Project3'));
+        this.#tasks = [];       
     };
 
     // set projects(value) {
@@ -48,15 +45,12 @@ export default class ProjectTaskList {
     };
 
     addTask(name, description, notes, dueDate, priority, project, id) {
-        // const newTask = new Task(name, description, notes, dueDate, priority, project);       
-
         this.#tasks.push(new Task(name, description, notes, dueDate, priority, project, id = Math.random().toString(16).slice(2)));
-        // if(project === 'tasks') { 
-        //   this.#allTasks.push(newTask)
-        // } else {
-        //     const currentProject = myProjectsList.projects.find(e => e.name === project);
-        //     currentProject.tasks.push(newTask);
-        // };        
+        // console.log(this.#tasks)
+        localStorage.setItem('tasks', JSON.stringify(this.#tasks));
+        let stringTasks = JSON.stringify(this.#tasks) 
+        let parsedTasks = JSON.parse(stringTasks)
+        // console.log(parsedTasks)      
     };
 
     getTasksByProject(project) {
@@ -73,14 +67,7 @@ export default class ProjectTaskList {
     };
 
 
-    updateProjectName(index, newName) {
-        // this.#projects.forEach(element => {
-        //    if (element.name === oldName) {
-        //     element.name = newName;
-        //    };
-        // });   
-
-        // let index = this.#projects.findIndex((element) => element.name === oldName);
+    updateProjectName(index, newName) {       
         this.#projects[index].name = newName;
 
     };
@@ -137,4 +124,7 @@ export default class ProjectTaskList {
         return overdueTasks;
     };
 };
+
+export const todoList = new TodoList();
+
 

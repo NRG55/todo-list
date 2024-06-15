@@ -1,4 +1,4 @@
-import myProjectsList from "./index.js";
+import { todoList } from "./todo-list";
 import { isToday, isPast } from 'date-fns';
 
 export function taskPriorityHandler(task) {
@@ -40,7 +40,7 @@ export function updateNumberOfTasksProjectButtons() {
 
     projectButtons.forEach((button) => {       
         const project = button.id;
-        const tasksNumber = myProjectsList.getTasksByProject(project).length;
+        const tasksNumber = todoList.getTasksByProject(project).length;
         const taskNumberSpan = document.createElement('span');
         taskNumberSpan.className = "tasks-span";
 
@@ -64,11 +64,11 @@ export function updateNumberOfTasksTasksButton() {
     let tasksNumber;  
         
     if (button.classList.contains("all-tasks-button")) {     
-      tasksNumber = myProjectsList.tasks.length;       
+      tasksNumber = todoList.tasks.length;       
     };
     
     if (button.classList.contains("today-tasks-button")) {
-      const todayTasksArray = myProjectsList.tasks.filter(element => {
+      const todayTasksArray = todoList.tasks.filter(element => {
         if(isToday(element.dueDate)) {            
           return element;
           };         
@@ -77,7 +77,7 @@ export function updateNumberOfTasksTasksButton() {
     };     
 
     if (button.classList.contains("overdue-tasks-button")) {     
-      const overdueTasksArray = myProjectsList.tasks.filter(element => {
+      const overdueTasksArray = todoList.tasks.filter(element => {
         if(isPast(element.dueDate) && !isToday(element.dueDate)) {            
           return element;
           };                  
@@ -100,13 +100,13 @@ export function updateNumberOfTasksHeader(project) {
     let tasksNumber;  
       
     if (headerName === "All Tasks") {        
-      tasksNumber = myProjectsList.tasks.length;      
+      tasksNumber = todoList.tasks.length;      
       taskContainerHeaderSpan.innerHTML = `(${tasksNumber})`;       
       return;   
      };
     
     if (headerName === "Today") {
-      const todayTasksArray = myProjectsList.tasks.filter(element => {
+      const todayTasksArray = todoList.tasks.filter(element => {
         if(isToday(element.dueDate)) {                      
           return element;
           };                   
@@ -118,7 +118,7 @@ export function updateNumberOfTasksHeader(project) {
     };     
   
     if (headerName === "Overdue") {     
-      const overdueTasksArray = myProjectsList.tasks.filter(element => {
+      const overdueTasksArray = todoList.tasks.filter(element => {
         if(isPast(element.dueDate) && !isToday(element.dueDate)) {            
           return element;
           };                  
@@ -129,7 +129,7 @@ export function updateNumberOfTasksHeader(project) {
         return;
      };   
   
-      taskContainerHeaderSpan.innerHTML = `(${myProjectsList.getTasksByProject(project).length})`;     
+      taskContainerHeaderSpan.innerHTML = `(${todoList.getTasksByProject(project).length})`;     
 } 
 
 export function renderTodayTasks() {

@@ -1,17 +1,18 @@
-import myProjectsList from "./index.js";
+// import todoList from "./index.js";
+import { todoList } from "./todo-list.js";
 import { format } from "date-fns";
 
 
 
 export function createDefaultData() {
-    myProjectsList.addProject("Work");
-    myProjectsList.addProject("Reading");
-    myProjectsList.addProject("Programming");
-    myProjectsList.addProject("Training");
+    todoList.addProject("Work");
+    todoList.addProject("Reading");
+    todoList.addProject("Programming");
+    todoList.addProject("Training");
 
 // ------------WORK-TASKS------------
 
-    myProjectsList.addTask(
+    todoList.addTask(
         "Administration",
         "Responding to emails. Responding to project queries.",
         "",
@@ -19,11 +20,9 @@ export function createDefaultData() {
         // format(new Date(), "yyyy-MM-dd"),
         "high",
         "Work"
-    );
+    );    
 
-    console.log(myProjectsList)
-
-    myProjectsList.addTask(
+    todoList.addTask(
         "Meetings",
         "Internally. Reproject roles and responsibilities.",
         "",
@@ -32,7 +31,7 @@ export function createDefaultData() {
         "Work"
     );
 
-    myProjectsList.addTask(
+    todoList.addTask(
         "Planning and preparation for an event",
         "Researching ideas for specific activities. Preparation of materials and resources.",
         "",
@@ -41,7 +40,7 @@ export function createDefaultData() {
         "Work"
     );
 
-    myProjectsList.addTask(
+    todoList.addTask(
         "Evaluation tasks",
         "Completing event summary forms. Distributing and collecting participants surveys.",
         "",
@@ -52,7 +51,7 @@ export function createDefaultData() {
 
     // -------------READING-TASKS--------------
 
-    myProjectsList.addTask(
+    todoList.addTask(
         "Javascript",
         "Javascript: The Definitive Guide: Master the World's Most-Used Programming Language",
         "",
@@ -61,7 +60,7 @@ export function createDefaultData() {
         "Reading"
     );
 
-    myProjectsList.addTask(
+    todoList.addTask(
         "HTML and CSS",
         "'HTML and CSS: Design and Build Websites' by Jon Duckett",
         "",
@@ -70,7 +69,7 @@ export function createDefaultData() {
         "Reading"
     );
 
-    myProjectsList.addTask(
+    todoList.addTask(
         "Javascript",
         "'Learning JavaScript Design Patterns' by Addy Osmani",
         "",
@@ -81,7 +80,7 @@ export function createDefaultData() {
 
      // -------------PROGRAMMING-TASKS--------------
 
-     myProjectsList.addTask(
+     todoList.addTask(
         "Codewars",
         "Practice javascript.",
         "",
@@ -90,7 +89,7 @@ export function createDefaultData() {
         "Programming"
     );
 
-    myProjectsList.addTask(
+    todoList.addTask(
         "Project: Weather app",
         "Finish a theory part and start the project.",
         "",
@@ -99,7 +98,7 @@ export function createDefaultData() {
         "Programming"
     );
 
-    myProjectsList.addTask(
+    todoList.addTask(
         "Project: Todo",
         "Refactoring.",
         "",
@@ -110,22 +109,12 @@ export function createDefaultData() {
 
  // -------------TRAINING-TASKS-------------- 
  
-    myProjectsList.addTask(
+    todoList.addTask(
         "Swimming",
         "The Ab-Blaster Swim Workout (45 min).",
         "",
         format(new Date(), "yyyy-MM-dd"),
         "medium",
         "Training"
-    );
-
-
-
-
-
-
-
-    
-
-    
-}
+    );    
+};

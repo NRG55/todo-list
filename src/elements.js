@@ -1,5 +1,6 @@
-import myProjectsList from "./index.js";
-import WebpageController from "./webpage-controller.js";
+// import myProjectsList from "./index.js";
+import { todoList } from "./todo-list.js";
+import WebpageController from "./ui.js";
 import { handleDate, setTodayDate } from "./task-form-controller.js";
 import { addProjectsToSelectBox, selectCurrentProject } from "./task-form-controller.js";
 import { taskPriorityHandler, updateNumberOfTasksHeader, updateNumberOfTasksTasksButton } from "./task-display-controller.js";
@@ -99,8 +100,8 @@ export default class RenderElement {
         projectSettingsPopup.appendChild(deleteButton);      
 
         deleteButton.onclick = () => {           
-            myProjectsList.deleteTasksByProject(project);
-            myProjectsList.deleteProject(project);           
+            todoList.deleteTasksByProject(project);
+            todoList.deleteProject(project);           
 
             const webpageController = new WebpageController();
             webpageController.renderProjectButtons();
@@ -131,8 +132,8 @@ export default class RenderElement {
             okButton.onclick = () => {                
                 const newName = renameInput.value.trim(); 
 
-                myProjectsList.updateProjectName(index, newName);
-                myProjectsList.updateProjectNameInTasks(project, newName)           
+                todoList.updateProjectName(index, newName);
+                todoList.updateProjectNameInTasks(project, newName)           
     
                 const webpageController = new WebpageController();
                 webpageController.renderProjectButtons();
@@ -445,6 +446,6 @@ export default class RenderElement {
 
         return header;
     };
-
-
 }
+
+export const renderElement = new RenderElement();

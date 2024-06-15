@@ -1,6 +1,7 @@
-import myProjectsList from './index.js';
+// import myProjectsList from './index.js';
+import { todoList } from './todo-list.js';
+import { renderElement } from './elements.js';
 import { createDefaultData } from './defaultData.js';
-import RenderElement from './elements.js';
 import { updateNumberOfTasks, getNumberOfTasksTasksButton, updateNumberOfTasksHeader, updateNumberOfTasksProjectButtons, updateNumberOfTasksTasksButton } from './task-display-controller.js';
 import { selectCurrentProject, isTaskFormValid } from './task-form-controller.js';
 import { setTodayDate } from './task-form-controller.js';
@@ -40,8 +41,8 @@ export default class WebpageController {
         const addProjectContainer = document.querySelector('.left-sidebar-projects-container');
         addProjectContainer.innerHTML = "";
         
-        const renderElement = new RenderElement();
-        const projects = myProjectsList.projects;
+        // const renderElement = new RenderElement();
+        const projects = todoList.projects;
 
         projects.forEach((element, index) => {           
             const button = renderElement.leftSidebarProjectButton(element.name, index); 
@@ -66,7 +67,7 @@ export default class WebpageController {
         const allTasksContainer = document.querySelector('.all-tasks'); 
         const addProjectButton = document.querySelector('.add-project-button');  
        
-        const renderElement = new RenderElement();
+        // const renderElement = new RenderElement();
 
         allTasksContainer.appendChild(renderElement.leftSidebarTasksButtons());       
       
@@ -95,7 +96,7 @@ export default class WebpageController {
         const projectsContainer = document.querySelector('.left-sidebar-projects-container');
         const projectFormContainer = document.querySelector('.left-sidebar-project-form');
         const addProjectButton = document.querySelector('.add-project-button');
-        const renderElement = new RenderElement();
+        // const renderElement = new RenderElement();
         const form = renderElement.projectForm();
 
         projectFormContainer.appendChild(form);
@@ -117,7 +118,7 @@ export default class WebpageController {
         projectForm.addEventListener("submit", (event) => {
             event.preventDefault(); 
            
-            if(myProjectsList.isProjectExists(projectName.value)) {
+            if(todoList.isProjectExists(projectName.value)) {
                 const warning = document.querySelector('.project-warning');
 
                 warning.innerHTML = "Project already exists";
@@ -126,7 +127,7 @@ export default class WebpageController {
                 return;
             };            
 
-            myProjectsList.addProject(projectName.value);
+            todoList.addProject(projectName.value);
             const project = projectName.value;            
                
             projectsContainer.innerHTML = "";
@@ -145,7 +146,7 @@ export default class WebpageController {
     
     initTasksContainer() {
         const tasksContainer = document.querySelector('.tasks-container-header');       
-        const renderElement = new RenderElement();
+        // const renderElement = new RenderElement();
         const header = renderElement.taskContainerHeader();
 
         tasksContainer.appendChild(header);
@@ -164,34 +165,39 @@ export default class WebpageController {
 
     renderAddTaskForm(taskToEdit) {
         const dialog = document.querySelector('.task-form-dialog');
-        const renderElement = new RenderElement();
+        // const renderElement = new RenderElement();
         const form = renderElement.taskForm(taskToEdit);
 
         dialog.textContent = "";
-        dialog.appendChild(form);
+        dialog.appendChild(form);    
        
         setTodayDate();
 
         const taskForm = document.getElementById('task-form');       
         const closeButton = document.querySelector(".task-form-close-button");
+        
 
         taskForm.addEventListener('submit', (event) => {
-            event.preventDefault(); 
+            event.preventDefault();             
             
             if (!isTaskFormValid()) {
                 this.renderAddTaskForm(taskToEdit);
+                const taskNameInput = document.querySelector(".task-form-name-input");                      
+                   
+                taskNameInput.classList.add('error');
+                taskNameInput.value = "";
+                taskNameInput.focus();
+                
                 return;
-            }
+            };
             
             if (taskToEdit) {
                 setTodayDate();
-               myProjectsList.updateTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value, taskToEdit.id);
+               todoList.updateTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value, taskToEdit.id);
             } else {
                
-            myProjectsList.addTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value); 
-            }; 
-            
-           
+            todoList.addTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value); 
+            };            
           
             this.renderTasks(selectProject.value);
             this.updateHeader(selectProject.value);
@@ -218,12 +224,12 @@ export default class WebpageController {
 
     renderTasks(project) {
         const tasksContainer = document.querySelector('.tasks-container');
-        const renderElement = new RenderElement();
+        // const renderElement = new RenderElement();
 
         tasksContainer.innerHTML = "";
         
         if (project === "All Tasks") {
-            myProjectsList.tasks.forEach((element) => {
+            todoList.tasks.forEach((element) => {
                 const task = renderElement.taskContent(element);
                
                 tasksContainer.appendChild(task);          
@@ -236,7 +242,7 @@ export default class WebpageController {
         };
        
         if (project === "Today") {
-            myProjectsList.getTodayTasks().forEach((element) => {
+            todoList.getTodayTasks().forEach((element) => {
                 const task = renderElement.taskContent(element);
                
                 tasksContainer.appendChild(task);          
@@ -249,7 +255,7 @@ export default class WebpageController {
         };
 
         if (project === "Overdue") {
-            myProjectsList.getOverdueTasks().forEach((element) => {
+            todoList.getOverdueTasks().forEach((element) => {
                 const task = renderElement.taskContent(element);
                
                 tasksContainer.appendChild(task);          
@@ -261,7 +267,7 @@ export default class WebpageController {
             return;           
         };       
         
-        let tasks = myProjectsList.getTasksByProject(project);
+        let tasks = todoList.getTasksByProject(project);
 
         tasks.forEach((element) => {
             const task = renderElement.taskContent(element);
@@ -281,7 +287,7 @@ export default class WebpageController {
                 const taskId = e.target.id;
                 console.log(taskId)
 
-                myProjectsList.removeTask(taskId);            
+                todoList.removeTask(taskId);            
                      
             this.renderTasks(project);
             this.removeLinkedProject();
@@ -298,7 +304,7 @@ export default class WebpageController {
         editTaskButtons.forEach((button) => {
             button.addEventListener("click", (e) => {
                 const taskId = e.target.id.slice(17, 30);
-                const task = myProjectsList.getTaskById(taskId);               
+                const task = todoList.getTaskById(taskId);               
                
                 this.renderAddTaskForm(task);          
             });

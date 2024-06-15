@@ -1,5 +1,6 @@
-import myProjectsList from "./index.js";
-import WebpageController from "./webpage-controller.js";
+// import todoList from "./index.js";
+import { todoList } from "./todo-list.js";
+import WebpageController from "./ui.js";
 
 
 export function addProjectsToSelectBox() {
@@ -8,7 +9,7 @@ export function addProjectsToSelectBox() {
         projectOptionGroup.label = "Projects"
         // console.log(projectOptionGroup)
 
-        myProjectsList.projects.forEach((element) => {       
+        todoList.projects.forEach((element) => {       
         const projectOption = document.createElement('option');
 
         projectOption.innerHTML = element.name;
@@ -50,7 +51,7 @@ export function isTaskFormValid() {
 
     if (taskNameInput === "") {      
         return false;
-    }
+    };
     return true;
 };
 
