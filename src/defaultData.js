@@ -123,8 +123,6 @@ export function createDefaultData() {
 //     // Storage.Save();
 };
 
-document.getElementById("click").onclick = () => {
-    
-    Storage.Save();
-    Storage.Load();
-}
+// document.getElementById("click").onclick = () => {   
+//     Storage.Load();
+// }

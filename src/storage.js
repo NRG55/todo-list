@@ -5,13 +5,21 @@ import { todoList as testTodoList } from "./todo-list";
 import { createDefaultData } from "./defaultData";
 
 export default class Storage {
-    static Save() { 
-        createDefaultData();
-        // localStorage.removeItem("todolist");
+    static Save() {        
         localStorage.setItem("todolist", todoList.toString());
     };
 
-    static Load() {         
+    static Load() { 
+        // localStorage.removeItem("todolist"); 
+        if (localStorage.getItem("todolist") === null) {            
+            createDefaultData();
+            Storage.Save();
+            const todoListString = localStorage.getItem("todolist");
+            // console.log(string) 
+            todoList.fromString(todoListString) 
+            console.log(todoList)
+            return;      
+        }       
         const todoListString = localStorage.getItem("todolist");
         // console.log(string) 
         todoList.fromString(todoListString) 

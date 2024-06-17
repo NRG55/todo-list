@@ -1,4 +1,3 @@
-// import myProjectsList from './index.js';
 import { todoList } from './todo-list.js';
 import { renderElement } from './elements.js';
 import { createDefaultData } from './defaultData.js';
@@ -9,13 +8,14 @@ import Storage from './storage.js';
 
 
 export default class WebpageController {
-    renderHomepage() { 
-        createDefaultData();
+    renderHomepage() {
+        Storage.Load();
+        this.renderSidebar();      
         this.initTasksContainer();    
-        this.initLeftSidebar();                   
+        // this.initLeftSidebar();                        
     };
 
-    initTasksButtons() {
+    addEventListenerToTasksButtons() {
         const allTasksButton = document.querySelector('.all-tasks-button');
         const todayTasksButton = document.querySelector('.today-tasks-button');
         const overdueTasksButton = document.querySelector('.overdue-tasks-button');
@@ -38,15 +38,22 @@ export default class WebpageController {
         });
     };
 
-    renderProjectButtons() {
+    renderSidebarTasksButtons() {
+        const allTasksContainer = document.querySelector('.all-tasks'); 
+
+        allTasksContainer.appendChild(renderElement.sidebarTasksButtons()); 
+        updateNumberOfTasksTasksButton(); 
+        this.addEventListenerToTasksButtons();
+    };
+
+    renderSidebarProjectsButtons() {
         const addProjectContainer = document.querySelector('.left-sidebar-projects-container');
-        addProjectContainer.innerHTML = "";
-        
-        // const renderElement = new RenderElement();
+        addProjectContainer.innerHTML = "";        
+       
         const projects = todoList.projects;
 
         projects.forEach((element, index) => {           
-            const button = renderElement.leftSidebarProjectButton(element.name, index); 
+            const button = renderElement.sidebarProjectButton(element.name, index); 
 
             button.onclick = (e)=> {
                     const projectName = button.id;
@@ -61,24 +68,35 @@ export default class WebpageController {
                      }};               
 
             addProjectContainer.appendChild(button);            
-        });        
+        }); 
+        updateNumberOfTasksProjectButtons();       
     };     
 
-    initLeftSidebar() {
-        const allTasksContainer = document.querySelector('.all-tasks'); 
-        const addProjectButton = document.querySelector('.add-project-button');  
+    // initLeftSidebar() {
+    //     const allTasksContainer = document.querySelector('.all-tasks'); 
+    //     const addProjectButton = document.querySelector('.add-project-button');  
        
-        // const renderElement = new RenderElement();
+      
+    //     allTasksContainer.appendChild(renderElement.sidebarTasksButtons());       
+      
+    //     addProjectButton.addEventListener('click', () => {          
+    //         this.openAddProjectForm();                      
+    //     });        
+    //     this.renderSidebarProjectsButtons();
+    //     updateNumberOfTasksProjectButtons();
+    //     updateNumberOfTasksTasksButton();
+    //     this.addEventListenerToTasksButtons();       
+    // };
 
-        allTasksContainer.appendChild(renderElement.leftSidebarTasksButtons());       
+    renderSidebar() {      
+        const addProjectButton = document.querySelector('.add-project-button');       
       
         addProjectButton.addEventListener('click', () => {          
             this.openAddProjectForm();                      
-        });        
-        this.renderProjectButtons();
-        updateNumberOfTasksProjectButtons();
-        updateNumberOfTasksTasksButton();
-        this.initTasksButtons();       
+        });
+
+        this.renderSidebarTasksButtons();        
+        this.renderSidebarProjectsButtons();
     };
 
     updateHeader(title) {
@@ -97,7 +115,7 @@ export default class WebpageController {
         const projectsContainer = document.querySelector('.left-sidebar-projects-container');
         const projectFormContainer = document.querySelector('.left-sidebar-project-form');
         const addProjectButton = document.querySelector('.add-project-button');
-        // const renderElement = new RenderElement();
+   
         const form = renderElement.projectForm();
 
         projectFormContainer.appendChild(form);
@@ -136,7 +154,7 @@ export default class WebpageController {
             projectsContainer.innerHTML = "";
             projectFormContainer.innerHTML = "";
 
-            this.renderProjectButtons(); 
+            this.renderSidebarProjectsButtons(); 
             updateNumberOfTasks(project);
             addProjectButton.style.display = 'block';                               
         }); 
@@ -149,7 +167,7 @@ export default class WebpageController {
     
     initTasksContainer() {
         const tasksContainer = document.querySelector('.tasks-container-header');       
-        // const renderElement = new RenderElement();
+       
         const header = renderElement.taskContainerHeader();
 
         tasksContainer.appendChild(header);
@@ -168,7 +186,7 @@ export default class WebpageController {
 
     renderAddTaskForm(taskToEdit) {
         const dialog = document.querySelector('.task-form-dialog');
-        // const renderElement = new RenderElement();
+   
         const form = renderElement.taskForm(taskToEdit);
 
         dialog.textContent = "";

@@ -6,7 +6,7 @@ import Storage from './storage.js';
 
 
 const webpageController = new WebpageController;
-Storage.Load();
+// Storage.Load();
 webpageController.renderHomepage();
 
 

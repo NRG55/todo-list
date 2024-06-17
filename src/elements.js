@@ -8,7 +8,7 @@ import { format } from "date-fns";
 import { updateNumberOfTasks, updateNumberOfTasksProjectButtons } from "./task-display-controller.js";
 
 export default class RenderElement {
-    leftSidebarTasksButtons() {
+    sidebarTasksButtons() {
         const buttonsWrap = document.createElement('div');
         buttonsWrap.classList.add('left-sidebar-all-tasks');
 
@@ -51,10 +51,9 @@ export default class RenderElement {
         buttonsWrap.append(allTasksButton, todayTasksButton, overdueTasksButton);
 
         return buttonsWrap;
+    };
 
-    }
-
-    leftSidebarProjectButton(project, index) {      
+    sidebarProjectButton(project, index) {      
         const projectButton = document.createElement("button");
         projectButton.classList.add("left-sidebar-project-button");
         projectButton.id = project
@@ -104,7 +103,7 @@ export default class RenderElement {
             todoList.deleteProject(project);           
 
             const webpageController = new WebpageController();
-            webpageController.renderProjectButtons();
+            webpageController.renderSidebarProjectsButtons();
 
             projectSettingsPopup.classList.remove('visible');           
         };
@@ -136,7 +135,7 @@ export default class RenderElement {
                 todoList.updateProjectNameInTasks(project, newName)           
     
                 const webpageController = new WebpageController();
-                webpageController.renderProjectButtons();
+                webpageController.renderSidebarProjectsButtons();
                 webpageController.updateHeader(newName);              
                 webpageController.renderTasks(newName);
                 webpageController.removeLinkedProject();
