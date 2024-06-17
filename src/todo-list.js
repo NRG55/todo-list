@@ -2,22 +2,23 @@ import myProjectsList from './index.js';
 import Project from './project.js';
 import Task from './task.js';
 import { isToday, isPast } from 'date-fns';
+import WebpageController, { webpageController } from './ui.js';
 
 export default class TodoList {
     #projects;
-    #tasks
+    #tasks;
 
     constructor() {
         this.#projects = [];
         this.#tasks = [];       
     };
 
-    // set projects(value) {
-    //     this.#projects = value;
-    // };
+    setProjects(value) {
+        this.#projects = value;
+    };
 
     get projects() {
-        return this.#projects;
+        return this.#projects;        
     };
 
     get tasks() {
@@ -27,7 +28,7 @@ export default class TodoList {
     addProject(value) {
         if (this.#projects.some((project) => project.name === value)) {
             return console.log('Project exists!')
-        };
+        };       
 
         this.#projects.push(new Project(value));
     };
@@ -47,9 +48,9 @@ export default class TodoList {
     addTask(name, description, notes, dueDate, priority, project, id) {
         this.#tasks.push(new Task(name, description, notes, dueDate, priority, project, id = Math.random().toString(16).slice(2)));
         // console.log(this.#tasks)
-        localStorage.setItem('tasks', JSON.stringify(this.#tasks));
-        let stringTasks = JSON.stringify(this.#tasks) 
-        let parsedTasks = JSON.parse(stringTasks)
+        // localStorage.setItem('tasks', JSON.stringify(this.#tasks));
+        // let stringTasks = JSON.stringify(this.#tasks) 
+        // let parsedTasks = JSON.parse(stringTasks)
         // console.log(parsedTasks)      
     };
 
@@ -123,6 +124,23 @@ export default class TodoList {
 
         return overdueTasks;
     };
+
+    toString() {
+        return JSON.stringify({
+            projects: this.#projects.map(project => project.toObject()),
+            tasks: this.#tasks.map(task => task.toObject())
+        });
+    };
+
+    fromString(todoListString) {
+        const parsedTodoList = JSON.parse(todoListString);
+        
+        // this.#projects = [];
+        // this.#tasks = [];
+       
+        this.#projects = parsedTodoList.projects.map(project => Project.FromObject(project));
+        this.#tasks = parsedTodoList.tasks.map(task => Task.FromObject(task));
+    }
 };
 
 export const todoList = new TodoList();

@@ -5,6 +5,7 @@ import { createDefaultData } from './defaultData.js';
 import { updateNumberOfTasks, getNumberOfTasksTasksButton, updateNumberOfTasksHeader, updateNumberOfTasksProjectButtons, updateNumberOfTasksTasksButton } from './task-display-controller.js';
 import { selectCurrentProject, isTaskFormValid } from './task-form-controller.js';
 import { setTodayDate } from './task-form-controller.js';
+import Storage from './storage.js';
 
 
 export default class WebpageController {
@@ -126,7 +127,9 @@ export default class WebpageController {
                 projectNameInput.focus();
                 return;
             };            
-
+            
+            const storage = new Storage();
+            // storage.addProject(projectName.value)
             todoList.addProject(projectName.value);
             const project = projectName.value;            
                

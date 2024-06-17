@@ -5,6 +5,10 @@ export default class Project {
     #name = '';
     #tasks;
 
+    static FromObject(object) {
+        return new Project(object.name);        
+    };
+
     constructor(name) {
         this.#name = name; 
         this.#tasks = [];       
@@ -31,7 +35,13 @@ export default class Project {
 
     get tasks() {
         return this.#tasks;
-    };    
+    }; 
+    
+    toObject() {
+        return {
+            name: this.#name
+        }
+    }
 };
 
 

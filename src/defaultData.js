@@ -1,6 +1,7 @@
 // import todoList from "./index.js";
 import { todoList } from "./todo-list.js";
 import { format } from "date-fns";
+import Storage from "./storage.js";
 
 
 
@@ -116,5 +117,14 @@ export function createDefaultData() {
         format(new Date(), "yyyy-MM-dd"),
         "medium",
         "Training"
-    );    
+    );
+    
+   
+//     // Storage.Save();
 };
+
+document.getElementById("click").onclick = () => {
+    
+    Storage.Save();
+    Storage.Load();
+}

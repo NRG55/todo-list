@@ -1,15 +1,20 @@
-import { todoList } from "./todo-list";
+import TodoList, { todoList } from "./todo-list";
 import Project from "./project";
 import Task from "./task";
+import { todoList as testTodoList } from "./todo-list";
+import { createDefaultData } from "./defaultData";
 
 export default class Storage {
-    setTodoList(value) {
-        localStorage.setItem("todolist", JSON.stringify(value));
+    static Save() { 
+        createDefaultData();
+        // localStorage.removeItem("todolist");
+        localStorage.setItem("todolist", todoList.toString());
     };
 
-    getTodoList() {
-       
-
-       
-    }
-}
+    static Load() {         
+        const todoListString = localStorage.getItem("todolist");
+        // console.log(string) 
+        todoList.fromString(todoListString) 
+        console.log(todoList)      
+    };    
+};
