@@ -1,14 +1,13 @@
 import { todoList } from './todo-list.js';
 import { renderElement } from './elements.js';
-import { createDefaultData } from './defaultData.js';
 import { updateNumberOfTasks, getNumberOfTasksTasksButton, updateNumberOfTasksHeader, updateNumberOfTasksProjectButtons, updateNumberOfTasksTasksButton } from './task-display-controller.js';
 import { selectCurrentProject, isTaskFormValid } from './task-form-controller.js';
 import { setTodayDate } from './task-form-controller.js';
 import Storage from './storage.js';
 
 
-export default class WebpageController {
-    renderHomepage() {
+export default class Ui {
+    render() {
         Storage.Load();
         this.renderSidebar();      
         this.initTasksContainer();    
@@ -70,23 +69,7 @@ export default class WebpageController {
             addProjectContainer.appendChild(button);            
         }); 
         updateNumberOfTasksProjectButtons();       
-    };     
-
-    // initLeftSidebar() {
-    //     const allTasksContainer = document.querySelector('.all-tasks'); 
-    //     const addProjectButton = document.querySelector('.add-project-button');  
-       
-      
-    //     allTasksContainer.appendChild(renderElement.sidebarTasksButtons());       
-      
-    //     addProjectButton.addEventListener('click', () => {          
-    //         this.openAddProjectForm();                      
-    //     });        
-    //     this.renderSidebarProjectsButtons();
-    //     updateNumberOfTasksProjectButtons();
-    //     updateNumberOfTasksTasksButton();
-    //     this.addEventListenerToTasksButtons();       
-    // };
+    };   
 
     renderSidebar() {      
         const addProjectButton = document.querySelector('.add-project-button');       
@@ -146,16 +129,17 @@ export default class WebpageController {
                 return;
             };            
             
-            const storage = new Storage();
-            // storage.addProject(projectName.value)
-            todoList.addProject(projectName.value);
-            const project = projectName.value;            
+            const project = projectName.value;  
+            todoList.addProject(project);
+            Storage.Save();                     
                
             projectsContainer.innerHTML = "";
             projectFormContainer.innerHTML = "";
 
-            this.renderSidebarProjectsButtons(); 
-            updateNumberOfTasks(project);
+            this.renderSidebarProjectsButtons();
+            this.updateHeader(project);
+            this.renderTasks(project); 
+            // updateNumberOfTasks(project);
             addProjectButton.style.display = 'block';                               
         }); 
         
@@ -212,13 +196,13 @@ export default class WebpageController {
                 return;
             };
             
-            if (taskToEdit) {
-                setTodayDate();
+            if (taskToEdit) {               
                todoList.updateTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value, taskToEdit.id);
-            } else {
-               
-            todoList.addTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value); 
-            };            
+               Storage.Save();
+            } else {               
+                todoList.addTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value); 
+                Storage.Save();
+                };            
           
             this.renderTasks(selectProject.value);
             this.updateHeader(selectProject.value);
@@ -244,8 +228,7 @@ export default class WebpageController {
     };
 
     renderTasks(project) {
-        const tasksContainer = document.querySelector('.tasks-container');
-        // const renderElement = new RenderElement();
+        const tasksContainer = document.querySelector('.tasks-container');      
 
         tasksContainer.innerHTML = "";
         
@@ -257,7 +240,7 @@ export default class WebpageController {
             });
 
             this.addEventListenerToTaskDeletButton(project);
-             this.addEventListenerToTaskEditButton(); 
+            this.addEventListenerToTaskEditButton(); 
 
             return;           
         };
@@ -345,4 +328,6 @@ export default class WebpageController {
         });
     };
 };
+
+export const ui = new Ui();
 
