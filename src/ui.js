@@ -9,9 +9,29 @@ import Storage from './storage.js';
 export default class Ui {
     render() {
         Storage.Load();
+        // this.renderMainContent(); 
         this.renderSidebar();      
-        this.initTasksContainer();    
+        this.renderTasksContainer(); 
+       
         // this.initLeftSidebar();                        
+    };
+
+    renderMainContent() {
+        const mainContent = document.querySelector(".main-content");
+        console.log(renderElement.sidebar())
+        
+        mainContent.appendChild(renderElement.sidebar());
+    };
+
+    renderSidebar() {              
+        const addProjectButton = document.querySelector(".sidebar-add-project-button");       
+      
+        addProjectButton.addEventListener('click', () => {          
+            this.renderAddProjectForm();                      
+        });
+
+        this.renderSidebarTasksButtons();        
+        this.renderSidebarProjectsButtons();
     };
 
     addEventListenerToTasksButtons() {
@@ -38,16 +58,16 @@ export default class Ui {
     };
 
     renderSidebarTasksButtons() {
-        const allTasksContainer = document.querySelector('.all-tasks'); 
+        const sidebarTasksContainer = document.querySelector('.sidebar-tasks'); 
 
-        allTasksContainer.appendChild(renderElement.sidebarTasksButtons()); 
+        sidebarTasksContainer.appendChild(renderElement.sidebarTasksButtons()); 
         updateNumberOfTasksTasksButton(); 
         this.addEventListenerToTasksButtons();
     };
 
     renderSidebarProjectsButtons() {
-        const addProjectContainer = document.querySelector('.left-sidebar-projects-container');
-        addProjectContainer.innerHTML = "";        
+        const projectsButtonsContainer = document.querySelector('.sidebar-projects-buttons-container');
+        projectsButtonsContainer.innerHTML = "";        
        
         const projects = todoList.projects;
 
@@ -66,25 +86,14 @@ export default class Ui {
                     this.removeLinkedProject();
                      }};               
 
-            addProjectContainer.appendChild(button);            
+            projectsButtonsContainer.appendChild(button);            
         }); 
         updateNumberOfTasksProjectButtons();       
-    };   
-
-    renderSidebar() {      
-        const addProjectButton = document.querySelector('.add-project-button');       
-      
-        addProjectButton.addEventListener('click', () => {          
-            this.openAddProjectForm();                      
-        });
-
-        this.renderSidebarTasksButtons();        
-        this.renderSidebarProjectsButtons();
-    };
+    };    
 
     updateHeader(title) {
         const header = document.querySelector(".task-container-header-name");      
-        
+        console.log("header")
         if (title === "tasks") {
             header.innerHTML = "All Tasks";
             return;
@@ -94,10 +103,10 @@ export default class Ui {
         updateNumberOfTasksHeader();        
     };
 
-    openAddProjectForm() {       
-        const projectsContainer = document.querySelector('.left-sidebar-projects-container');
-        const projectFormContainer = document.querySelector('.left-sidebar-project-form');
-        const addProjectButton = document.querySelector('.add-project-button');
+    renderAddProjectForm() {       
+        const projectsContainer = document.querySelector(".sidebar-projects-buttons-container");
+        const projectFormContainer = document.querySelector(".sidebar-project-form-container");
+        const addProjectButton = document.querySelector(".sidebar-add-project-button");
    
         const form = renderElement.projectForm();
 
@@ -139,7 +148,7 @@ export default class Ui {
             this.renderSidebarProjectsButtons();
             this.updateHeader(project);
             this.renderTasks(project); 
-            // updateNumberOfTasks(project);
+         
             addProjectButton.style.display = 'block';                               
         }); 
         
@@ -149,24 +158,26 @@ export default class Ui {
         });
     };
     
-    initTasksContainer() {
+    renderTasksContainer() {
+        this.renderTasksContainerHeader();
+        this.renderTasks("All Tasks");
+    };
+
+    renderTasksContainerHeader() {
         const tasksContainer = document.querySelector('.tasks-container-header');       
-       
         const header = renderElement.taskContainerHeader();
 
         tasksContainer.appendChild(header);
      
         this.updateHeader("All Tasks");        
 
-        const addTask = document.querySelector('.add-task-button');
-       
-        this.renderTasks("All Tasks");
+        const addTask = document.querySelector('.add-task-button');         
 
         addTask.addEventListener("click", () => {           
             this.renderAddTaskForm();
             selectCurrentProject();
         });
-    };
+    }
 
     renderAddTaskForm(taskToEdit) {
         const dialog = document.querySelector('.task-form-dialog');
@@ -288,10 +299,10 @@ export default class Ui {
 
         deleteTaskButtons.forEach((button) => {
             button.addEventListener("click", (e) => {
-                const taskId = e.target.id;
-                console.log(taskId)
+                const taskId = e.target.id;               
 
-                todoList.removeTask(taskId);            
+                todoList.removeTask(taskId);
+                Storage.Save();            
                      
             this.renderTasks(project);
             this.removeLinkedProject();

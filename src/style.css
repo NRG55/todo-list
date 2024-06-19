@@ -34,22 +34,22 @@ input, textarea, select, option {
     background-color: white;
 }
 
-.left-sidebar h3 {
-    padding: 8px 12px;   
-}
-
 .main-content { 
     display: grid;
     grid-template-columns: 240px auto; 
     height: calc(100% - 2.5rem);       
 }
 
-.left-sidebar {
+.sidebar {
     display: grid;
     grid-template-rows: 8rem auto;   
     padding: 20px;
     padding-top: 80px;   
-    background-color:#f9f6f3;  
+    background-color:#f9f6f3; 
+    
+    h3 {
+        padding: 8px 12px;   
+    }
 }
 
 .project-warning {
@@ -265,8 +265,8 @@ dialog {
     align-items: center;    
 }
 
-.left-sidebar-projects-container,
- .left-sidebar-all-tasks {
+.sidebar-projects-buttons-container,
+ .sidebar-tasks-buttons-container {
     display: grid;
     position: relative;
     grid-template-columns: 1fr;

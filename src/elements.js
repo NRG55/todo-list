@@ -1,6 +1,7 @@
 // import myProjectsList from "./index.js";
+import Storage from "./storage.js";
 import { todoList } from "./todo-list.js";
-import WebpageController from "./ui.js";
+import { ui } from "./ui.js";
 import { handleDate, setTodayDate } from "./task-form-controller.js";
 import { addProjectsToSelectBox, selectCurrentProject } from "./task-form-controller.js";
 import { taskPriorityHandler, updateNumberOfTasksHeader, updateNumberOfTasksTasksButton } from "./task-display-controller.js";
@@ -8,9 +9,34 @@ import { format } from "date-fns";
 import { updateNumberOfTasks, updateNumberOfTasksProjectButtons } from "./task-display-controller.js";
 
 export default class RenderElement {
+    sidebar() {
+        const sidebar = document.createElement("div");
+        sidebar.classList.add("sidebar");
+
+        const sidebarTasks = document.createElement("div");
+        sidebarTasks.classList.add("sidebar-tasks");
+
+        const sidebarProjects = document.createElement("div");
+        sidebarProjects.classList.add("sidebar-projects");
+        const sidebarProjectsTitle = document.createElement("h3");
+        sidebarProjectsTitle.innerHTML = "Projects";
+        const sidebarProjectsButtonsContainer = document.createElement("div");
+        sidebarProjectsButtonsContainer.classList.add("sidebar-projects-buttons-container");
+        const sidebarProjectFormContainer = document.createElement("div");
+        sidebarProjectFormContainer.classList.add("sidebar-project-form-container");
+        const sidebarAddProjectButton = document.createElement("button");
+        sidebarAddProjectButton.classList.add("sidebar-add-project-button");
+        sidebarAddProjectButton.innerHTML = "+ Add project";
+        sidebarProjects.append(sidebarProjectsTitle, sidebarProjectsButtonsContainer, sidebarProjectFormContainer, sidebarAddProjectButton);
+
+        sidebar.append(sidebarTasks, sidebarProjects)
+
+        return sidebar;        
+    };
+
     sidebarTasksButtons() {
         const buttonsWrap = document.createElement('div');
-        buttonsWrap.classList.add('left-sidebar-all-tasks');
+        buttonsWrap.classList.add("sidebar-tasks-buttons-container");
 
         const allTasksButton = document.createElement('button');
         allTasksButton.classList.add("all-tasks-button", "left-sidebar-tasks-button");
@@ -100,10 +126,15 @@ export default class RenderElement {
 
         deleteButton.onclick = () => {           
             todoList.deleteTasksByProject(project);
-            todoList.deleteProject(project);           
+            todoList.deleteProject(project); 
+            Storage.Save();
 
-            const webpageController = new WebpageController();
-            webpageController.renderSidebarProjectsButtons();
+            ui.updateHeader("All Tasks")
+            ui.renderTasks("All Tasks");
+            ui.renderSidebarProjectsButtons();
+            // ui.renderTasksContainer();
+          
+            console.log("HEY")            
 
             projectSettingsPopup.classList.remove('visible');           
         };
@@ -134,11 +165,11 @@ export default class RenderElement {
                 todoList.updateProjectName(index, newName);
                 todoList.updateProjectNameInTasks(project, newName)           
     
-                const webpageController = new WebpageController();
-                webpageController.renderSidebarProjectsButtons();
-                webpageController.updateHeader(newName);              
-                webpageController.renderTasks(newName);
-                webpageController.removeLinkedProject();
+                
+                ui.renderSidebarProjectsButtons();
+                ui.updateHeader(newName);              
+                ui.renderTasks(newName);
+                ui.removeLinkedProject();
                 updateNumberOfTasks(newName);                
 
                 const newProjectButton = document.getElementById(`${newName}`);
