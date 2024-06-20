@@ -249,7 +249,7 @@ export default class Ui {
         const tasksDisplay = document.querySelector(".tasks-display");      
 
         tasksDisplay.innerHTML = "";
-        console.log(title)
+      
         if (title === "All Tasks" || title === undefined) {
             todoList.tasks.forEach((element) => {
                 const task = renderElement.taskContent(element);
