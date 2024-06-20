@@ -9,11 +9,7 @@ import Storage from './storage.js';
 export default class Ui {
     render() {
         Storage.Load();
-        // this.renderMainContent(); 
-        this.renderSidebar();      
-        this.renderTasksContainer(); 
-       
-        // this.initLeftSidebar();                        
+        this.renderMainContent();                        
     };
 
     renderMainContent() {
@@ -21,6 +17,10 @@ export default class Ui {
         console.log(renderElement.sidebar())
         
         mainContent.appendChild(renderElement.sidebar());
+        this.renderSidebar(); 
+
+        mainContent.appendChild(renderElement.tasksContainer());
+        this.renderTasksContainer();        
     };
 
     renderSidebar() {              
@@ -32,6 +32,11 @@ export default class Ui {
 
         this.renderSidebarTasksButtons();        
         this.renderSidebarProjectsButtons();
+    };
+
+    renderTasksContainer() {
+        this.renderTasksContainerHeader();
+        this.renderTasks("All Tasks");
     };
 
     addEventListenerToTasksButtons() {
@@ -156,19 +161,9 @@ export default class Ui {
             projectFormContainer.innerHTML = "";
             addProjectButton.style.display = 'block';     
         });
-    };
-    
-    renderTasksContainer() {
-        this.renderTasksContainerHeader();
-        this.renderTasks("All Tasks");
-    };
+    };    
 
-    renderTasksContainerHeader() {
-        const tasksContainer = document.querySelector('.tasks-container-header');       
-        const header = renderElement.taskContainerHeader();
-
-        tasksContainer.appendChild(header);
-     
+    renderTasksContainerHeader() {     
         this.updateHeader("All Tasks");        
 
         const addTask = document.querySelector('.add-task-button');         
@@ -177,11 +172,10 @@ export default class Ui {
             this.renderAddTaskForm();
             selectCurrentProject();
         });
-    }
+    };
 
     renderAddTaskForm(taskToEdit) {
-        const dialog = document.querySelector('.task-form-dialog');
-   
+        const dialog = document.querySelector('.task-form-dialog');   
         const form = renderElement.taskForm(taskToEdit);
 
         dialog.textContent = "";
@@ -239,15 +233,15 @@ export default class Ui {
     };
 
     renderTasks(project) {
-        const tasksContainer = document.querySelector('.tasks-container');      
+        const tasksDisplay = document.querySelector(".tasks-display");      
 
-        tasksContainer.innerHTML = "";
+        tasksDisplay.innerHTML = "";
         
         if (project === "All Tasks") {
             todoList.tasks.forEach((element) => {
                 const task = renderElement.taskContent(element);
                
-                tasksContainer.appendChild(task);          
+                tasksDisplay.appendChild(task);          
             });
 
             this.addEventListenerToTaskDeletButton(project);
@@ -260,7 +254,7 @@ export default class Ui {
             todoList.getTodayTasks().forEach((element) => {
                 const task = renderElement.taskContent(element);
                
-                tasksContainer.appendChild(task);          
+                tasksDisplay.appendChild(task);          
             });
 
             this.addEventListenerToTaskDeletButton(project);
@@ -273,7 +267,7 @@ export default class Ui {
             todoList.getOverdueTasks().forEach((element) => {
                 const task = renderElement.taskContent(element);
                
-                tasksContainer.appendChild(task);          
+                tasksDisplay.appendChild(task);          
             });
 
             this.addEventListenerToTaskDeletButton(project);
@@ -287,7 +281,7 @@ export default class Ui {
         tasks.forEach((element) => {
             const task = renderElement.taskContent(element);
             
-            tasksContainer.appendChild(task);           
+            tasksDisplay.appendChild(task);           
         });
 
         this.addEventListenerToTaskDeletButton(project);

@@ -34,6 +34,21 @@ export default class RenderElement {
         return sidebar;        
     };
 
+    tasksContainer() {
+        const tasksContainer = document.createElement("div");
+        tasksContainer.classList.add("tasks-container");
+
+        const tasksDisplay = document.createElement("div");
+        tasksDisplay.classList.add("tasks-display");       
+
+        const taskFormDialog = document.createElement("dialog");
+        taskFormDialog.classList.add("task-form-dialog");
+
+        tasksContainer.append(this.tasksDisplayHeader(), tasksDisplay, taskFormDialog);       
+        
+        return tasksContainer;       
+    };
+
     sidebarTasksButtons() {
         const buttonsWrap = document.createElement('div');
         buttonsWrap.classList.add("sidebar-tasks-buttons-container");
@@ -450,16 +465,15 @@ export default class RenderElement {
         return taskItem;
     };
 
-    taskContainerHeader() {
+    tasksDisplayHeader() {
         const header = document.createElement('div');
-        header.className = "task-container-header";
+        header.className = "tasks-display-header";
 
         const name = document.createElement('h2');
         name.className = "task-container-header-name";
-        // name.innerHTML = name;
+     
         const numberOfTasksSpan = document.createElement('span');
-        numberOfTasksSpan.className = "task-container-header-span";
-        // numberOfTasksSpan.innerHTML = "(4)";
+        numberOfTasksSpan.className = "task-container-header-span";       
 
         const addTaskButton = document.createElement('button');
         addTaskButton.className = "add-task-button";

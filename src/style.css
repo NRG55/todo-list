@@ -166,10 +166,7 @@ input, textarea, select, option {
 .project-settings-popup {
     position: absolute;
     margin-top: -100px;
-    left: 140px;
-    /* background-color: #ebe4dc; */
-   
-   
+    left: 140px;   
 }
 
 .project-settings-popup > button {
@@ -184,7 +181,7 @@ input, textarea, select, option {
     }    
 }
 
-.add-project-button,
+.sidebar-add-project-button,
 .add-task-button {  
     color: grey;
 
@@ -256,7 +253,7 @@ dialog {
     }
 }
 
-.task-container-header {
+.tasks-display-header {
     display: grid;
     grid-template-columns: auto 1fr 120px;
     padding: 1rem; 
@@ -273,7 +270,7 @@ dialog {
     padding-bottom: 1rem ;
   }
 
-.tasks-main {
+.tasks-container {
     padding: 0 1rem; 
 }
 
