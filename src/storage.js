@@ -14,10 +14,11 @@ export default class Storage {
         if (localStorage.getItem("todolist") === null) {            
             createDefaultData();
             Storage.Save();
+
             const todoListString = localStorage.getItem("todolist");
-            // console.log(string) 
+          
             todoList.fromString(todoListString) 
-            console.log(todoList)
+           
             return;      
         }       
         const todoListString = localStorage.getItem("todolist");

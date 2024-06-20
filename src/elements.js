@@ -37,15 +37,18 @@ export default class RenderElement {
     tasksContainer() {
         const tasksContainer = document.createElement("div");
         tasksContainer.classList.add("tasks-container");
-
+        
+        const tasksDisplayHeader = this.tasksDisplayHeader();
         const tasksDisplay = document.createElement("div");
         tasksDisplay.classList.add("tasks-display");       
 
         const taskFormDialog = document.createElement("dialog");
         taskFormDialog.classList.add("task-form-dialog");
-
-        tasksContainer.append(this.tasksDisplayHeader(), tasksDisplay, taskFormDialog);       
         
+        tasksContainer.append(tasksDisplayHeader, tasksDisplay, taskFormDialog);       
+        // console.log(this.tasksDisplayHeader())
+
+        // console.log(tasksContainer)
         return tasksContainer;       
     };
 
@@ -171,17 +174,17 @@ export default class RenderElement {
             input.focus();
             
             okButton.onclick = () => {                
-                const newName = renameInput.value.trim(); 
-
+                const newName = renameInput.value.trim();
+                
                 todoList.updateProjectName(index, newName);
                 todoList.updateProjectNameInTasks(project, newName)           
-    
-                
-                ui.renderSidebarProjectsButtons();
-                ui.updateHeader(newName);              
-                ui.renderTasks(newName);
-                ui.removeLinkedProject();
-                updateNumberOfTasks(newName);                
+                Storage.Save();
+                ui.render(newName);
+                // ui.renderSidebarProjectsButtons();
+                // ui.renderTasksContainerHeader(newName);              
+                // ui.renderTasks(newName);
+                // ui.removeLinkedProject();
+                // updateNumberOfTasks(newName);                
 
                 const newProjectButton = document.getElementById(`${newName}`);
                 newProjectButton.focus();                                            
@@ -463,16 +466,16 @@ export default class RenderElement {
 
     tasksDisplayHeader() {
         const header = document.createElement('div');
-        header.className = "tasks-display-header";
+        header.classList.add("tasks-display-header");
 
-        const name = document.createElement('h2');
-        name.className = "tasks-display-header-name";
+        const headerName = document.createElement('h2');
+        headerName.classList.add("tasks-display-header-name");        
      
         const numberOfTasksSpan = document.createElement('span');
-        numberOfTasksSpan.className = "task-container-header-span";       
+        numberOfTasksSpan.classList.add("task-container-header-span");       
 
         const addTaskButton = document.createElement('button');
-        addTaskButton.className = "add-task-button";
+        addTaskButton.classList.add("add-task-button");
 
         const iconSpan = document.createElement('span');
         iconSpan.classList.add('material-symbols-outlined', 'add-task-button-icon');
@@ -482,8 +485,8 @@ export default class RenderElement {
         text.textContent = "Add task";
 
         addTaskButton.append(iconSpan, text);
-        header.append(name, numberOfTasksSpan, addTaskButton);
-
+        header.append(headerName, numberOfTasksSpan, addTaskButton);
+        
         return header;
     };
 }

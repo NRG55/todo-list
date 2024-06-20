@@ -7,59 +7,32 @@ import Storage from './storage.js';
 
 
 export default class Ui {
-    render() {
+    render(title) {
         Storage.Load();
-        this.renderMainContent();                        
+        this.renderMainContent(title);                        
     };
 
-    renderMainContent() {
+    renderMainContent(title) {
         const mainContent = document.querySelector(".main-content");
-        mainContent.innerHTML = "";
-        console.log(renderElement.sidebar())
+        mainContent.innerHTML = "";       
         
         mainContent.appendChild(renderElement.sidebar());
         this.renderSidebar(); 
 
-        mainContent.appendChild(renderElement.tasksContainer());
-        this.renderTasksContainer();        
+        mainContent.appendChild(renderElement.tasksContainer());       
+        this.renderTasksContainer(title);        
     };
 
-    renderSidebar() {              
+    // -------------SIDEBAR-------------
+
+    renderSidebar() {         
+        this.renderSidebarTasksButtons();        
+        this.renderSidebarProjectsButtons();
+
         const addProjectButton = document.querySelector(".sidebar-add-project-button");       
       
         addProjectButton.addEventListener('click', () => {          
             this.renderAddProjectForm();                      
-        });
-
-        this.renderSidebarTasksButtons();        
-        this.renderSidebarProjectsButtons();
-    };
-
-    renderTasksContainer() {
-        this.renderTasksContainerHeader();
-        this.renderTasks("All Tasks");
-    };
-
-    addEventListenerToTasksButtons() {
-        const allTasksButton = document.querySelector('.all-tasks-button');
-        const todayTasksButton = document.querySelector('.today-tasks-button');
-        const overdueTasksButton = document.querySelector('.overdue-tasks-button');
-       
-        allTasksButton.addEventListener('click', () => { 
-                  
-            this.updateHeader("All Tasks");
-            this.renderTasks("All Tasks");
-            this.removeLinkedProject();                 
-        });
-
-        todayTasksButton.addEventListener('click', () => {            
-            this.updateHeader("Today");           
-            this.renderTasks("Today");              
-        });
-
-        overdueTasksButton.addEventListener('click', () => {            
-            this.updateHeader("Overdue");
-            this.renderTasks("Overdue");          
         });
     };
 
@@ -70,6 +43,29 @@ export default class Ui {
         updateNumberOfTasksTasksButton(); 
         this.addEventListenerToTasksButtons();
     };
+
+    addEventListenerToTasksButtons() {
+        const allTasksButton = document.querySelector('.all-tasks-button');
+        const todayTasksButton = document.querySelector('.today-tasks-button');
+        const overdueTasksButton = document.querySelector('.overdue-tasks-button');
+       
+        allTasksButton.addEventListener('click', () => { 
+                  
+            this.renderTasksContainerHeader("All Tasks");
+            this.renderTasks("All Tasks");
+            this.removeLinkedProject();                 
+        });
+
+        todayTasksButton.addEventListener('click', () => {            
+            this.renderTasksContainerHeader("Today");           
+            this.renderTasks("Today");              
+        });
+
+        overdueTasksButton.addEventListener('click', () => {            
+            this.renderTasksContainerHeader("Overdue");
+            this.renderTasks("Overdue");          
+        });
+    };    
 
     renderSidebarProjectsButtons() {
         const projectsButtonsContainer = document.querySelector('.sidebar-projects-buttons-container');
@@ -86,27 +82,16 @@ export default class Ui {
                      if (e.target.classList.contains("project-popup-edit-button") || e.target.classList.contains("project-rename-ok-button")) { button.classList.remove("left-sidebar-project-button");                      
                         return;
                      } else {
-                    this.updateHeader(projectName);
+                    // this.updateHeader(projectName);
+                    this.renderTasksContainerHeader(projectName)
                     this.renderTasks(projectName); 
-                    updateNumberOfTasks(projectName);                   
+                    // updateNumberOfTasks(projectName);                   
                     this.removeLinkedProject();
                      }};               
 
             projectsButtonsContainer.appendChild(button);            
         }); 
         updateNumberOfTasksProjectButtons();       
-    };    
-
-    updateHeader(title) {
-        const header = document.querySelector(".tasks-display-header-name");      
-        console.log("header")
-        if (title === "tasks") {
-            header.innerHTML = "All Tasks";
-            return;
-        };
-
-        header.innerHTML = title;
-        updateNumberOfTasksHeader();        
     };
 
     renderAddProjectForm() {       
@@ -152,7 +137,7 @@ export default class Ui {
             projectFormContainer.innerHTML = "";
 
             this.renderSidebarProjectsButtons();
-            this.updateHeader(project);
+            this.renderTasksContainerHeader(project);
             this.renderTasks(project); 
          
             addProjectButton.style.display = 'block';                               
@@ -163,9 +148,36 @@ export default class Ui {
             addProjectButton.style.display = 'block';     
         });
     };    
+    
+     // -------------TASKS-CONTAINER-------------
+    
+    renderTasksContainer(title) {
+        this.renderTasksContainerHeader(title);
+        this.renderTasks(title);
+    };
 
-    renderTasksContainerHeader() {     
-        this.updateHeader("All Tasks");        
+    // updateHeader(title) {
+    //     const header = document.querySelector(".tasks-display-header-name");      
+      
+    //     if (title === "tasks") {
+    //         header.innerHTML = "All Tasks";
+    //         return;
+    //     };
+
+    //     header.innerHTML = title;
+    //     updateNumberOfTasksHeader();        
+    // };    
+
+    renderTasksContainerHeader(title) { 
+        const headerTitle = document.querySelector(".tasks-display-header-name");           
+       
+        if (!title) {
+            headerTitle.innerHTML = "All Tasks";
+            updateNumberOfTasksHeader();  
+        } else {            
+            headerTitle.innerHTML = title;
+            updateNumberOfTasksHeader(title); 
+            }; 
 
         const addTask = document.querySelector('.add-task-button');         
 
@@ -211,7 +223,7 @@ export default class Ui {
                 };            
           
             this.renderTasks(selectProject.value);
-            this.updateHeader(selectProject.value);
+            this.renderTasksContainerHeader(selectProject.value);
             updateNumberOfTasks(selectProject.value); 
             this.removeLinkedProject();            
 
@@ -233,51 +245,51 @@ export default class Ui {
         dialog.showModal();
     };
 
-    renderTasks(project) {
+    renderTasks(title) {
         const tasksDisplay = document.querySelector(".tasks-display");      
 
         tasksDisplay.innerHTML = "";
-        
-        if (project === "All Tasks") {
+        console.log(title)
+        if (title === "All Tasks" || title === undefined) {
             todoList.tasks.forEach((element) => {
                 const task = renderElement.taskContent(element);
                
                 tasksDisplay.appendChild(task);          
             });
 
-            this.addEventListenerToTaskDeletButton(project);
+            this.addEventListenerToTaskDeletButton(title);
             this.addEventListenerToTaskEditButton(); 
 
             return;           
         };
        
-        if (project === "Today") {
+        if (title === "Today") {
             todoList.getTodayTasks().forEach((element) => {
                 const task = renderElement.taskContent(element);
                
                 tasksDisplay.appendChild(task);          
             });
 
-            this.addEventListenerToTaskDeletButton(project);
+            this.addEventListenerToTaskDeletButton(title);
             this.addEventListenerToTaskEditButton(); 
 
             return;           
         };
 
-        if (project === "Overdue") {
+        if (title === "Overdue") {
             todoList.getOverdueTasks().forEach((element) => {
                 const task = renderElement.taskContent(element);
                
                 tasksDisplay.appendChild(task);          
             });
 
-            this.addEventListenerToTaskDeletButton(project);
+            this.addEventListenerToTaskDeletButton(title);
             this.addEventListenerToTaskEditButton(); 
           
             return;           
         };       
         
-        let tasks = todoList.getTasksByProject(project);
+        let tasks = todoList.getTasksByProject(title);
 
         tasks.forEach((element) => {
             const task = renderElement.taskContent(element);
@@ -285,11 +297,11 @@ export default class Ui {
             tasksDisplay.appendChild(task);           
         });
 
-        this.addEventListenerToTaskDeletButton(project);
+        this.addEventListenerToTaskDeletButton(title);
         this.addEventListenerToTaskEditButton(); 
     }; 
 
-    addEventListenerToTaskDeletButton(project) {
+    addEventListenerToTaskDeletButton(title) {
         const deleteTaskButtons = document.querySelectorAll(".task-delete-button");
 
         deleteTaskButtons.forEach((button) => {
@@ -298,12 +310,12 @@ export default class Ui {
 
                 todoList.removeTask(taskId);
                 Storage.Save();            
-                     
-            this.renderTasks(project);
-            this.removeLinkedProject();
-            updateNumberOfTasksProjectButtons();
-            updateNumberOfTasksTasksButton();
-            updateNumberOfTasksHeader();
+                this.render(title);     
+                this.renderTasks(title);
+            // this.removeLinkedProject();
+            // updateNumberOfTasksProjectButtons();
+            // updateNumberOfTasksTasksButton();
+            // updateNumberOfTasksHeader();
             });
         });       
     };

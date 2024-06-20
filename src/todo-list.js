@@ -46,12 +46,7 @@ export default class TodoList {
     };
 
     addTask(name, description, notes, dueDate, priority, project, id) {
-        this.#tasks.push(new Task(name, description, notes, dueDate, priority, project, id = Math.random().toString(16).slice(2)));
-        // console.log(this.#tasks)
-        // localStorage.setItem('tasks', JSON.stringify(this.#tasks));
-        // let stringTasks = JSON.stringify(this.#tasks) 
-        // let parsedTasks = JSON.parse(stringTasks)
-        // console.log(parsedTasks)      
+        this.#tasks.push(new Task(name, description, notes, dueDate, priority, project, id = Math.random().toString(16).slice(2)));      
     };
 
     getTasksByProject(project) {
@@ -86,9 +81,7 @@ export default class TodoList {
         return task[0];
     };
 
-    removeTask(taskId) {
-        // console.log(index)
-        // this.#tasks.splice(index, 1);
+    removeTask(taskId) {       
         this.#tasks = this.#tasks.filter((element) => element.id !== taskId);       
     };
 

@@ -1,6 +1,3 @@
-import myProjectsList from ".";
-import Task from "./task";
-
 export default class Project {
     #name = '';
     #tasks;

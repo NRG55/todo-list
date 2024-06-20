@@ -3,16 +3,9 @@ import { isToday, isPast } from 'date-fns';
 
 export function taskPriorityHandler(task) {
     const taskPrioritySpan = document.createElement("span");
-        // taskPrioritySpan.className = "priority-span"
-        taskPrioritySpan.classList.add('material-symbols-outlined');
-        // taskPrioritySpan.textContent = 'remove';
-         
-    // const prioritySpan = document.querySelector('.priority-span');
-    // console.log(taskPrioritySpan)
-    // if (task.priority == 'no priority') {
-    //     taskPrioritySpan.classList.add('task-no-priority');
-    //     taskPrioritySpan.textContent = 'stat_1';
-    //   }
+        
+    taskPrioritySpan.classList.add('material-symbols-outlined');
+       
       if (task.priority == 'low') {
         taskPrioritySpan.classList.add('task-priority-low');
         taskPrioritySpan.textContent = 'stat_1';
@@ -132,9 +125,6 @@ export function updateNumberOfTasksHeader(project) {
       taskContainerHeaderSpan.innerHTML = `(${todoList.getTasksByProject(project).length})`;     
 } 
 
-export function renderTodayTasks() {
-
-}
 
 
 

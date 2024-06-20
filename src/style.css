@@ -14,9 +14,13 @@ html, body {
 header {
     height: 2.5rem;
     padding-left: 20px;
-    background: linear-gradient(90deg, #f9f6f3 240px, white 0%); 
-    /* color: #8d8780;  */
+    background: linear-gradient(90deg, #f9f6f3 240px, white 0%);   
 }
+
+/* h1 {
+   min-height: 40px; 
+   font-size: 48px;
+} */
 
 button {
     cursor: pointer;
@@ -190,7 +194,7 @@ input, textarea, select, option {
     }
 }
 
-.tasks-main {
+.tasks-container {
     margin: 0 auto;
     max-width: 640px;
     min-width: 320px;
