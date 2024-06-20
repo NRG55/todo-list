@@ -94,7 +94,7 @@ export function updateNumberOfTasksTasksButton() {
 };
 
 export function updateNumberOfTasksHeader(project) {
-    const headerName = document.querySelector(".task-container-header-name").innerHTML;
+    const headerName = document.querySelector(".tasks-display-header-name").innerHTML;
     const taskContainerHeaderSpan = document.querySelector(".task-container-header-span");   
     
     let tasksNumber;  

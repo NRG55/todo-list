@@ -139,19 +139,15 @@ export default class RenderElement {
         deleteButton.textContent = "Delete";
         projectSettingsPopup.appendChild(deleteButton);      
 
-        deleteButton.onclick = () => {           
+        deleteButton.onclick = (e) => {
+            e.stopPropagation();           
             todoList.deleteTasksByProject(project);
             todoList.deleteProject(project); 
-            Storage.Save();
+            Storage.Save();           
+            ui.render();                     
 
-            ui.updateHeader("All Tasks")
-            ui.renderTasks("All Tasks");
-            ui.renderSidebarProjectsButtons();
-            // ui.renderTasksContainer();
-          
-            console.log("HEY")            
-
-            projectSettingsPopup.classList.remove('visible');           
+            projectSettingsPopup.classList.remove('visible');
+            return           
         };
 
         const editButton = document.createElement('button');
@@ -470,7 +466,7 @@ export default class RenderElement {
         header.className = "tasks-display-header";
 
         const name = document.createElement('h2');
-        name.className = "task-container-header-name";
+        name.className = "tasks-display-header-name";
      
         const numberOfTasksSpan = document.createElement('span');
         numberOfTasksSpan.className = "task-container-header-span";       

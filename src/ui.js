@@ -14,6 +14,7 @@ export default class Ui {
 
     renderMainContent() {
         const mainContent = document.querySelector(".main-content");
+        mainContent.innerHTML = "";
         console.log(renderElement.sidebar())
         
         mainContent.appendChild(renderElement.sidebar());
@@ -97,7 +98,7 @@ export default class Ui {
     };    
 
     updateHeader(title) {
-        const header = document.querySelector(".task-container-header-name");      
+        const header = document.querySelector(".tasks-display-header-name");      
         console.log("header")
         if (title === "tasks") {
             header.innerHTML = "All Tasks";
@@ -321,7 +322,7 @@ export default class Ui {
     };
 
     removeLinkedProject() {
-        const headerProjectName = document.querySelector(".task-container-header-name").innerHTML;
+        const headerProjectName = document.querySelector(".tasks-display-header-name").innerHTML;
         const linkedProjectContainers = document.querySelectorAll(".linked-project-container");
         const linkedProject = document.querySelector(".linked-project");    
        
