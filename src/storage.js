@@ -1,7 +1,4 @@
-import TodoList, { todoList } from "./todo-list";
-import Project from "./project";
-import Task from "./task";
-import { todoList as testTodoList } from "./todo-list";
+import { todoList } from "./todo-list";
 import { createDefaultData } from "./defaultData";
 
 export default class Storage {
@@ -20,10 +17,9 @@ export default class Storage {
             todoList.fromString(todoListString) 
            
             return;      
-        }       
-        const todoListString = localStorage.getItem("todolist");
-        // console.log(string) 
-        todoList.fromString(todoListString) 
-        console.log(todoList)      
+        }; 
+
+        const todoListString = localStorage.getItem("todolist");       
+        todoList.fromString(todoListString);            
     };    
 };

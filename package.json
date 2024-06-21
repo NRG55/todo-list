@@ -2,10 +2,10 @@
   "name": "todo-list",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "push": "git subtree push --prefix dist origin gh-pages",
+    "push": "git push origin :gh-pages && git subtree push --prefix dist origin gh-pages",
     "watch": "webpack --watch",
     "start": "webpack serve --open",
     "build": "webpack"

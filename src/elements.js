@@ -2,11 +2,9 @@
 import Storage from "./storage.js";
 import { todoList } from "./todo-list.js";
 import { ui } from "./ui.js";
-import { handleDate, setTodayDate } from "./task-form-controller.js";
-import { addProjectsToSelectBox, selectCurrentProject } from "./task-form-controller.js";
 import { taskPriorityHandler, updateNumberOfTasksHeader, updateNumberOfTasksTasksButton } from "./task-display-controller.js";
 import { format } from "date-fns";
-import { updateNumberOfTasks, updateNumberOfTasksProjectButtons } from "./task-display-controller.js";
+
 
 export default class RenderElement {
     sidebar() {
@@ -46,9 +44,7 @@ export default class RenderElement {
         taskFormDialog.classList.add("task-form-dialog");
         
         tasksContainer.append(tasksDisplayHeader, tasksDisplay, taskFormDialog);       
-        // console.log(this.tasksDisplayHeader())
-
-        // console.log(tasksContainer)
+       
         return tasksContainer;       
     };
 
@@ -368,7 +364,7 @@ export default class RenderElement {
         const selectProjectOption = document.createElement('option');
         selectProjectOption.value = "All Tasks";
         selectProjectOption.innerHTML = "All Tasks";
-        selectProjectSelect.append(selectProjectOption, addProjectsToSelectBox());
+        selectProjectSelect.append(selectProjectOption);
         selectProjectWrap.append(selectProjectLabel, selectProjectSelect);
 
         const buttonsWrap = document.createElement('div');
@@ -384,7 +380,7 @@ export default class RenderElement {
         buttonClose.classList.add("task-form-close-button");      
         buttonClose.className = "task-form-close-button";
         buttonClose.innerHTML = "Close";       
-        // buttonClose.formNoValidate = "formnovalidate";
+     
         buttonsWrap.append(buttonSubmit, buttonClose);
         
         taskFormRightDiv.append(dueDateWrap, priorityWrap, selectProjectWrap, buttonsWrap);

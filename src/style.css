@@ -17,11 +17,6 @@ header {
     background: linear-gradient(90deg, #f9f6f3 240px, white 0%);   
 }
 
-/* h1 {
-   min-height: 40px; 
-   font-size: 48px;
-} */
-
 button {
     cursor: pointer;
     background-color: transparent;
@@ -36,6 +31,7 @@ input, textarea, select, option {
     border: 1px solid rgb(201, 196, 196);
     outline: none;
     background-color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  ;
 }
 
 .main-content { 
