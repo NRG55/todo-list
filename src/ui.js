@@ -7,7 +7,12 @@ import Storage from './storage.js';
 export default class Ui {
     render(title) {
         Storage.Load();
-        this.renderMainContent(title);                        
+        this.renderWebpage(title);                        
+    };
+
+    renderWebpage(title) {
+        renderElement.headerAndMain();
+        this.renderMainContent(title);
     };
 
     renderMainContent(title) {

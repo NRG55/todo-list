@@ -7,6 +7,21 @@ import { format } from "date-fns";
 
 
 export default class RenderElement {
+    headerAndMain() {
+        const body = document.querySelector("body"); 
+
+        const header = document.createElement("header");       
+        const headerTitle = document.createElement("h1");
+        headerTitle.innerHTML = "Todo";
+        header.appendChild(headerTitle);
+
+        const mainContent = document.createElement("div");
+        mainContent.classList.add("main-content");
+        
+        body.append(header, mainContent);
+        return body;
+    };
+
     sidebar() {
         const sidebar = document.createElement("div");
         sidebar.classList.add("sidebar");
