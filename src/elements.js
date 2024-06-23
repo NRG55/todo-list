@@ -1,14 +1,13 @@
-// import myProjectsList from "./index.js";
 import Storage from "./storage.js";
 import { todoList } from "./todo-list.js";
 import { ui } from "./ui.js";
-import { taskPriorityHandler, updateNumberOfTasksHeader, updateNumberOfTasksTasksButton } from "./task-display-controller.js";
 import { format } from "date-fns";
 
 
 export default class RenderElement {
     headerAndMain() {
-        const body = document.querySelector("body"); 
+        const body = document.querySelector("body");
+        body.innerHTML = ""; 
 
         const header = document.createElement("header");       
         const headerTitle = document.createElement("h1");
@@ -421,7 +420,7 @@ export default class RenderElement {
 
         const taskInfoFirstDiv = document.createElement('div');
         taskInfoFirstDiv.classList.add('task-info-first-div');
-        taskInfoFirstDiv.append(taskPriorityHandler(task));
+        taskInfoFirstDiv.append(ui.taskPriorityHandler(task));
         taskItem.append(taskInfoFirstDiv);
         
         const taskInfoSecondDiv = document.createElement('div');
