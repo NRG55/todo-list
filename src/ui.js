@@ -107,48 +107,7 @@ export default class Ui {
       
           button.appendChild(taskNumberSpan);
         });     
-      };
-      
-     updateNumberOfTasksHeader(project) {
-          const headerName = document.querySelector(".tasks-display-header-name").innerHTML;
-          const taskContainerHeaderSpan = document.querySelector(".task-container-header-span");   
-          
-          let tasksNumber;  
-            
-          if (headerName === "All Tasks") {        
-            tasksNumber = todoList.tasks.length;      
-            taskContainerHeaderSpan.innerHTML = `(${tasksNumber})`;       
-            return;   
-           };
-          
-          if (headerName === "Today") {
-            const todayTasksArray = todoList.tasks.filter(element => {
-              if(isToday(element.dueDate)) {                      
-                return element;
-                };                   
-              });   
-             
-              tasksNumber = todayTasksArray.length;    
-              taskContainerHeaderSpan.innerHTML = `(${tasksNumber})`; 
-              return;          
-          };     
-        
-          if (headerName === "Overdue") {     
-            const overdueTasksArray = todoList.tasks.filter(element => {
-              if(isPast(element.dueDate) && !isToday(element.dueDate)) {            
-                return element;
-                };                  
-              }); 
-      
-              tasksNumber = overdueTasksArray.length; 
-              taskContainerHeaderSpan.innerHTML = `(${tasksNumber})`; 
-              return;
-           };   
-        
-            taskContainerHeaderSpan.innerHTML = `(${todoList.getTasksByProject(project).length})`;     
-      } 
-      
-      
+    };      
 
     renderSidebarProjectsButtons() {
         const projectsButtonsContainer = document.querySelector('.sidebar-projects-buttons-container');
@@ -161,7 +120,7 @@ export default class Ui {
 
             button.onclick = (e)=> {
                     const projectName = button.id;
-                   
+                    console.log(projectName)
                      if (e.target.classList.contains("project-popup-edit-button") || e.target.classList.contains("project-rename-ok-button")) { button.classList.remove("left-sidebar-project-button");                      
                         return;
                      } else {                
@@ -179,6 +138,7 @@ export default class Ui {
     
         projectButtons.forEach((button) => {       
             const project = button.id;
+            console.log(button.id)
             const tasksNumber = todoList.getTasksByProject(project).length;
             const taskNumberSpan = document.createElement('span');
             taskNumberSpan.className = "tasks-span";
@@ -192,8 +152,7 @@ export default class Ui {
         });
     };
 
-    renderAddProjectForm() {       
-        const projectsContainer = document.querySelector(".sidebar-projects-buttons-container");
+    renderAddProjectForm() { 
         const projectFormContainer = document.querySelector(".sidebar-project-form-container");
         const addProjectButton = document.querySelector(".sidebar-add-project-button");
    
@@ -230,13 +189,7 @@ export default class Ui {
             const project = projectName.value;  
             todoList.addProject(project);
             Storage.Save();                     
-               
-            projectsContainer.innerHTML = "";
-            projectFormContainer.innerHTML = "";
-
-            this.renderSidebarProjectsButtons();
-            this.renderTasksContainerHeader(project);
-            this.renderTasks(project); 
+            this.render(project);           
          
             addProjectButton.style.display = 'block';                               
         }); 
@@ -256,12 +209,12 @@ export default class Ui {
 
     renderTasksContainerHeader(title) { 
         const headerTitle = document.querySelector(".tasks-display-header-name");           
-       
+        
         if (!title) {
             headerTitle.innerHTML = "All Tasks";
             this.updateNumberOfTasksHeader();  
-        } else {            
-            headerTitle.innerHTML = title;
+        } else {                    
+            headerTitle.textContent = title;           
             this.updateNumberOfTasksHeader(title); 
             }; 
 
@@ -271,6 +224,45 @@ export default class Ui {
             this.renderAddTaskForm();          
         });
     };
+
+    updateNumberOfTasksHeader(project) {
+        const headerName = document.querySelector(".tasks-display-header-name").innerHTML;
+        const taskContainerHeaderSpan = document.querySelector(".task-container-header-span");   
+        
+        let tasksNumber;  
+        
+        if (headerName === "All Tasks") {        
+          tasksNumber = todoList.tasks.length;      
+          taskContainerHeaderSpan.innerHTML = `(${tasksNumber})`;       
+          return;   
+         };
+        
+        if (headerName === "Today") {
+          const todayTasksArray = todoList.tasks.filter(element => {
+            if(isToday(element.dueDate)) {                      
+              return element;
+              };                   
+            });   
+           
+            tasksNumber = todayTasksArray.length;    
+            taskContainerHeaderSpan.innerHTML = `(${tasksNumber})`; 
+            return;          
+        };     
+      
+        if (headerName === "Overdue") {     
+          const overdueTasksArray = todoList.tasks.filter(element => {
+            if(isPast(element.dueDate) && !isToday(element.dueDate)) {            
+              return element;
+              };                  
+            }); 
+    
+            tasksNumber = overdueTasksArray.length; 
+            taskContainerHeaderSpan.innerHTML = `(${tasksNumber})`; 
+            return;
+        };   
+        
+        taskContainerHeaderSpan.innerHTML = `(${todoList.getTasksByProject(project).length})`;     
+    };    
 
     renderTasks(title) {
         const tasksDisplay = document.querySelector(".tasks-display");      
@@ -357,8 +349,7 @@ export default class Ui {
           
        
         linkedProjectContainers.forEach((element) => { 
-            const linkedProject = element.querySelector(".linked-project"); 
-            console.log(element, linkedProject)        
+            const linkedProject = element.querySelector(".linked-project");                 
 
             if (headerProjectName === linkedProject.innerHTML) {                
                element.remove();
