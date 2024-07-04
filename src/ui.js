@@ -5,9 +5,10 @@ import Storage from './storage.js';
 
 
 export default class Ui {
+    // TODO: Props drilling is an anti-pattern. You should avoid it.
     render(title) {
         Storage.Load();
-        this.renderWebpage(title);                        
+        this.renderWebpage(title);
     };
 
     renderWebpage(title) {
@@ -17,166 +18,196 @@ export default class Ui {
 
     renderMainContent(title) {
         const mainContent = document.querySelector(".main-content");
-        mainContent.innerHTML = "";       
-        
-        mainContent.appendChild(renderElement.sidebar());
-        this.renderSidebar(); 
+        mainContent.innerHTML = "";
 
-        mainContent.appendChild(renderElement.tasksContainer());       
-        this.renderTasksContainer(title);        
+        mainContent.appendChild(renderElement.sidebar()); // TODO: You can put this in the renderSidebar method
+        this.renderSidebar();
+
+        mainContent.appendChild(renderElement.tasksContainer()); // TODO: You can put this in the renderTasksContainer method
+        this.renderTasksContainer(title);
     };
 
     // -------------SIDEBAR-------------
 
-    renderSidebar() {         
-        this.renderSidebarTasksButtons();        
+    renderSidebar() {
+        this.renderSidebarTasksButtons();
         this.renderSidebarProjectsButtons();
 
-        const addProjectButton = document.querySelector(".sidebar-add-project-button");       
-      
-        addProjectButton.addEventListener('click', () => {          
-            this.renderAddProjectForm();                      
+        const addProjectButton = document.querySelector(".sidebar-add-project-button");
+
+        addProjectButton.addEventListener('click', () => {
+            this.renderAddProjectForm();
         });
     };
 
     renderSidebarTasksButtons() {
-        const sidebarTasksContainer = document.querySelector('.sidebar-tasks'); 
+        const sidebarTasksContainer = document.querySelector('.sidebar-tasks');
 
-        sidebarTasksContainer.appendChild(renderElement.sidebarTasksButtons()); 
-        this.updateNumberOfTasksTasksButton(); 
+        sidebarTasksContainer.appendChild(renderElement.sidebarTasksButtons());
+        this.updateNumberOfTasksTasksButton();
         this.addEventListenerToTasksButtons();
     };
 
     addEventListenerToTasksButtons() {
+        // TODO: Use array when you need to iterate over the same logic
+        // TODO: Логика ноль, один и дохуя. Поэтому можно использовать массив
+        // const buttons = [
+        //     {
+        //         selector: '.all-tasks-button',
+        //         text: 'All Tasks'
+        //     },
+        //     {
+        //         selector: '.today-tasks-button',
+        //         text: 'Today'
+        //     },
+        //     {
+        //         selector: '.overdue-tasks-button',
+        //         text: 'Overdue'
+        //     }
+        // ]
+        //
+        // buttons.forEach((button) => {
+        //     const buttonElement = document.querySelector(button.selector);
+        //     buttonElement.addEventListener('click', () => {
+        //         this.renderTasksContainerHeader(button.text);
+        //         this.renderTasks(button.text);
+        //     });
+        // })
+
+
+
+
+
+
         const allTasksButton = document.querySelector('.all-tasks-button');
         const todayTasksButton = document.querySelector('.today-tasks-button');
         const overdueTasksButton = document.querySelector('.overdue-tasks-button');
-       
-        allTasksButton.addEventListener('click', () => { 
-                  
+
+        allTasksButton.addEventListener('click', () => {
+
             this.renderTasksContainerHeader("All Tasks");
-            this.renderTasks("All Tasks");                       
+            this.renderTasks("All Tasks");
         });
 
-        todayTasksButton.addEventListener('click', () => {            
-            this.renderTasksContainerHeader("Today");           
-            this.renderTasks("Today");              
+        todayTasksButton.addEventListener('click', () => {
+            this.renderTasksContainerHeader("Today");
+            this.renderTasks("Today");
         });
 
-        overdueTasksButton.addEventListener('click', () => {            
+        overdueTasksButton.addEventListener('click', () => {
             this.renderTasksContainerHeader("Overdue");
-            this.renderTasks("Overdue");          
+            this.renderTasks("Overdue");
         });
-    }; 
-    
+    };
+
     updateNumberOfTasksTasksButton() {
         const tasksButtons = document.querySelectorAll(".left-sidebar-tasks-button");
-      
-        tasksButtons.forEach((button) => { 
+
+        tasksButtons.forEach((button) => {
             if (button.contains(button.querySelector('.tasks-span'))) {
               button.querySelector('.tasks-span').remove();
-            };     
-        
-          let tasksNumber;  
-              
-          if (button.classList.contains("all-tasks-button")) {     
-            tasksNumber = todoList.tasks.length;       
+            };
+
+          let tasksNumber;
+
+          if (button.classList.contains("all-tasks-button")) {
+            tasksNumber = todoList.tasks.length;
           };
-          
+
           if (button.classList.contains("today-tasks-button")) {
             const todayTasksArray = todoList.tasks.filter(element => {
-              if(isToday(element.dueDate)) {            
+              if(isToday(element.dueDate)) {
                 return element;
-                };         
-              });  
-              tasksNumber = todayTasksArray.length;       
-          };     
-      
-          if (button.classList.contains("overdue-tasks-button")) {     
-            const overdueTasksArray = todoList.tasks.filter(element => {
-              if(isPast(element.dueDate) && !isToday(element.dueDate)) {            
-                return element;
-                };                  
-              });           
-              tasksNumber = overdueTasksArray.length; 
+                };
+              });
+              tasksNumber = todayTasksArray.length;
           };
-      
+
+          if (button.classList.contains("overdue-tasks-button")) {
+            const overdueTasksArray = todoList.tasks.filter(element => {
+              if(isPast(element.dueDate) && !isToday(element.dueDate)) {
+                return element;
+                };
+              });
+              tasksNumber = overdueTasksArray.length;
+          };
+
           const taskNumberSpan = document.createElement("span");
           taskNumberSpan.className = "tasks-span";
-          taskNumberSpan.innerHTML = tasksNumber; 
-      
+          taskNumberSpan.innerHTML = tasksNumber;
+
           button.appendChild(taskNumberSpan);
-        });     
-    };      
+        });
+    };
 
     renderSidebarProjectsButtons() {
         const projectsButtonsContainer = document.querySelector('.sidebar-projects-buttons-container');
-        projectsButtonsContainer.innerHTML = "";        
-       
+        projectsButtonsContainer.innerHTML = "";
+
         const projects = todoList.projects;
 
-        projects.forEach((element, index) => {           
-            const button = renderElement.sidebarProjectButton(element.name, index); 
+        projects.forEach((element, index) => {
+            const button = renderElement.sidebarProjectButton(element.name, index);
 
             button.onclick = (e)=> {
                     const projectName = button.id;
                     console.log(projectName)
-                     if (e.target.classList.contains("project-popup-edit-button") || e.target.classList.contains("project-rename-ok-button")) { button.classList.remove("left-sidebar-project-button");                      
+                     if (e.target.classList.contains("project-popup-edit-button") || e.target.classList.contains("project-rename-ok-button")) { button.classList.remove("left-sidebar-project-button");
                         return;
-                     } else {                
+                     } else {
                         this.renderTasksContainerHeader(projectName)
-                        this.renderTasks(projectName);                  
-                     }};               
+                        this.renderTasks(projectName);
+                     }};
 
-            projectsButtonsContainer.appendChild(button);            
-        }); 
-        ui.updateNumberOfTasksProjectButtons();       
+            projectsButtonsContainer.appendChild(button);
+        });
+        ui.updateNumberOfTasksProjectButtons();
     };
 
-    updateNumberOfTasksProjectButtons() {    
+    updateNumberOfTasksProjectButtons() {
         const projectButtons = document.querySelectorAll('.left-sidebar-project-button');
-    
-        projectButtons.forEach((button) => {       
+
+        projectButtons.forEach((button) => {
             const project = button.id;
             console.log(button.id)
             const tasksNumber = todoList.getTasksByProject(project).length;
             const taskNumberSpan = document.createElement('span');
             taskNumberSpan.className = "tasks-span";
-    
+
             if (button.contains(button.querySelector('.tasks-span'))) {
                 button.querySelector('.tasks-span').remove();
             };
-           
-            taskNumberSpan.innerHTML = tasksNumber;       
+
+            taskNumberSpan.innerHTML = tasksNumber;
             button.appendChild(taskNumberSpan);
         });
     };
 
-    renderAddProjectForm() { 
+    renderAddProjectForm() {
         const projectFormContainer = document.querySelector(".sidebar-project-form-container");
         const addProjectButton = document.querySelector(".sidebar-add-project-button");
-   
+
         const form = renderElement.projectForm();
 
         projectFormContainer.appendChild(form);
 
         const projectForm = document.getElementById('project-form');
         const projectNameInput = document.getElementById('projectName');
-        const cancelButton = document.getElementById('project-form-cancel-button');  
+        const cancelButton = document.getElementById('project-form-cancel-button');
 
         projectNameInput.focus();
         addProjectButton.style.display = 'none';
-       
+
         projectNameInput.addEventListener('invalid', (e) => {
-            e.preventDefault(); 
-            
+            e.preventDefault();
+
             projectNameInput.classList.add('error');
             projectNameInput.focus();
           }, false);
-       
+
         projectForm.addEventListener("submit", (event) => {
-            event.preventDefault(); 
-           
+            event.preventDefault();
+
             if(todoList.isProjectExists(projectName.value)) {
                 const warning = document.querySelector('.project-warning');
 
@@ -184,149 +215,149 @@ export default class Ui {
                 projectNameInput.classList.add('error');
                 projectNameInput.focus();
                 return;
-            };            
-            
-            const project = projectName.value;  
+            };
+
+            const project = projectName.value;
             todoList.addProject(project);
-            Storage.Save();                     
-            this.render(project);           
-         
-            addProjectButton.style.display = 'block';                               
-        }); 
-        
+            Storage.Save();
+            this.render(project);
+
+            addProjectButton.style.display = 'block';
+        });
+
         cancelButton.addEventListener('click', () => {
             projectFormContainer.innerHTML = "";
-            addProjectButton.style.display = 'block';     
+            addProjectButton.style.display = 'block';
         });
-    };    
-    
+    };
+
      // -------------TASKS-CONTAINER-------------
-    
+
     renderTasksContainer(title) {
         this.renderTasksContainerHeader(title);
         this.renderTasks(title);
-    };   
+    };
 
-    renderTasksContainerHeader(title) { 
-        const headerTitle = document.querySelector(".tasks-display-header-name");           
-        
+    renderTasksContainerHeader(title) {
+        const headerTitle = document.querySelector(".tasks-display-header-name");
+
         if (!title) {
             headerTitle.innerHTML = "All Tasks";
-            this.updateNumberOfTasksHeader();  
-        } else {                    
-            headerTitle.textContent = title;           
-            this.updateNumberOfTasksHeader(title); 
-            }; 
+            this.updateNumberOfTasksHeader();
+        } else {
+            headerTitle.textContent = title;
+            this.updateNumberOfTasksHeader(title);
+        };
 
-        const addTask = document.querySelector('.add-task-button');         
+        const addTask = document.querySelector('.add-task-button');
 
-        addTask.addEventListener("click", () => {           
-            this.renderAddTaskForm();          
+        addTask.addEventListener("click", () => {
+            this.renderAddTaskForm();
         });
     };
 
     updateNumberOfTasksHeader(project) {
         const headerName = document.querySelector(".tasks-display-header-name").innerHTML;
-        const taskContainerHeaderSpan = document.querySelector(".task-container-header-span");   
-        
-        let tasksNumber;  
-        
-        if (headerName === "All Tasks") {        
-          tasksNumber = todoList.tasks.length;      
-          taskContainerHeaderSpan.innerHTML = `(${tasksNumber})`;       
-          return;   
+        const taskContainerHeaderSpan = document.querySelector(".task-container-header-span");
+
+        let tasksNumber;
+
+        if (headerName === "All Tasks") {
+          tasksNumber = todoList.tasks.length;
+          taskContainerHeaderSpan.innerHTML = `(${tasksNumber})`;
+          return;
          };
-        
+
         if (headerName === "Today") {
           const todayTasksArray = todoList.tasks.filter(element => {
-            if(isToday(element.dueDate)) {                      
+            if(isToday(element.dueDate)) {
               return element;
-              };                   
-            });   
-           
-            tasksNumber = todayTasksArray.length;    
-            taskContainerHeaderSpan.innerHTML = `(${tasksNumber})`; 
-            return;          
-        };     
-      
-        if (headerName === "Overdue") {     
-          const overdueTasksArray = todoList.tasks.filter(element => {
-            if(isPast(element.dueDate) && !isToday(element.dueDate)) {            
-              return element;
-              };                  
-            }); 
-    
-            tasksNumber = overdueTasksArray.length; 
-            taskContainerHeaderSpan.innerHTML = `(${tasksNumber})`; 
+              };
+            });
+
+            tasksNumber = todayTasksArray.length;
+            taskContainerHeaderSpan.innerHTML = `(${tasksNumber})`;
             return;
-        };   
-        
-        taskContainerHeaderSpan.innerHTML = `(${todoList.getTasksByProject(project).length})`;     
-    };    
+        };
+
+        if (headerName === "Overdue") {
+          const overdueTasksArray = todoList.tasks.filter(element => {
+            if(isPast(element.dueDate) && !isToday(element.dueDate)) {
+              return element;
+              };
+            });
+
+            tasksNumber = overdueTasksArray.length;
+            taskContainerHeaderSpan.innerHTML = `(${tasksNumber})`;
+            return;
+        };
+
+        taskContainerHeaderSpan.innerHTML = `(${todoList.getTasksByProject(project).length})`;
+    };
 
     renderTasks(title) {
-        const tasksDisplay = document.querySelector(".tasks-display");      
+        const tasksDisplay = document.querySelector(".tasks-display");
 
         tasksDisplay.innerHTML = "";
-      
+
         if (title === "All Tasks" || title === undefined) {
             todoList.tasks.forEach((element) => {
                 const task = renderElement.taskContent(element);
-               
-                tasksDisplay.appendChild(task);                       
-            });
-            
-            this.removeLinkedProject();  
-            this.addEventListenerToTaskDeletButton(title);
-            this.addEventListenerToTaskEditButton(); 
 
-            return;           
+                tasksDisplay.appendChild(task);
+            });
+
+            this.removeLinkedProject();
+            this.addEventListenerToTaskDeletButton(title);
+            this.addEventListenerToTaskEditButton();
+
+            return;
         };
-       
+
         if (title === "Today") {
             todoList.getTodayTasks().forEach((element) => {
                 const task = renderElement.taskContent(element);
-               
-                tasksDisplay.appendChild(task);          
+
+                tasksDisplay.appendChild(task);
             });
 
             this.addEventListenerToTaskDeletButton(title);
-            this.addEventListenerToTaskEditButton(); 
+            this.addEventListenerToTaskEditButton();
 
-            return;           
+            return;
         };
 
         if (title === "Overdue") {
             todoList.getOverdueTasks().forEach((element) => {
                 const task = renderElement.taskContent(element);
-               
-                tasksDisplay.appendChild(task);          
+
+                tasksDisplay.appendChild(task);
             });
 
             this.addEventListenerToTaskDeletButton(title);
-            this.addEventListenerToTaskEditButton(); 
-          
-            return;           
-        };       
-        
+            this.addEventListenerToTaskEditButton();
+
+            return;
+        };
+
         let tasks = todoList.getTasksByProject(title);
 
         tasks.forEach((element) => {
             const task = renderElement.taskContent(element);
-            
-            tasksDisplay.appendChild(task);           
+
+            tasksDisplay.appendChild(task);
         });
 
         this.addEventListenerToTaskDeletButton(title);
-        this.addEventListenerToTaskEditButton(); 
-        this.removeLinkedProject();  
+        this.addEventListenerToTaskEditButton();
+        this.removeLinkedProject();
     };
 
     taskPriorityHandler(task) {
         const taskPrioritySpan = document.createElement("span");
-            
+
         taskPrioritySpan.classList.add('material-symbols-outlined');
-           
+
           if (task.priority == 'low') {
             taskPrioritySpan.classList.add('task-priority-low');
             taskPrioritySpan.textContent = 'stat_1';
@@ -339,19 +370,19 @@ export default class Ui {
             taskPrioritySpan.classList.add('task-priority-high');
             taskPrioritySpan.textContent = 'stat_3';
           };
-    
+
           return taskPrioritySpan;
     };
-    
+
     removeLinkedProject() {
         const headerProjectName = document.querySelector(".tasks-display-header-name").innerHTML;
         const linkedProjectContainers = document.querySelectorAll(".linked-project-container");
-          
-       
-        linkedProjectContainers.forEach((element) => { 
-            const linkedProject = element.querySelector(".linked-project");                 
 
-            if (headerProjectName === linkedProject.innerHTML) {                
+
+        linkedProjectContainers.forEach((element) => {
+            const linkedProject = element.querySelector(".linked-project");
+
+            if (headerProjectName === linkedProject.innerHTML) {
                element.remove();
             };
         });
@@ -362,81 +393,81 @@ export default class Ui {
 
         deleteTaskButtons.forEach((button) => {
             button.addEventListener("click", (e) => {
-                const taskId = e.target.id;               
+                const taskId = e.target.id;
 
                 todoList.removeTask(taskId);
-                Storage.Save();            
-                this.render(title);     
-                this.renderTasks(title);           
+                Storage.Save();
+                this.render(title);
+                this.renderTasks(title);
             });
-        });       
+        });
     };
 
     addEventListenerToTaskEditButton() {
-        const editTaskButtons = document.querySelectorAll(".task-edit-button");        
+        const editTaskButtons = document.querySelectorAll(".task-edit-button");
 
         editTaskButtons.forEach((button) => {
             button.addEventListener("click", (e) => {
                 const taskId = e.target.id.slice(17, 30);
-                const task = todoList.getTaskById(taskId);               
-               
-                this.renderAddTaskForm(task);          
+                const task = todoList.getTaskById(taskId);
+
+                this.renderAddTaskForm(task);
             });
-        });       
+        });
     };
 
     // ------------TASK-FORM-------------
 
     renderAddTaskForm(taskToEdit) {
-        const dialog = document.querySelector('.task-form-dialog');   
+        const dialog = document.querySelector('.task-form-dialog');
         const form = renderElement.taskForm(taskToEdit);
 
         dialog.textContent = "";
-        dialog.appendChild(form);    
-       
+        dialog.appendChild(form);
+
         this.setTodayDate();
         this.addProjectsToSelectBox();
         this.selectCurrentProject();
 
-        const taskForm = document.getElementById('task-form');       
+        const taskForm = document.getElementById('task-form');
         const closeButton = document.querySelector(".task-form-close-button");
-        
+
 
         taskForm.addEventListener('submit', (event) => {
-            event.preventDefault();             
-            
+            event.preventDefault();
+
             if (!this.isTaskFormValid()) {
                 this.renderAddTaskForm(taskToEdit);
-                const taskNameInput = document.querySelector(".task-form-name-input");                      
-                   
+                const taskNameInput = document.querySelector(".task-form-name-input");
+
                 taskNameInput.classList.add('error');
                 taskNameInput.value = "";
                 taskNameInput.focus();
-                
+
                 return;
             };
-            
-            if (taskToEdit) {               
+
+            if (taskToEdit) {
                todoList.updateTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value, taskToEdit.id);
                Storage.Save();
-            } else {               
-                todoList.addTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value); 
+            } else {
+                todoList.addTask(title.value, description.value, "notes.value", duedate.value, priority.value, selectProject.value);
                 Storage.Save();
                 };
-                
-            this.render(selectProject.value);                   
 
-            dialog.close();                     
-            });              
-        
+            this.render(selectProject.value);
+
+            dialog.close();
+            });
+
         closeButton.addEventListener('click', (e) => {
-            e.preventDefault(); 
-               dialog.close();              
+            e.preventDefault();
+               dialog.close();
         });
-        
+
         dialog.addEventListener('click', (event) => {
             if (event.target === dialog) {
-               
+
                 dialog.close();
             };
         });
@@ -449,14 +480,14 @@ export default class Ui {
         const projectOptionGroup = document.createElement('optgroup');
 
         projectOptionGroup.className = "task-form-projects-optgroup";
-        projectOptionGroup.label = "Projects";       
+        projectOptionGroup.label = "Projects";
 
-        todoList.projects.forEach((element) => {       
+        todoList.projects.forEach((element) => {
         const projectOption = document.createElement('option');
 
         projectOption.innerHTML = element.name;
-        projectOption.value = element.name;       
-        projectOptionGroup.appendChild(projectOption);        
+        projectOption.value = element.name;
+        projectOptionGroup.appendChild(projectOption);
         });
 
         projectSelectBox.appendChild(projectOptionGroup)
@@ -467,22 +498,22 @@ export default class Ui {
     selectCurrentProject() {
         const title = document.querySelector(".tasks-display-header-name");
         const projectsOptgroup = document.querySelectorAll('.task-form-projects-optgroup');
-    
+
         projectsOptgroup.forEach((optgroup) => {
             const projectOptions = optgroup.querySelectorAll('option');
 
-            projectOptions.forEach((option) => {               
+            projectOptions.forEach((option) => {
                 if (option.value === title.innerHTML) {
                     option.selected = true;
-    
+
                     return;
-                };         
-            });         
+                };
+            });
         });
     };
 
     setTodayDate() {
-        const dateInput = document.getElementById('duedate');  
+        const dateInput = document.getElementById('duedate');
         const today = new Date().toISOString().split('T')[0];
 
         dateInput.setAttribute('min', today);
@@ -490,14 +521,14 @@ export default class Ui {
     }
 
     isTaskFormValid() {
-        const taskNameInput = document.querySelector(".task-form-name-input").value;   
+        const taskNameInput = document.querySelector(".task-form-name-input").value;
 
-        if (taskNameInput === "") {      
+        if (taskNameInput === "") {
             return false;
         };
         return true;
-    };   
-   
+    };
+
 };
 
 export const ui = new Ui();

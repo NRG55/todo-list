@@ -2,23 +2,32 @@ import Storage from "./storage.js";
 import { todoList } from "./todo-list.js";
 import { ui } from "./ui.js";
 import { format } from "date-fns";
+import ProjectButton from "./components/Project";
 
 
 export default class RenderElement {
     headerAndMain() {
-        const body = document.querySelector("body");
-        body.innerHTML = ""; 
+        const body = document.querySelector("body"); // TODO: document.body
+        body.innerHTML = "";
 
-        const header = document.createElement("header");       
+        const header = document.createElement("header");
         const headerTitle = document.createElement("h1");
         headerTitle.innerHTML = "Todo";
         header.appendChild(headerTitle);
 
         const mainContent = document.createElement("div");
         mainContent.classList.add("main-content");
-        
+
         body.append(header, mainContent);
         return body;
+
+        // TODO: You can use this code instead of the above code:
+        // document.body.innerHTML = `
+        //     <header>
+        //         <h1>Todo</h1>
+        //     </header>
+        //     <div class="main-content"></div>
+        // `;
     };
 
     sidebar() {
@@ -43,23 +52,23 @@ export default class RenderElement {
 
         sidebar.append(sidebarTasks, sidebarProjects)
 
-        return sidebar;        
+        return sidebar;
     };
 
     tasksContainer() {
         const tasksContainer = document.createElement("div");
         tasksContainer.classList.add("tasks-container");
-        
+
         const tasksDisplayHeader = this.tasksDisplayHeader();
         const tasksDisplay = document.createElement("div");
-        tasksDisplay.classList.add("tasks-display");       
+        tasksDisplay.classList.add("tasks-display");
 
         const taskFormDialog = document.createElement("dialog");
         taskFormDialog.classList.add("task-form-dialog");
-        
-        tasksContainer.append(tasksDisplayHeader, tasksDisplay, taskFormDialog);       
-       
-        return tasksContainer;       
+
+        tasksContainer.append(tasksDisplayHeader, tasksDisplay, taskFormDialog);
+
+        return tasksContainer;
     };
 
     sidebarTasksButtons() {
@@ -107,7 +116,7 @@ export default class RenderElement {
         return buttonsWrap;
     };
 
-    sidebarProjectButton(project, index) {      
+    sidebarProjectButton(project, index) {
         const projectButton = document.createElement("button");
         projectButton.classList.add("left-sidebar-project-button");
         projectButton.id = project
@@ -122,12 +131,12 @@ export default class RenderElement {
 
         const settingsIcon = document.createElement('span');
         settingsIcon.classList.add('material-symbols-outlined', 'project-button-settings');
-        settingsIcon.textContent = 'more_vert';       
+        settingsIcon.textContent = 'more_vert';
 
         const projectSettingsPopup = document.createElement('div');
         projectSettingsPopup.classList.add('project-settings-popup', 'hidden');
-        
-        settingsIcon.onclick = () => { 
+
+        settingsIcon.onclick = () => {
             const popups = document.querySelectorAll(".project-settings-popup");
 
             popups.forEach((element) => {
@@ -144,63 +153,63 @@ export default class RenderElement {
                 if (!e.target.classList.contains("project-button-settings")) {
                     projectSettingsPopup.classList.add('hidden');
                 };
-            };    
+            };
         };
 
         const deleteButton = document.createElement('button');
         deleteButton.classList.add('project-popup-delete-button');
         deleteButton.textContent = "Delete";
-        projectSettingsPopup.appendChild(deleteButton);      
+        projectSettingsPopup.appendChild(deleteButton);
 
         deleteButton.onclick = (e) => {
-            e.stopPropagation();           
+            e.stopPropagation();
             todoList.deleteTasksByProject(project);
-            todoList.deleteProject(project); 
-            Storage.Save();           
-            ui.render();                     
+            todoList.deleteProject(project);
+            Storage.Save();
+            ui.render();
 
             projectSettingsPopup.classList.remove('visible');
-            return           
+            return // TODO: Unnecessary return
         };
 
         const editButton = document.createElement('button');
         editButton.classList.add('project-popup-edit-button');
         editButton.textContent = "Edit";
-        projectSettingsPopup.appendChild(editButton);        
+        projectSettingsPopup.appendChild(editButton);
 
-        editButton.onclick = () => {            
-            const currentProjectButton = document.getElementById(`${project}`);                
-          
+        editButton.onclick = () => {
+            const currentProjectButton = document.getElementById(`${project}`);
+
             currentProjectButton.innerHTML = "";
             currentProjectButton.classList.add('remove-padding');
-           
+
             currentProjectButton.append(this.projectRenameElement(project));
             const okButton = document.querySelector(".project-rename-ok-button");
             const cancelButton = document.querySelector(".project-rename-cancel-button");
             const renameInput = document.querySelector(".project-rename-input");
- 
+
             const input = document.querySelector('.project-rename-input');
             input.value = project;
             input.focus();
-            
-            okButton.onclick = () => {                
+
+            okButton.onclick = () => {
                 const newName = renameInput.value.trim();
-                
+
                 todoList.updateProjectName(index, newName);
-                todoList.updateProjectNameInTasks(project, newName)           
+                todoList.updateProjectNameInTasks(project, newName)
                 Storage.Save();
                 ui.render(newName);
                 // ui.renderSidebarProjectsButtons();
-                // ui.renderTasksContainerHeader(newName);              
+                // ui.renderTasksContainerHeader(newName);
                 // ui.renderTasks(newName);
                 // ui.removeLinkedProject();
-                // updateNumberOfTasks(newName);                
+                // updateNumberOfTasks(newName);
 
                 const newProjectButton = document.getElementById(`${newName}`);
-                newProjectButton.focus();                                            
+                newProjectButton.focus();
             };
 
-            cancelButton.onclick = () => {               
+            cancelButton.onclick = () => {
                 currentProjectButton.innerHTML = "";
                 currentProjectButton.classList.remove('remove-padding');
                 currentProjectButton.append(iconSpan, text, settingsIcon, projectSettingsPopup);
@@ -215,6 +224,7 @@ export default class RenderElement {
         return projectButton;
     };
 
+    // TODO: This function is not used
     projectSettingsOptions() {
         const optionsWrap = document.createElement('div');
         optionsWrap.classList.add('project-button-options');
@@ -234,31 +244,31 @@ export default class RenderElement {
 
     projectRenameElement() {
         const renameInputWrap =  document.createElement('div');
-        renameInputWrap.classList.add('project-rename-input-container'); 
+        renameInputWrap.classList.add('project-rename-input-container');
 
         const iconSpan = document.createElement('span');
         iconSpan.classList.add('material-symbols-outlined');
         iconSpan.textContent = 'folder'
 
         const renameInput = document.createElement('input');
-        renameInput.classList.add('project-rename-input');              
+        renameInput.classList.add('project-rename-input');
 
         const okButton = document.createElement('button');
         const okIcon = document.createElement('span');
         okIcon.classList.add('material-symbols-outlined', 'project-rename-ok-button');
         okIcon.textContent = "check";
-        okButton.appendChild(okIcon);        
+        okButton.appendChild(okIcon);
 
         const cancelButton = document.createElement('button');
         const cancelIcon = document.createElement('span');
         cancelIcon.classList.add('material-symbols-outlined', 'project-rename-cancel-button');
         cancelIcon.textContent = "close";
-        cancelButton.appendChild(cancelIcon);       
+        cancelButton.appendChild(cancelIcon);
 
-        renameInputWrap.append(iconSpan, renameInput, okButton, cancelButton);       
+        renameInputWrap.append(iconSpan, renameInput, okButton, cancelButton);
 
         return renameInputWrap;
-    };   
+    };
 
     projectForm() {
         const addProjectForm = document.createElement('form');
@@ -287,18 +297,18 @@ export default class RenderElement {
         cancelButton.textContent = 'Cancel';
         cancelButton.id = "project-form-cancel-button";
 
-        buttonsContainer.append(addButton, cancelButton);        
-        addProjectForm.append(projectWarning, projectInput, buttonsContainer);       
+        buttonsContainer.append(addButton, cancelButton);
+        addProjectForm.append(projectWarning, projectInput, buttonsContainer);
 
         return addProjectForm;
     };
 
     taskForm(taskToEdit) {
         const taskForm = document.createElement('form');
-        taskForm.setAttribute("id", "task-form");    
+        taskForm.setAttribute("id", "task-form");
 
         const taskFormLeftDiv = document.createElement('div');
-        taskFormLeftDiv.classList.add("task-form-left-div"); 
+        taskFormLeftDiv.classList.add("task-form-left-div");
 
         const nameWrap = document.createElement('div');
         const nameLabel = document.createElement('label');
@@ -309,14 +319,14 @@ export default class RenderElement {
         nameInput.id = "title";
         nameInput.className = "task-form-name-input";
         nameInput.placeholder = "Task title (required)";
-        nameInput.required = true;      
+        nameInput.required = true;
         nameWrap.append(nameLabel, nameInput);
 
         const descriptionWrap = document.createElement('div');
         const descriptionLabel = document.createElement('label');
         descriptionLabel.htmlFor = "description";
         descriptionLabel.innerHTML = "Description:";
-        const descriptionInput = document.createElement('textarea');  
+        const descriptionInput = document.createElement('textarea');
         descriptionInput.id = "description";
         descriptionInput.className = "task-form-input-description";
         descriptionWrap.append(descriptionLabel, descriptionInput);
@@ -342,8 +352,8 @@ export default class RenderElement {
         dueDateLabel.innerHTML = "Due date:";
         const dueDateInput = document.createElement('input');
         dueDateInput.type = "date";
-        dueDateInput.id = "duedate"; 
-        dueDateInput.formNoValidate = true;    
+        dueDateInput.id = "duedate";
+        dueDateInput.formNoValidate = true;
         dueDateWrap.append(dueDateLabel, dueDateInput);
 
         const priorityWrap = document.createElement('div');
@@ -391,17 +401,17 @@ export default class RenderElement {
         buttonSubmit.innerHTML = "Submit";
         buttonSubmit.id = "task-form-submit-button";
         const buttonClose = document.createElement('button');
-        buttonClose.classList.add("task-form-close-button");      
+        buttonClose.classList.add("task-form-close-button");
         buttonClose.className = "task-form-close-button";
-        buttonClose.innerHTML = "Close";       
-     
+        buttonClose.innerHTML = "Close";
+
         buttonsWrap.append(buttonSubmit, buttonClose);
-        
+
         taskFormRightDiv.append(dueDateWrap, priorityWrap, selectProjectWrap, buttonsWrap);
 
         taskForm.append(taskFormLeftDiv, taskFormRightDiv);
-        
-        if (taskToEdit) {               
+
+        if (taskToEdit) {
             nameInput.value = taskToEdit.name;
             descriptionInput.value = taskToEdit.description;
             notesInput.value = taskToEdit.notes;
@@ -415,14 +425,14 @@ export default class RenderElement {
 
     taskContent(task) {
         const taskItem = document.createElement('div');
-        taskItem.classList.add('task-item');       
+        taskItem.classList.add('task-item');
         taskItem.id = task.id;
 
         const taskInfoFirstDiv = document.createElement('div');
         taskInfoFirstDiv.classList.add('task-info-first-div');
         taskInfoFirstDiv.append(ui.taskPriorityHandler(task));
         taskItem.append(taskInfoFirstDiv);
-        
+
         const taskInfoSecondDiv = document.createElement('div');
         const taskName = document.createElement('h3');
         taskName.classList.add('task-name');
@@ -444,33 +454,33 @@ export default class RenderElement {
         dueDateWrap.append(dueDateIcon, dueDate);
 
         const linkedProjectWrap = document.createElement('div');
-        linkedProjectWrap.classList.add("linked-project-container");        
+        linkedProjectWrap.classList.add("linked-project-container");
         const linkedProjectIcon = document.createElement('span');
         linkedProjectIcon.classList.add('material-symbols-outlined');
         linkedProjectIcon.textContent = 'folder';
         const linkedProject = document.createElement('span');
-        linkedProject.classList.add("linked-project");        
+        linkedProject.classList.add("linked-project");
         linkedProject.innerHTML = task.project;
-        linkedProjectWrap.append(linkedProjectIcon, linkedProject);     
-        bottomInfoLine.append(dueDateWrap, linkedProjectWrap); 
+        linkedProjectWrap.append(linkedProjectIcon, linkedProject);
+        bottomInfoLine.append(dueDateWrap, linkedProjectWrap);
 
-        taskInfoSecondDiv.append(taskName, taskDescription, bottomInfoLine);       
+        taskInfoSecondDiv.append(taskName, taskDescription, bottomInfoLine);
         taskItem.append(taskInfoSecondDiv);
-        
+
         const taskInfoThirdDiv = document.createElement('div');
-        taskInfoThirdDiv.classList.add("task-info-third-div")       
+        taskInfoThirdDiv.classList.add("task-info-third-div")
         const editButton = document.createElement("button");
         editButton.classList.add("material-symbols-outlined", "task-edit-button");
-        editButton.setAttribute("id", `task-edit-button-${task.id}`);        
+        editButton.setAttribute("id", `task-edit-button-${task.id}`);
         editButton.textContent = "edit_square";
         const deleteButton = document.createElement("button");
         deleteButton.classList.add("material-symbols-outlined", "task-delete-button");
         deleteButton.setAttribute("id", task.id);
-        deleteButton.textContent = "delete";       
+        deleteButton.textContent = "delete";
         taskInfoThirdDiv.append(editButton, deleteButton);
 
-        taskItem.appendChild(taskInfoThirdDiv);        
-       
+        taskItem.appendChild(taskInfoThirdDiv);
+
         return taskItem;
     };
 
@@ -479,10 +489,10 @@ export default class RenderElement {
         header.classList.add("tasks-display-header");
 
         const headerName = document.createElement('h2');
-        headerName.classList.add("tasks-display-header-name");        
-     
+        headerName.classList.add("tasks-display-header-name");
+
         const numberOfTasksSpan = document.createElement('span');
-        numberOfTasksSpan.classList.add("task-container-header-span");       
+        numberOfTasksSpan.classList.add("task-container-header-span");
 
         const addTaskButton = document.createElement('button');
         addTaskButton.classList.add("add-task-button");
@@ -496,7 +506,7 @@ export default class RenderElement {
 
         addTaskButton.append(iconSpan, text);
         header.append(headerName, numberOfTasksSpan, addTaskButton);
-        
+
         return header;
     };
 }

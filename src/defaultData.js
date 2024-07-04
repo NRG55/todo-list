@@ -17,11 +17,11 @@ export function createDefaultData() {
         "Administration",
         "Responding to emails. Responding to project queries.",
         "",
-        "2024-06-07",
+        "2024-06-07", // TODO: For date use Date object
         // format(new Date(), "yyyy-MM-dd"),
         "high",
         "Work"
-    );    
+    );
 
     todoList.addTask(
         "Meetings",
@@ -108,8 +108,8 @@ export function createDefaultData() {
         "Programming"
     );
 
- // -------------TRAINING-TASKS-------------- 
- 
+ // -------------TRAINING-TASKS--------------
+
     todoList.addTask(
         "Swimming",
         "The Ab-Blaster Swim Workout (45 min).",
@@ -118,11 +118,11 @@ export function createDefaultData() {
         "medium",
         "Training"
     );
-    
-   
+
+
 //     // Storage.Save();
 };
 
-// document.getElementById("click").onclick = () => {   
+// document.getElementById("click").onclick = () => {
 //     Storage.Load();
 // }
