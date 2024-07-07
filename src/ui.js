@@ -137,8 +137,7 @@ export default class Ui {
         const projectButtons = document.querySelectorAll('.left-sidebar-project-button');
     
         projectButtons.forEach((button) => {       
-            const project = button.id;
-            console.log(button.id)
+            const project = button.id;           
             const tasksNumber = todoList.getTasksByProject(project).length;
             const taskNumberSpan = document.createElement('span');
             taskNumberSpan.className = "tasks-span";
