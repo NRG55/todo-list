@@ -1,9 +1,6 @@
 // import todoList from "./index.js";
 import { todoList } from "./todo-list.js";
 import { format } from "date-fns";
-import Storage from "./storage.js";
-
-
 
 export function createDefaultData() {
     todoList.addProject("Work");
@@ -118,11 +115,5 @@ export function createDefaultData() {
         "medium",
         "Training"
     );
-    
-   
-//     // Storage.Save();
 };
 
-// document.getElementById("click").onclick = () => {   
-//     Storage.Load();
-// }

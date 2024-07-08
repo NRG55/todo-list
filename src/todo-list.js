@@ -1,8 +1,6 @@
-import myProjectsList from './index.js';
 import Project from './project.js';
 import Task from './task.js';
 import { isToday, isPast } from 'date-fns';
-import WebpageController, { webpageController } from './ui.js';
 
 export default class TodoList {
     #projects;
@@ -27,31 +25,22 @@ export default class TodoList {
 
     addProject(value) {
         if (this.#projects.some((project) => project.name === value)) {
-            return console.log('Project exists!')
+            return; 
         };       
 
         this.#projects.push(new Project(value));
     };
 
     isProjectExists(value) {
-        if (this.#projects.some((project) => project.name === value)) {
-            return true;
-        };
-
-        return false;
-    };
-
-    clearProjects() {
-        return this.#projects = [];
-    };
+        return this.#projects.some((project) => project.name === value);
+    };    
 
     addTask(name, description, notes, dueDate, priority, project, id) {
         this.#tasks.push(new Task(name, description, notes, dueDate, priority, project, id = Math.random().toString(16).slice(2)));      
     };
 
     getTasksByProject(project) {
-        let tasks = this.#tasks.filter(element => element.project === project);
-        return tasks;
+        return this.#tasks.filter((task) => task.project === project);       
     };
 
     deleteProject(project) {
@@ -62,18 +51,18 @@ export default class TodoList {
         this.#tasks = this.#tasks.filter(element => element.project !== project);
     };
 
-
     updateProjectName(index, newName) {       
         this.#projects[index].name = newName;
-
     };
 
     updateProjectNameInTasks(oldName, newName) {
-         this.#tasks.forEach(element => {
-           if (element.project === oldName) {
-            element.project = newName;
+    // using a for loop instead of a forEach method because it stops looping when an element is found
+       for (let i = 0; i < this.#tasks.length; i++) {
+           if (this.#tasks[i].project === oldName) {
+               this.#tasks[i].project === newName;
+               return;
            };
-        });   
+       };
     };
 
     getTaskById(taskId) {
