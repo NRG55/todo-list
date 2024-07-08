@@ -66,8 +66,7 @@ export default class TodoList {
     };
 
     getTaskById(taskId) {
-        const task = this.#tasks.filter(element => element.id === taskId);
-        return task[0];
+        return this.#tasks.find(element => element.id === taskId);        
     };
 
     removeTask(taskId) {       
@@ -75,36 +74,29 @@ export default class TodoList {
     };
 
     updateTask(newName, newDescription, newNotes, newDueDate, newPriority, newProject, taskId) {
-        this.#tasks.forEach(element => {
-            if (element.id === taskId) {
-             element.name = newName;
-             element.description = newDescription;
-             element.notes = newNotes;
-             element.dueDate = newDueDate;
-             element.priority = newPriority;
-             element.project = newProject;
-            };
-         });         
+         const index = this.#tasks.findIndex((task) => task.id === taskId);
+         
+         if (index === -1) {
+            return;
+         };
+
+         this.#tasks[index] = Task.FromObject({
+            id: taskId,
+            name: newName,
+            description: newDescription,
+            notes: newNotes,
+            dueDate: newDueDate,
+            priority: newPriority,
+            project: newProject
+        });      
     };
     
     getTodayTasks() {
-        const todayTasks = this.#tasks.filter(element => {
-            if(isToday(element.dueDate)) {                                  
-              return element;
-              };                   
-            });
-           
-        return todayTasks;       
+        return this.#tasks.filter((task) => isToday(task.dueDate)); 
     };
 
     getOverdueTasks() {
-        const overdueTasks = this.#tasks.filter(element => {
-            if(isPast(element.dueDate) && !isToday(element.dueDate)) {            
-              return element;
-              };                  
-            }); 
-
-        return overdueTasks;
+        return this.#tasks.filter((task) => isPast(task.dueDate));       
     };
 
     toString() {
@@ -115,10 +107,7 @@ export default class TodoList {
     };
 
     fromString(todoListString) {
-        const parsedTodoList = JSON.parse(todoListString);
-        
-        // this.#projects = [];
-        // this.#tasks = [];
+        const parsedTodoList = JSON.parse(todoListString);     
        
         this.#projects = parsedTodoList.projects.map(project => Project.FromObject(project));
         this.#tasks = parsedTodoList.tasks.map(task => Task.FromObject(task));
