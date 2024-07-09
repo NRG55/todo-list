@@ -5,6 +5,7 @@ import Storage from './storage.js';
 
 
 export default class Ui {
+    // Props drilling is an anti-pattern. I should avoid it.
     render(title) {
         Storage.Load();
         this.renderWebpage(title);                        
@@ -17,20 +18,19 @@ export default class Ui {
 
     renderMainContent(title) {
         const mainContent = document.querySelector(".main-content");
-        mainContent.innerHTML = "";       
+        mainContent.innerHTML = "";         
         
-        mainContent.appendChild(renderElement.sidebar());
-        this.renderSidebar(); 
-
-        mainContent.appendChild(renderElement.tasksContainer());       
-        this.renderTasksContainer(title);        
+        this.renderSidebar(mainContent);         
+        this.renderTasksContainer(mainContent, title);        
     };
 
     // -------------SIDEBAR-------------
 
-    renderSidebar() {         
+    renderSidebar(mainContent) { 
+        mainContent.appendChild(renderElement.sidebar());        
         this.renderSidebarTasksButtons();        
         this.renderSidebarProjectsButtons();
+        
 
         const addProjectButton = document.querySelector(".sidebar-add-project-button");       
       
@@ -51,7 +51,7 @@ export default class Ui {
         const allTasksButton = document.querySelector('.all-tasks-button');
         const todayTasksButton = document.querySelector('.today-tasks-button');
         const overdueTasksButton = document.querySelector('.overdue-tasks-button');
-       
+               
         allTasksButton.addEventListener('click', () => { 
                   
             this.renderTasksContainerHeader("All Tasks");
@@ -201,9 +201,11 @@ export default class Ui {
     
      // -------------TASKS-CONTAINER-------------
     
-    renderTasksContainer(title) {
+    renderTasksContainer(mainContent, title) {
+        mainContent.appendChild(renderElement.tasksContainer()); 
         this.renderTasksContainerHeader(title);
         this.renderTasks(title);
+              
     };   
 
     renderTasksContainerHeader(title) { 

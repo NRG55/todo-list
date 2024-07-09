@@ -11,14 +11,11 @@ export default class Project {
         this.#tasks = [];       
     };
 
-    set name(value) {
-        try {
+    set name(value) {    
         if(value === "" || typeof value !== 'string') {
             throw new Error('Invalid project name!');
-         }
-        } catch (error) {
-            console.warn(error);
-        }
+         };
+                
          this.#name = value;
     };
 
