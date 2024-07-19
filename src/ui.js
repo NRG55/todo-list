@@ -29,14 +29,15 @@ export default class Ui {
     renderSidebar(mainContent) { 
         mainContent.appendChild(renderElement.sidebar());        
         this.renderSidebarTasksButtons();        
-        this.renderSidebarProjectsButtons();
-        
+        this.renderSidebarProjectsButtons();        
 
         const addProjectButton = document.querySelector(".sidebar-add-project-button");       
       
         addProjectButton.addEventListener('click', () => {          
             this.renderAddProjectForm();                      
         });
+
+        this.renderResetDemoButton();
     };
 
     renderSidebarTasksButtons() {
@@ -197,7 +198,21 @@ export default class Ui {
             projectFormContainer.innerHTML = "";
             addProjectButton.style.display = 'block';     
         });
-    };    
+    }; 
+    
+    renderResetDemoButton() {
+        const sidebar = document.querySelector(".sidebar");
+
+        sidebar.appendChild(renderElement.resetDemoButton());
+        
+        const resetButton = document.querySelector(".reset-demo-button");
+
+        resetButton.onclick = () => {
+            Storage.ClearAll();
+            todoList.clearAll();
+            this.render();
+        };
+    };
     
      // -------------TASKS-CONTAINER-------------
     

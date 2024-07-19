@@ -44,7 +44,7 @@ export default class RenderElement {
         sidebar.append(sidebarTasks, sidebarProjects)
 
         return sidebar;        
-    };
+    };    
 
     tasksContainer() {
         const tasksContainer = document.createElement("div");
@@ -189,12 +189,7 @@ export default class RenderElement {
                 todoList.updateProjectName(index, newName);
                 todoList.updateProjectNameInTasks(project, newName)           
                 Storage.Save();
-                ui.render(newName);
-                // ui.renderSidebarProjectsButtons();
-                // ui.renderTasksContainerHeader(newName);              
-                // ui.renderTasks(newName);
-                // ui.removeLinkedProject();
-                // updateNumberOfTasks(newName);                
+                ui.render(newName);                         
 
                 const newProjectButton = document.getElementById(`${newName}`);
                 newProjectButton.focus();                                            
@@ -498,6 +493,14 @@ export default class RenderElement {
         header.append(headerName, numberOfTasksSpan, addTaskButton);
         
         return header;
+    };
+
+    resetDemoButton() {
+        const resetButton = document.createElement('button');
+        resetButton.classList.add("reset-demo-button");
+        resetButton.innerHTML = "Reset demo";
+        
+        return resetButton;
     };
 }
 

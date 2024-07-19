@@ -42,7 +42,7 @@ input, textarea, select, option {
 
 .sidebar {
     display: grid;
-    grid-template-rows: 8rem auto;   
+    grid-template-rows: 8rem auto 40px;   
     padding: 20px;
     padding-top: 80px;   
     background-color:#f9f6f3; 
@@ -187,6 +187,15 @@ input, textarea, select, option {
 
     &:hover {
         color: rgb(238, 65, 65);
+    }
+}
+
+.reset-demo-button {
+    text-align: left;
+    color: rgb(238, 65, 65);
+
+    &:hover {
+        color: red;
     }
 }
 

@@ -6,8 +6,7 @@ export default class Storage {
         localStorage.setItem("todolist", todoList.toString());
     };
 
-    static Load() { 
-        // localStorage.removeItem("todolist"); 
+    static Load() {        
         if (localStorage.getItem("todolist") === null) {            
             createDefaultData();
             Storage.Save();
@@ -21,5 +20,9 @@ export default class Storage {
 
         const todoListString = localStorage.getItem("todolist");       
         todoList.fromString(todoListString);            
-    };    
+    }; 
+    
+    static ClearAll() {
+        localStorage.removeItem("todolist"); 
+    };
 };

@@ -111,7 +111,12 @@ export default class TodoList {
        
         this.#projects = parsedTodoList.projects.map(project => Project.FromObject(project));
         this.#tasks = parsedTodoList.tasks.map(task => Task.FromObject(task));
-    }
+    };
+
+    clearAll() {
+        this.#projects = [];
+        this.#tasks = [];
+    };
 };
 
 export const todoList = new TodoList();
