@@ -1,6 +1,6 @@
 import Project from './project.js';
 import Task from './task.js';
-import { isToday, isPast } from 'date-fns';
+import { isToday, isPast, isBefore } from 'date-fns';
 
 export default class TodoList {
     #projects;
@@ -96,7 +96,7 @@ export default class TodoList {
     };
 
     getOverdueTasks() {
-        return this.#tasks.filter((task) => isPast(task.dueDate));       
+        return this.#tasks.filter((task) => isPast(task.dueDate) && !isToday(task.dueDate));       
     };
 
     toString() {

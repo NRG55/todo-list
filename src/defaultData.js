@@ -1,4 +1,3 @@
-// import todoList from "./index.js";
 import { todoList } from "./todo-list.js";
 import { format } from "date-fns";
 

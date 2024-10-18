@@ -121,7 +121,7 @@ export default class Ui {
 
             button.onclick = (e)=> {
                     const projectName = button.id;
-                    console.log(projectName)
+                   
                      if (e.target.classList.contains("project-popup-edit-button") || e.target.classList.contains("project-rename-ok-button")) { button.classList.remove("left-sidebar-project-button");                      
                         return;
                      } else {                
@@ -313,9 +313,10 @@ export default class Ui {
         };
 
         if (title === "Overdue") {
+            console.log(todoList.getOverdueTasks())
             todoList.getOverdueTasks().forEach((element) => {
                 const task = renderElement.taskContent(element);
-               
+               console.log(element)
                 tasksDisplay.appendChild(task);          
             });
 
