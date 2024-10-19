@@ -312,11 +312,10 @@ export default class Ui {
             return;           
         };
 
-        if (title === "Overdue") {
-            console.log(todoList.getOverdueTasks())
+        if (title === "Overdue") {            
             todoList.getOverdueTasks().forEach((element) => {
                 const task = renderElement.taskContent(element);
-               console.log(element)
+             
                 tasksDisplay.appendChild(task);          
             });
 
